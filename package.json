@@ -18,33 +18,33 @@
   "contributes": {
     "mcpServerDefinitionProviders": [
       {
-        "id": "knowledgeAgent.mcpServers",
+        "id": "contextRecall.mcpServers",
         "label": "Context Recall"
       }
     ],
     "commands": [
       {
-        "command": "knowledgeAgent.startChat",
+        "command": "contextRecall.startChat",
         "title": "Context Recall: Start Chat",
         "icon": "$(comment-discussion)"
       },
       {
-        "command": "knowledgeAgent.openDashboard",
+        "command": "contextRecall.openDashboard",
         "title": "Context Recall: Open Data Overview",
         "icon": "$(graph)"
       },
       {
-        "command": "knowledgeAgent.refreshSidebar",
+        "command": "contextRecall.refreshSidebar",
         "title": "Context Recall: Refresh Overview",
         "icon": "$(refresh)"
       },
       {
-        "command": "knowledgeAgent.organizeCopilotSessions",
+        "command": "contextRecall.organizeCopilotSessions",
         "title": "Context Recall: Organize All Copilot Sessions",
         "icon": "$(sparkle)"
       },
       {
-        "command": "knowledgeAgent.syncService",
+        "command": "contextRecall.syncService",
         "title": "Context Recall: Sync Local Data To Layered Service",
         "icon": "$(sync)"
       }
@@ -70,22 +70,22 @@
     "menus": {
       "view/title": [
         {
-          "command": "knowledgeAgent.refreshSidebar",
+          "command": "contextRecall.refreshSidebar",
           "when": "view == contextRecall.sidebar",
           "group": "navigation@1"
         },
         {
-          "command": "knowledgeAgent.openDashboard",
+          "command": "contextRecall.openDashboard",
           "when": "view == contextRecall.sidebar",
           "group": "navigation@2"
         },
         {
-          "command": "knowledgeAgent.organizeCopilotSessions",
+          "command": "contextRecall.organizeCopilotSessions",
           "when": "view == contextRecall.sidebar",
           "group": "navigation@3"
         },
         {
-          "command": "knowledgeAgent.syncService",
+          "command": "contextRecall.syncService",
           "when": "view == contextRecall.sidebar",
           "group": "navigation@4"
         }
@@ -94,7 +94,7 @@
     "configuration": {
       "title": "Context Recall",
       "properties": {
-        "knowledgeAgent.backend": {
+        "contextRecall.backend": {
           "type": "string",
           "enum": [
             "auto",
@@ -104,16 +104,33 @@
           "default": "auto",
           "description": "Use the layered service when available, require it, or use only the embedded local fallback."
         },
-        "knowledgeAgent.serviceUrl": {
+        "contextRecall.serviceUrl": {
           "type": "string",
           "default": "http://127.0.0.1:8765",
           "description": "Base URL of the independent Context Recall service."
+        },
+        "knowledgeAgent.backend": {
+          "type": "string",
+          "enum": [
+            "auto",
+            "service",
+            "local"
+          ],
+          "default": "auto",
+          "deprecationMessage": "已更名为 contextRecall.backend（单名制迁移），旧键仍可读但不再维护。",
+          "description": "[已弃用] 旧键，请改用 contextRecall.backend。"
+        },
+        "knowledgeAgent.serviceUrl": {
+          "type": "string",
+          "default": "http://127.0.0.1:8765",
+          "deprecationMessage": "已更名为 contextRecall.serviceUrl（单名制迁移），旧键仍可读但不再维护。",
+          "description": "[已弃用] 旧键，请改用 contextRecall.serviceUrl。"
         }
       }
     },
     "chatParticipants": [
       {
-        "id": "knowledge-agent.chat",
+        "id": "contextRecall.chat",
         "name": "recall",
         "fullName": "Context Recall",
         "description": "A cross-project engineering memory assistant with persistent sessions, hybrid recall, and evidence-linked knowledge.",

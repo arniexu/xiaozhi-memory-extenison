@@ -51,7 +51,7 @@ export class DashboardPanel {
 		}
 
 		this.panel = vscode.window.createWebviewPanel(
-			'knowledgeAgent.dashboard',
+			'contextRecall.dashboard',
 			'Context Recall Overview',
 			vscode.ViewColumn.One,
 			{
@@ -82,14 +82,14 @@ export class DashboardPanel {
 					await this.importDocuments();
 					break;
 				case 'syncService':
-					await vscode.commands.executeCommand('knowledgeAgent.syncService');
+					await vscode.commands.executeCommand('contextRecall.syncService');
 					await this.refresh();
 					break;
 				case 'startChat':
-					await vscode.commands.executeCommand('knowledgeAgent.startChat');
+					await vscode.commands.executeCommand('contextRecall.startChat');
 					break;
 				case 'organizeSessions':
-					await vscode.commands.executeCommand('knowledgeAgent.organizeCopilotSessions');
+					await vscode.commands.executeCommand('contextRecall.organizeCopilotSessions');
 					await this.refresh();
 					break;
 			}

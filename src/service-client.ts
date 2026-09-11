@@ -14,10 +14,14 @@ export interface KnowledgeServiceConfiguration {
 }
 
 export function getKnowledgeServiceConfiguration(): KnowledgeServiceConfiguration {
-	const configuration = vscode.workspace.getConfiguration('knowledgeAgent');
+	const primary = vscode.workspace.getConfiguration('contextRecall');
+	const legacy = vscode.workspace.getConfiguration('knowledgeAgent');
+	// 命名迁移（单名制）：新键优先，旧键回退，保证既有用户设置继续生效。
+	const mode = primary.get<BackendMode>('backend') ?? legacy.get<BackendMode>('backend') ?? 'auto';
+	const url = primary.get<string>('serviceUrl') ?? legacy.get<string>('serviceUrl') ?? 'http://127.0.0.1:8765';
 	return {
-		mode: configuration.get<BackendMode>('backend', 'auto'),
-		url: configuration.get<string>('serviceUrl', 'http://127.0.0.1:8765').replace(/\/+$/, ''),
+		mode,
+		url: url.replace(/\/+$/, ''),
 	};
 }
 

@@ -39,16 +39,16 @@ export class SidebarProvider implements vscode.WebviewViewProvider {
 		view.webview.onDidReceiveMessage(async (message: { type?: string; query?: string }) => {
 			switch (message.type) {
 				case 'startChat':
-					await vscode.commands.executeCommand('knowledgeAgent.startChat');
+					await vscode.commands.executeCommand('contextRecall.startChat');
 					break;
 				case 'openDashboard':
-					await vscode.commands.executeCommand('knowledgeAgent.openDashboard');
+					await vscode.commands.executeCommand('contextRecall.openDashboard');
 					break;
 				case 'organizeSessions':
-					await vscode.commands.executeCommand('knowledgeAgent.organizeCopilotSessions');
+					await vscode.commands.executeCommand('contextRecall.organizeCopilotSessions');
 					break;
 				case 'syncService':
-					await vscode.commands.executeCommand('knowledgeAgent.syncService');
+					await vscode.commands.executeCommand('contextRecall.syncService');
 					break;
 				case 'search':
 					this.query = message.query?.trim() ?? '';

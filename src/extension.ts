@@ -11,8 +11,21 @@ import { organizeCopilotHistory } from './transcript';
 import { ValueMetrics } from './value-metrics';
 import { embed } from './vector';
 
-const PARTICIPANT_ID = 'knowledge-agent.chat';
-const MCP_PROVIDER_ID = 'knowledgeAgent.mcpServers';
+const PARTICIPANT_ID = 'contextRecall.chat';
+const MCP_PROVIDER_ID = 'contextRecall.mcpServers';
+
+/**
+ * 命名迁移（单名制 Context Recall）：`contextRecall.*` 是唯一对外 id。
+ * 旧 `knowledgeAgent.*` 只注册为兼容别名，且不再出现在 contributes.commands，
+ * 因此命令面板不会出现重复项；待迁移完成后可直接删掉别名注册。
+ */
+function registerRenamedCommand(id: string, handler: (...args: any[]) => any): vscode.Disposable {
+	const legacyId = id.replace(/^contextRecall\./, 'knowledgeAgent.');
+	return vscode.Disposable.from(
+		vscode.commands.registerCommand(id, handler),
+		vscode.commands.registerCommand(legacyId, handler),
+	);
+}
 
 function workspaceId(): string {
 	const roots = vscode.workspace.workspaceFolders?.map((folder) => folder.uri.toString()).sort().join('|') ?? 'empty-workspace';
@@ -100,21 +113,22 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
 	});
 	console.info(`Context Recall MCP provider registered: ${MCP_PROVIDER_ID}`);
 	const mcpConfigurationListener = vscode.workspace.onDidChangeConfiguration((event) => {
-		if (event.affectsConfiguration('knowledgeAgent.backend') || event.affectsConfiguration('knowledgeAgent.serviceUrl')) {
+		if (event.affectsConfiguration('contextRecall.backend') || event.affectsConfiguration('contextRecall.serviceUrl')
+			|| event.affectsConfiguration('knowledgeAgent.backend') || event.affectsConfiguration('knowledgeAgent.serviceUrl')) {
 			mcpDefinitionsChanged.fire();
 		}
 	});
 	const mcpWorkspaceListener = vscode.workspace.onDidChangeWorkspaceFolders(() => mcpDefinitionsChanged.fire());
 
-	const startChat = vscode.commands.registerCommand('knowledgeAgent.startChat', async () => {
+	const startChat = registerRenamedCommand('contextRecall.startChat', async () => {
 		await vscode.commands.executeCommand('workbench.action.chat.open', {
 			query: '@recall ',
 			isPartialQuery: true,
 		});
 	});
-	const openDashboard = vscode.commands.registerCommand('knowledgeAgent.openDashboard', async () => dashboard.show());
-	const refreshSidebar = vscode.commands.registerCommand('knowledgeAgent.refreshSidebar', async () => sidebar.refresh());
-	const syncService = vscode.commands.registerCommand('knowledgeAgent.syncService', async () => {
+	const openDashboard = registerRenamedCommand('contextRecall.openDashboard', async () => dashboard.show());
+	const refreshSidebar = registerRenamedCommand('contextRecall.refreshSidebar', async () => sidebar.refresh());
+	const syncService = registerRenamedCommand('contextRecall.syncService', async () => {
 		try {
 			const result = await vscode.window.withProgress({
 				location: vscode.ProgressLocation.Notification,
@@ -126,7 +140,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
 			void vscode.window.showErrorMessage(`Context Recall sync failed: ${error instanceof Error ? error.message : String(error)}`);
 		}
 	});
-	const organizeSessions = vscode.commands.registerCommand('knowledgeAgent.organizeCopilotSessions', async () => {
+	const organizeSessions = registerRenamedCommand('contextRecall.organizeCopilotSessions', async () => {
 		try {
 			const [model] = await vscode.lm.selectChatModels({ vendor: 'copilot' });
 			if (!model) {
@@ -153,7 +167,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
 	statusBar.name = 'Context Recall';
 	statusBar.text = '$(database) Context Recall';
 	statusBar.tooltip = 'Start a sticky Context Recall chat';
-	statusBar.command = 'knowledgeAgent.startChat';
+	statusBar.command = 'contextRecall.startChat';
 	statusBar.show();
 	const participant = vscode.chat.createChatParticipant(PARTICIPANT_ID, async (request, chatContext, stream, token) => {
 		if (request.command === 'overview') {
@@ -208,7 +222,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
 		}
 		await dashboard.refresh();
 		await sidebar.refresh();
-		stream.button({ command: 'knowledgeAgent.openDashboard', title: 'Open Data Overview' });
+		stream.button({ command: 'contextRecall.openDashboard', title: 'Open Data Overview' });
 		return { metadata: { sessionId: currentSessionId } };
 	});
 	participant.iconPath = new vscode.ThemeIcon('database');
