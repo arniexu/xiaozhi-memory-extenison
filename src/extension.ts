@@ -5,6 +5,7 @@ import { organizeConversation } from './organizer';
 import { formatConnectedSearchContext } from './search-connections';
 import { resolveSessionContext } from './session-context';
 import { getKnowledgeServiceConfiguration, KnowledgeServiceClient } from './service-client';
+import { recordServiceResolution, resolveServiceUrl } from './service-resolver';
 import { SidebarProvider } from './sidebar';
 import { KnowledgeStore } from './store';
 import { organizeCopilotHistory } from './transcript';
@@ -91,9 +92,12 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
 	const mcpDefinitionsChanged = new vscode.EventEmitter<void>();
 	const mcpProvider = vscode.lm.registerMcpServerDefinitionProvider(MCP_PROVIDER_ID, {
 		onDidChangeMcpServerDefinitions: mcpDefinitionsChanged.event,
-		provideMcpServerDefinitions: () => {
+		provideMcpServerDefinitions: async () => {
 			const configuration = getKnowledgeServiceConfiguration();
-			console.info(`Context Recall MCP definition requested (backend=${configuration.mode}).`);
+			// 服务可能只监听某个具体网卡地址；配置不可达时探测候选地址，并落盘便于排查。
+			const resolution = await resolveServiceUrl(configuration.url);
+			await recordServiceResolution(context.globalStorageUri.fsPath, resolution);
+			console.info(`Context Recall MCP definition requested (backend=${configuration.mode}, service=${resolution.url}, source=${resolution.source}).`);
 			const definition = new vscode.McpStdioServerDefinition(
 				'Context Recall',
 				process.execPath,
@@ -101,7 +105,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
 				{
 					ELECTRON_RUN_AS_NODE: '1',
 					CONTEXT_RECALL_BACKEND: configuration.mode,
-					CONTEXT_RECALL_SERVICE_URL: configuration.url,
+					CONTEXT_RECALL_SERVICE_URL: resolution.url,
 					CONTEXT_RECALL_SNAPSHOT: vscode.Uri.joinPath(context.globalStorageUri, 'context-recall.json').fsPath,
 					CONTEXT_RECALL_WORKSPACE_ID: workspaceId(),
 				},

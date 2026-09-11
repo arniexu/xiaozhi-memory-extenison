@@ -2,7 +2,7 @@
   "name": "memory",
   "displayName": "Context Recall",
   "description": "A cross-project engineering memory and context retrieval assistant for VS Code",
-  "version": "0.3.21",
+  "version": "0.3.22",
   "publisher": "xuqj-local",
   "engines": {
     "vscode": "^1.103.0"

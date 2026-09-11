@@ -5,6 +5,7 @@ import { ContinuityDecision } from './data-import';
 import { KnowledgeSnapshot } from './model';
 import { ExtractedDocument } from './pdf-documents';
 import { rankRetrievalResults } from './retrieval';
+import { resolveServiceUrlCached } from './service-resolver';
 
 type BackendMode = 'auto' | 'local' | 'service';
 
@@ -134,11 +135,13 @@ export class KnowledgeServiceClient {
 		if (mode === 'local') {
 			return { available: false, mode, url };
 		}
+		// 服务常绑定在具体网卡地址而非回环地址，配置不可达时逐个探测候选地址。
+		const resolution = await resolveServiceUrlCached(url);
 		try {
-			const result = await requestJson<Omit<ServiceHealth, 'available' | 'mode' | 'url'>>(new URL(`${url}/health`), 'GET');
-			return { ...result, available: true, mode, url };
+			const result = await requestJson<Omit<ServiceHealth, 'available' | 'mode' | 'url'>>(new URL(`${resolution.url}/health`), 'GET');
+			return { ...result, available: true, mode, url: resolution.url };
 		} catch {
-			return { available: false, mode, url };
+			return { available: false, mode, url: resolution.url };
 		}
 	}
 
