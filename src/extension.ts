@@ -1,0 +1,247 @@
+import { createHash, randomUUID } from 'node:crypto';
+import * as vscode from 'vscode';
+import { DashboardPanel } from './dashboard';
+import { organizeConversation } from './organizer';
+import { formatConnectedSearchContext } from './search-connections';
+import { resolveSessionContext } from './session-context';
+import { getKnowledgeServiceConfiguration, KnowledgeServiceClient } from './service-client';
+import { SidebarProvider } from './sidebar';
+import { KnowledgeStore } from './store';
+import { organizeCopilotHistory } from './transcript';
+import { ValueMetrics } from './value-metrics';
+import { embed } from './vector';
+
+const PARTICIPANT_ID = 'knowledge-agent.chat';
+const MCP_PROVIDER_ID = 'knowledgeAgent.mcpServers';
+
+function workspaceId(): string {
+	const roots = vscode.workspace.workspaceFolders?.map((folder) => folder.uri.toString()).sort().join('|') ?? 'empty-workspace';
+	return createHash('sha256').update(roots).digest('hex').slice(0, 20);
+}
+
+function sessionId(chatContext: vscode.ChatContext): string {
+	for (const turn of [...chatContext.history].reverse()) {
+		if (turn instanceof vscode.ChatResponseTurn) {
+			const previous = turn.result.metadata?.sessionId;
+			if (typeof previous === 'string' && previous) {
+				return previous;
+			}
+		}
+	}
+	return randomUUID();
+}
+
+async function memoryContext(service: KnowledgeServiceClient, store: KnowledgeStore, currentSessionId: string, query: string): Promise<string> {
+	const serviceResults = await service.search(query, embed(query), { workspaceId: workspaceId(), sessionId: currentSessionId }, 6);
+	if (serviceResults) {
+		return serviceResults.length
+			? formatConnectedSearchContext(serviceResults)
+			: 'The layered service found no relevant active knowledge.';
+	}
+	const results = store.search(query, 6);
+	if (!results.length) {
+		return 'No relevant stored knowledge was found.';
+	}
+	return results.map((result, index) => `${index + 1}. [${result.sourceKind}, score=${result.score.toFixed(3)}] ${result.text}`).join('\n');
+}
+
+async function modelMessages(service: KnowledgeServiceClient, store: KnowledgeStore, currentSessionId: string, query: string, retrievalQuery: string): Promise<vscode.LanguageModelChatMessage[]> {
+	const sessionContext = store.getSessionContext(currentSessionId);
+	const instructions = `You are Context Recall, a persistent technical collaborator inside VS Code.
+Answer the user directly and distinguish stored evidence from inference. Use the retrieved context only when relevant. Treat VERIFIED CONNECTIONS as explicit graph or shared-evidence relationships; do not invent causal links between otherwise separate items. Never claim that retrieved context is automatically verified.
+
+WORKING SESSION CONTEXT:
+${JSON.stringify(sessionContext ?? null)}
+
+RETRIEVAL QUERY:
+${retrievalQuery}
+
+RETRIEVED CONTEXT:
+${await memoryContext(service, store, currentSessionId, retrievalQuery)}`;
+	const messages = [vscode.LanguageModelChatMessage.User(instructions)];
+	for (const turn of store.getSessionTurns(currentSessionId, 14).slice(0, -1)) {
+		messages.push(turn.role === 'user'
+			? vscode.LanguageModelChatMessage.User(turn.text)
+			: vscode.LanguageModelChatMessage.Assistant(turn.text));
+	}
+	messages.push(vscode.LanguageModelChatMessage.User(query));
+	return messages;
+}
+
+export async function activate(context: vscode.ExtensionContext): Promise<void> {
+	const store = new KnowledgeStore(context.globalStorageUri.fsPath);
+	await store.initialize();
+	const service = new KnowledgeServiceClient();
+	const valueMetrics = new ValueMetrics(context.globalState);
+	const dashboard = new DashboardPanel(context.extensionUri, store, service, valueMetrics);
+	const sidebar = new SidebarProvider(context.extensionUri, store, service, valueMetrics);
+	const mcpDefinitionsChanged = new vscode.EventEmitter<void>();
+	const mcpProvider = vscode.lm.registerMcpServerDefinitionProvider(MCP_PROVIDER_ID, {
+		onDidChangeMcpServerDefinitions: mcpDefinitionsChanged.event,
+		provideMcpServerDefinitions: () => {
+			const configuration = getKnowledgeServiceConfiguration();
+			console.info(`Context Recall MCP definition requested (backend=${configuration.mode}).`);
+			const definition = new vscode.McpStdioServerDefinition(
+				'Context Recall',
+				process.execPath,
+				[vscode.Uri.joinPath(context.extensionUri, 'dist', 'mcp-server.js').fsPath],
+				{
+					ELECTRON_RUN_AS_NODE: '1',
+					KNOWLEDGE_AGENT_BACKEND: configuration.mode,
+					KNOWLEDGE_AGENT_SERVICE_URL: configuration.url,
+					KNOWLEDGE_AGENT_SNAPSHOT: vscode.Uri.joinPath(context.globalStorageUri, 'knowledge-agent.json').fsPath,
+					KNOWLEDGE_AGENT_WORKSPACE_ID: workspaceId(),
+				},
+				String(context.extension.packageJSON.version),
+			);
+			definition.cwd = context.extensionUri;
+			return [definition];
+		},
+	});
+	console.info(`Context Recall MCP provider registered: ${MCP_PROVIDER_ID}`);
+	const mcpConfigurationListener = vscode.workspace.onDidChangeConfiguration((event) => {
+		if (event.affectsConfiguration('knowledgeAgent.backend') || event.affectsConfiguration('knowledgeAgent.serviceUrl')) {
+			mcpDefinitionsChanged.fire();
+		}
+	});
+	const mcpWorkspaceListener = vscode.workspace.onDidChangeWorkspaceFolders(() => mcpDefinitionsChanged.fire());
+
+	const startChat = vscode.commands.registerCommand('knowledgeAgent.startChat', async () => {
+		await vscode.commands.executeCommand('workbench.action.chat.open', {
+			query: '@recall ',
+			isPartialQuery: true,
+		});
+	});
+	const openDashboard = vscode.commands.registerCommand('knowledgeAgent.openDashboard', async () => dashboard.show());
+	const refreshSidebar = vscode.commands.registerCommand('knowledgeAgent.refreshSidebar', async () => sidebar.refresh());
+	const syncService = vscode.commands.registerCommand('knowledgeAgent.syncService', async () => {
+		try {
+			const result = await vscode.window.withProgress({
+				location: vscode.ProgressLocation.Notification,
+				title: 'Context Recall: syncing layered context',
+			}, () => service.sync(store.getSnapshot()));
+			await sidebar.refresh();
+			void vscode.window.showInformationMessage(`Context Recall layered sync completed: ${JSON.stringify(result)}`);
+		} catch (error) {
+			void vscode.window.showErrorMessage(`Context Recall sync failed: ${error instanceof Error ? error.message : String(error)}`);
+		}
+	});
+	const organizeSessions = vscode.commands.registerCommand('knowledgeAgent.organizeCopilotSessions', async () => {
+		try {
+			const [model] = await vscode.lm.selectChatModels({ vendor: 'copilot' });
+			if (!model) {
+				void vscode.window.showErrorMessage('Context Recall could not find an available Copilot language model.');
+				return;
+			}
+			const result = await vscode.window.withProgress({
+				location: vscode.ProgressLocation.Notification,
+				title: 'Context Recall: organizing Copilot sessions',
+				cancellable: true,
+			}, (progress, token) => organizeCopilotHistory(context.globalStorageUri.fsPath, store, model, progress, token));
+			await dashboard.refresh();
+			await sidebar.refresh();
+			const status = result.cancelled ? 'stopped' : 'finished';
+			void vscode.window.showInformationMessage(
+				`Context Recall ${status}: ${result.organized} organized, ${result.failed} failed, ${result.discovered} discovered.`,
+			);
+		} catch (error) {
+			void vscode.window.showErrorMessage(`Context Recall could not organize sessions: ${error instanceof Error ? error.message : String(error)}`);
+		}
+	});
+	const sidebarRegistration = vscode.window.registerWebviewViewProvider('contextRecall.sidebar', sidebar);
+	const statusBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100);
+	statusBar.name = 'Context Recall';
+	statusBar.text = '$(database) Context Recall';
+	statusBar.tooltip = 'Start a sticky Context Recall chat';
+	statusBar.command = 'knowledgeAgent.startChat';
+	statusBar.show();
+	const participant = vscode.chat.createChatParticipant(PARTICIPANT_ID, async (request, chatContext, stream, token) => {
+		if (request.command === 'overview') {
+			await dashboard.show();
+			stream.markdown('Opened the Context Recall data overview.');
+			return { metadata: { sessionId: sessionId(chatContext) } };
+		}
+
+		const currentSessionId = sessionId(chatContext);
+		await store.ensureSession(currentSessionId, workspaceId(), request.prompt);
+		const userTurn = await store.recordTurn(currentSessionId, 'user', request.prompt);
+		const contextResolution = await resolveSessionContext(
+			request.model,
+			store.getSessionContext(currentSessionId),
+			store.getSessionTurns(currentSessionId, 12),
+			request.prompt,
+			token,
+		);
+		await store.updateSessionContext(currentSessionId, contextResolution.context);
+
+		let assistantText = '';
+		try {
+			const response = await request.model.sendRequest(await modelMessages(service, store, currentSessionId, request.prompt, contextResolution.rewrittenQuery), {}, token);
+			for await (const fragment of response.text) {
+				assistantText += fragment;
+				stream.markdown(fragment);
+			}
+		} catch (error) {
+			return {
+				errorDetails: { message: error instanceof Error ? error.message : String(error) },
+				metadata: { sessionId: currentSessionId },
+			};
+		}
+
+		const assistantTurn = await store.recordTurn(currentSessionId, 'assistant', assistantText);
+		stream.progress('Organizing durable knowledge from this exchange...');
+		try {
+			const organized = await organizeConversation(
+				request.model,
+				request.prompt,
+				assistantText,
+				[userTurn.id, assistantTurn.id],
+				contextResolution.context,
+				token,
+			);
+			await store.updateSessionContext(currentSessionId, organized.sessionContext);
+			if (organized.nodes.length || organized.edges.length) {
+				await store.upsertKnowledge(organized.nodes, organized.edges);
+			}
+		} catch (error) {
+			console.warn('Knowledge organization failed; raw session and vectors were preserved.', error);
+		}
+		await dashboard.refresh();
+		await sidebar.refresh();
+		stream.button({ command: 'knowledgeAgent.openDashboard', title: 'Open Data Overview' });
+		return { metadata: { sessionId: currentSessionId } };
+	});
+	participant.iconPath = new vscode.ThemeIcon('database');
+	participant.followupProvider = {
+		provideFollowups: (result) => {
+			const metadata = result.metadata as { sessionId?: unknown } | undefined;
+			const contextSessionId = typeof metadata?.sessionId === 'string' ? metadata.sessionId : '';
+			const sessionContext = contextSessionId ? store.getSessionContext(contextSessionId) : undefined;
+			const contextual = [
+				...(sessionContext?.openIssues.slice(0, 2).map((issue) => ({ prompt: issue, label: `Investigate: ${issue}` })) ?? []),
+				...(sessionContext?.nextSteps.slice(0, 2).map((step) => ({ prompt: step, label: `Next: ${step}` })) ?? []),
+			].slice(0, 3);
+			return contextual.length ? contextual : [
+				{ prompt: 'Summarize what you have learned in this session.', label: 'Summarize this session' },
+				{ prompt: 'Which stored claims are uncertain or contested?', label: 'Review uncertain knowledge' },
+			];
+		},
+	};
+
+	context.subscriptions.push(
+		startChat,
+		openDashboard,
+		refreshSidebar,
+		syncService,
+		organizeSessions,
+		sidebarRegistration,
+		statusBar,
+		participant,
+		mcpProvider,
+		mcpDefinitionsChanged,
+		mcpConfigurationListener,
+		mcpWorkspaceListener,
+	);
+}
+
+export function deactivate() {}

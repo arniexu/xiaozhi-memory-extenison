@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="Context Recall 是面向研发工作的跨工程长期记忆与上下文检索助手。">
+	<title>Context Recall｜让工程经验延续下去</title>
+	<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+	<header class="site-header">
+		<a class="brand" href="#top" aria-label="Context Recall 首页">
+			<img src="../media/context-recall.svg" alt="">
+			<span>Context Recall</span>
+		</a>
+		<nav aria-label="主导航">
+			<a href="#workflow">工作方式</a>
+			<a href="#architecture">架构</a>
+			<a href="#boundaries">边界</a>
+		</nav>
+		<a class="header-action" href="#start">开始了解</a>
+	</header>
+
+	<main id="top">
+		<section class="hero" aria-labelledby="hero-title">
+			<div class="hero-copy reveal">
+				<p class="kicker"><span></span>为长期研发而设计</p>
+				<h1 id="hero-title">Context Recall</h1>
+				<p class="hero-statement">别让关键上下文<br>止步于上一次对话。</p>
+				<p class="hero-detail">一个面向研发工作的跨工程记忆与检索助手。它把散落在会话里的决策、事实、工具和解决方案沉淀为可追溯的长期知识，在下一次需要时准确找回来。</p>
+				<div class="hero-actions">
+					<a class="primary-action" href="#workflow">查看它如何工作 <span aria-hidden="true">↓</span></a>
+					<span>VS Code extension · Local first</span>
+				</div>
+			</div>
+
+			<div class="memory-scene reveal" aria-label="跨工程上下文检索示意图">
+				<div class="scene-toolbar">
+					<div><i></i><i></i><i></i></div>
+					<span>CONTEXT RECALL / LIVE CONTEXT</span>
+					<b>LOCAL</b>
+				</div>
+				<div class="scene-body">
+					<div class="project-rail">
+						<span>PROJECTS</span>
+						<button class="project active" type="button" data-project="alpha"><b>A</b><small>Project Alpha</small></button>
+						<button class="project" type="button" data-project="beta"><b>B</b><small>Project Beta</small></button>
+						<button class="project" type="button" data-project="gamma"><b>C</b><small>Project Gamma</small></button>
+					</div>
+					<div class="recall-view">
+						<div class="recall-query">
+							<span>RECALL</span>
+							<p id="recallQuery">为什么当时选择了分层设计？</p>
+						</div>
+						<div class="evidence-path" aria-hidden="true">
+							<div class="node source">会话证据</div><i></i>
+							<div class="node decision">工程决策</div><i></i>
+							<div class="node result">当前上下文</div>
+						</div>
+						<article class="answer-surface">
+							<div class="answer-meta"><span>GROUNDED ANSWER</span><b>3 条证据</b></div>
+							<p id="recallAnswer">早期验证表明，分层设计能够隔离变化频繁的部分，让核心能力在不同环境中保持一致，并降低后续迁移成本。</p>
+							<div class="source-row"><span>01</span><p id="recallSource">设计讨论 · 已验证结论 · 高置信度</p></div>
+						</article>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section class="signal-strip" aria-label="产品特性概览">
+			<div><strong>跨工程</strong><span>不被单一仓库和会话隔断</span></div>
+			<div><strong>可追溯</strong><span>结论始终链接到原始证据</span></div>
+			<div><strong>本地优先</strong><span>数据边界由你掌控</span></div>
+			<div><strong>混合检索</strong><span>关键词、语义与关系协同</span></div>
+		</section>
+
+		<section id="workflow" class="workflow section-band">
+			<div class="section-intro reveal">
+				<p class="section-number">01 / WORKFLOW</p>
+				<h2>从一次对话，<br>到可复用的工程经验。</h2>
+				<p>Context Recall 不把聊天记录简单堆积起来。它保留原始证据，再从中组织可以长期使用的事实、决策、概念和关系。</p>
+			</div>
+			<ol class="workflow-list">
+				<li class="reveal"><span>01</span><div><h3>捕获证据</h3><p>保存用户明确选择的会话，并可按需整理已有对话。原始记录保持独立，不被知识摘要覆盖。</p></div><b>CAPTURE</b></li>
+				<li class="reveal"><span>02</span><div><h3>组织知识</h3><p>将会话提炼为事实、决策、工具、工作流和关系，同时保留置信度与证据引用。</p></div><b>ORGANIZE</b></li>
+				<li class="reveal"><span>03</span><div><h3>跨域召回</h3><p>通过全文、向量和知识图谱联合检索，让过去项目中的经验进入当前问题的上下文。</p></div><b>RECALL</b></li>
+			</ol>
+		</section>
+
+		<section class="use-cases section-band">
+			<div class="section-heading reveal">
+				<p class="section-number">02 / IN PRACTICE</p>
+				<h2>它记住的，不只是答案。</h2>
+			</div>
+			<div class="case-grid">
+				<article class="case case-wide reveal">
+					<span>DECISIONS</span>
+					<h3>为什么当时这样做？</h3>
+					<p>找回方案背后的限制、取舍和验证结果，而不是只看到最后一行代码。</p>
+					<div class="decision-log"><i></i><div><small>DECISION FOUND</small><strong>采用兼容优先的迁移方案</strong><p>减少重复实现，保持变更清晰可验证</p></div></div>
+				</article>
+				<article class="case reveal">
+					<span>CONTINUITY</span>
+					<h3>换个工程，继续工作。</h3>
+					<p>工作区变了，相关经验仍可按作用域检索，不必从头解释整个背景。</p>
+					<div class="scope-lines"><b>Session</b><i></i><b>Workspace</b><i></i><b>Repository</b></div>
+				</article>
+				<article class="case reveal">
+					<span>PROVENANCE</span>
+					<h3>每个结论都有来处。</h3>
+					<p>知识节点携带证据引用、生命周期和置信度，方便核对，也允许保留争议。</p>
+					<div class="confidence"><span>置信度</span><div><i></i></div><b>HIGH</b></div>
+				</article>
+			</div>
+		</section>
+
+		<section id="architecture" class="architecture section-band">
+			<div class="architecture-copy reveal">
+				<p class="section-number">03 / ARCHITECTURE</p>
+				<h2>一条清晰的记忆链路。</h2>
+				<p>证据、索引和知识彼此关联，但职责分离。这样既能高效检索，也不会把模型生成的摘要误当作原始事实。</p>
+			</div>
+			<div class="architecture-flow reveal">
+				<div><span>01</span><strong>Sessions</strong><small>不可变会话证据</small></div>
+				<i></i>
+				<div><span>02</span><strong>Lifecycle</strong><small>Raw · Candidate · Active</small></div>
+				<i></i>
+				<div><span>03</span><strong>Hybrid Index</strong><small>Lexical · Semantic</small></div>
+				<i></i>
+				<div><span>04</span><strong>Knowledge Graph</strong><small>实体 · 关系 · 证据</small></div>
+			</div>
+			<div class="tech-line reveal"><span>Local storage</span><span>Semantic index</span><span>Optional graph</span><span>Assistant integration</span><span>Portable snapshots</span></div>
+		</section>
+
+		<section id="boundaries" class="boundaries section-band">
+			<div class="section-heading reveal">
+				<p class="section-number">04 / TRUST BOUNDARY</p>
+				<h2>记忆有价值，边界更重要。</h2>
+			</div>
+			<div class="boundary-list">
+				<div class="reveal"><span>01</span><h3>明确触发</h3><p>只保存用户明确选择的对话；历史会话整理需要用户主动执行。</p></div>
+				<div class="reveal"><span>02</span><h3>敏感信息处理</h3><p>导入历史会话时，对常见凭据、令牌和私钥内容进行脱敏。</p></div>
+				<div class="reveal"><span>03</span><h3>本地可运行</h3><p>没有外部服务或当前工程目录时，扩展仍可使用本地回退数据。</p></div>
+				<div class="reveal"><span>04</span><h3>可迁移</h3><p>完整快照可以导入和导出，数据不被锁在某一个工作区里。</p></div>
+			</div>
+		</section>
+
+		<section id="start" class="closing">
+			<div class="closing-mark reveal"><img src="../media/context-recall.svg" alt=""></div>
+			<div class="reveal">
+				<p class="section-number">CONTEXT RECALL</p>
+				<h2>让经验留下，<br>让上下文随时回来。</h2>
+			</div>
+			<div class="closing-note reveal">
+				<p>为持续演进的工程和长期协作而设计。</p>
+				<span>VS Code · Cross-project · Evidence-linked</span>
+			</div>
+		</section>
+	</main>
+
+	<footer>
+		<a class="brand" href="#top"><img src="../media/context-recall.svg" alt=""><span>Context Recall</span></a>
+		<p>Cross-project engineering memory.</p>
+		<span>Built for context that matters.</span>
+	</footer>
+	<script src="app.js"></script>
+</body>
+</html>

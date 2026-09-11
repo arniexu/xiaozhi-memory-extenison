@@ -1,0 +1,21 @@
+{
+  "folders": [
+    {
+      "name": "OpenBMC Reference",
+      "path": "../openbmc-openbmc"
+    },
+    {
+      "name": "Context Recall Extension",
+      "path": "."
+    },
+    {
+      "name": "Context Recall Service",
+      "path": "../knowledge-agent-service"
+    }
+  ],
+  "settings": {
+    "files.exclude": {
+      "**/node_modules": true
+    }
+  }
+}

@@ -1,0 +1,167 @@
+{
+  "name": "memory",
+  "displayName": "Context Recall",
+  "description": "A cross-project engineering memory and context retrieval assistant for VS Code",
+  "version": "0.3.19",
+  "publisher": "xuqj-local",
+  "engines": {
+    "vscode": "^1.103.0"
+  },
+  "categories": [
+    "AI",
+    "Chat"
+  ],
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "mcpServerDefinitionProviders": [
+      {
+        "id": "knowledgeAgent.mcpServers",
+        "label": "Context Recall"
+      }
+    ],
+    "commands": [
+      {
+        "command": "knowledgeAgent.startChat",
+        "title": "Context Recall: Start Chat",
+        "icon": "$(comment-discussion)"
+      },
+      {
+        "command": "knowledgeAgent.openDashboard",
+        "title": "Context Recall: Open Data Overview",
+        "icon": "$(graph)"
+      },
+      {
+        "command": "knowledgeAgent.refreshSidebar",
+        "title": "Context Recall: Refresh Overview",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "knowledgeAgent.organizeCopilotSessions",
+        "title": "Context Recall: Organize All Copilot Sessions",
+        "icon": "$(sparkle)"
+      },
+      {
+        "command": "knowledgeAgent.syncService",
+        "title": "Context Recall: Sync Local Data To Layered Service",
+        "icon": "$(sync)"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "contextRecall",
+          "title": "Context Recall",
+          "icon": "media/activitybar-probe.png"
+        }
+      ]
+    },
+    "views": {
+      "contextRecall": [
+        {
+          "type": "webview",
+          "id": "contextRecall.sidebar",
+          "name": "Data Overview"
+        }
+      ]
+    },
+    "menus": {
+      "view/title": [
+        {
+          "command": "knowledgeAgent.refreshSidebar",
+          "when": "view == contextRecall.sidebar",
+          "group": "navigation@1"
+        },
+        {
+          "command": "knowledgeAgent.openDashboard",
+          "when": "view == contextRecall.sidebar",
+          "group": "navigation@2"
+        },
+        {
+          "command": "knowledgeAgent.organizeCopilotSessions",
+          "when": "view == contextRecall.sidebar",
+          "group": "navigation@3"
+        },
+        {
+          "command": "knowledgeAgent.syncService",
+          "when": "view == contextRecall.sidebar",
+          "group": "navigation@4"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Context Recall",
+      "properties": {
+        "knowledgeAgent.backend": {
+          "type": "string",
+          "enum": [
+            "auto",
+            "service",
+            "local"
+          ],
+          "default": "auto",
+          "description": "Use the layered service when available, require it, or use only the embedded local fallback."
+        },
+        "knowledgeAgent.serviceUrl": {
+          "type": "string",
+          "default": "http://127.0.0.1:8765",
+          "description": "Base URL of the independent Context Recall service."
+        }
+      }
+    },
+    "chatParticipants": [
+      {
+        "id": "knowledge-agent.chat",
+        "name": "recall",
+        "fullName": "Context Recall",
+        "description": "A cross-project engineering memory assistant with persistent sessions, hybrid recall, and evidence-linked knowledge.",
+        "isSticky": true,
+        "commands": [
+          {
+            "name": "overview",
+            "description": "Open the data overview"
+          }
+        ]
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "compile": "npm run check-types && npm run lint && node esbuild.js",
+    "watch": "npm-run-all -p watch:*",
+    "watch:esbuild": "node esbuild.js --watch",
+    "watch:tsc": "tsc --noEmit --watch --project tsconfig.json",
+    "package": "npm run check-types && npm run lint && node esbuild.js --production",
+    "test:mcp": "npm run package && node scripts/test-mcp.mjs",
+    "test:continuity": "npm run compile-tests && node scripts/evaluate-session-continuity.mjs",
+    "compile-tests": "tsc -p . --outDir out",
+    "watch-tests": "tsc -p . -w --outDir out",
+    "pretest": "npm run compile-tests && npm run compile && npm run lint",
+    "check-types": "tsc --noEmit",
+    "lint": "eslint src",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "@types/mocha": "^10.0.10",
+    "@types/node": "24.x",
+    "@types/vscode": "^1.103.0",
+    "@vscode/test-cli": "^0.0.15",
+    "@vscode/test-electron": "^3.0.0",
+    "esbuild": "^0.28.1",
+    "eslint": "^10.5.0",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.61.1"
+  },
+  "overrides": {
+    "diff": "^8.0.4",
+    "serialize-javascript": "^7.0.6"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.30.0",
+    "pdfjs-dist": "^6.3.289",
+    "zod": "^4.5.4"
+  }
+}
