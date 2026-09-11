@@ -1,5 +1,5 @@
 import { randomUUID } from 'node:crypto';
-import { mkdir, readFile, rename, writeFile } from 'node:fs/promises';
+import { access, copyFile, mkdir, readFile, rename, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import {
 	ActivityEvent,
@@ -65,17 +65,43 @@ function assertSnapshot(value: unknown): asserts value is KnowledgeSnapshot {
 	}
 }
 
+const SNAPSHOT_FILENAME = 'context-recall.json';
+/** 命名迁移前的旧快照文件名，仅用于一次性迁移（S6 收缩期删除） */
+const LEGACY_SNAPSHOT_FILENAME = 'knowledge-agent.json';
+
+/**
+ * 命名迁移：旧快照文件 knowledge-agent.json → context-recall.json。
+ * 采用复制而非移动，旧文件保留一段时间以便回滚；两者都在时以新文件为准。
+ */
+async function migrateLegacySnapshot(directory: string, current: string): Promise<void> {
+	try {
+		await access(current);
+		return;
+	} catch {
+		// 新文件不存在，继续检查旧文件
+	}
+	const legacy = join(directory, LEGACY_SNAPSHOT_FILENAME);
+	try {
+		await access(legacy);
+	} catch {
+		return;
+	}
+	await copyFile(legacy, current);
+	console.info(`Context Recall: migrated snapshot ${LEGACY_SNAPSHOT_FILENAME} -> ${SNAPSHOT_FILENAME}`);
+}
+
 export class KnowledgeStore {
 	private readonly snapshotPath: string;
 	private snapshot: KnowledgeSnapshot = emptySnapshot();
 	private writeQueue: Promise<void> = Promise.resolve();
 
 	constructor(private readonly storageDirectory: string) {
-		this.snapshotPath = join(storageDirectory, 'knowledge-agent.json');
+		this.snapshotPath = join(storageDirectory, SNAPSHOT_FILENAME);
 	}
 
 	async initialize(): Promise<void> {
 		await mkdir(this.storageDirectory, { recursive: true });
+		await migrateLegacySnapshot(this.storageDirectory, this.snapshotPath);
 		try {
 			const parsed: unknown = JSON.parse(await readFile(this.snapshotPath, 'utf8'));
 			assertSnapshot(parsed);

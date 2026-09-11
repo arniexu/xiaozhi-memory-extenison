@@ -35,6 +35,8 @@ const RULES = [
 const ALLOW = [
   { when: /^package\.json$/, match: /"knowledgeAgent\.(backend|serviceUrl)"/, reason: 'deprecated 旧设置键（S6 删除）' },
   { when: /^src\/extension\.ts$/, match: /legacyId|MCP_PROVIDER_ID|affectsConfiguration\('knowledgeAgent|旧 `knowledgeAgent/, reason: '兼容别名与双监听（S6 删除）' },
+  { when: /^src\/mcp-server\.ts$/, match: /KNOWLEDGE_AGENT_/, reason: '兼容读取旧环境变量（S6 删除）' },
+  { when: /^src\/store\.ts$/, match: /legacy|LEGACY_SNAPSHOT_FILENAME|旧快照文件/, reason: '兼容旧快照文件名与迁移注释（S6 删除）' },
 ];
 
 const bucket = { unexpected: new Map(), allowed: new Map() };

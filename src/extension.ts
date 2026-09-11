@@ -100,10 +100,10 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
 				[vscode.Uri.joinPath(context.extensionUri, 'dist', 'mcp-server.js').fsPath],
 				{
 					ELECTRON_RUN_AS_NODE: '1',
-					KNOWLEDGE_AGENT_BACKEND: configuration.mode,
-					KNOWLEDGE_AGENT_SERVICE_URL: configuration.url,
-					KNOWLEDGE_AGENT_SNAPSHOT: vscode.Uri.joinPath(context.globalStorageUri, 'knowledge-agent.json').fsPath,
-					KNOWLEDGE_AGENT_WORKSPACE_ID: workspaceId(),
+					CONTEXT_RECALL_BACKEND: configuration.mode,
+					CONTEXT_RECALL_SERVICE_URL: configuration.url,
+					CONTEXT_RECALL_SNAPSHOT: vscode.Uri.joinPath(context.globalStorageUri, 'context-recall.json').fsPath,
+					CONTEXT_RECALL_WORKSPACE_ID: workspaceId(),
 				},
 				String(context.extension.packageJSON.version),
 			);

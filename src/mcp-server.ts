@@ -43,10 +43,10 @@ interface ServiceSearchResponse {
 	graph_error?: string;
 }
 
-const backend = (process.env.KNOWLEDGE_AGENT_BACKEND ?? 'auto') as BackendMode;
-const serviceUrl = (process.env.KNOWLEDGE_AGENT_SERVICE_URL ?? 'http://127.0.0.1:8765').replace(/\/+$/, '');
-const snapshotPath = process.env.KNOWLEDGE_AGENT_SNAPSHOT ?? '';
-const workspaceId = process.env.KNOWLEDGE_AGENT_WORKSPACE_ID ?? '';
+const backend = (process.env.CONTEXT_RECALL_BACKEND ?? process.env.KNOWLEDGE_AGENT_BACKEND ?? 'auto') as BackendMode;
+const serviceUrl = (process.env.CONTEXT_RECALL_SERVICE_URL ?? process.env.KNOWLEDGE_AGENT_SERVICE_URL ?? 'http://127.0.0.1:8765').replace(/\/+$/, '');
+const snapshotPath = process.env.CONTEXT_RECALL_SNAPSHOT ?? process.env.KNOWLEDGE_AGENT_SNAPSHOT ?? '';
+const workspaceId = process.env.CONTEXT_RECALL_WORKSPACE_ID ?? process.env.KNOWLEDGE_AGENT_WORKSPACE_ID ?? '';
 
 async function requestJson<T>(path: string, body?: unknown): Promise<T> {
 	const controller = new AbortController();
