@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Context Recall: Evidence-Linked Engineering Memory and Grounded Retrieval System UI Story">
+  <title>Context Recall | Evidence-Linked Engineering Memory</title>
+  <link rel="stylesheet" href="context-recall-story.css">
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- App Header & System Telemetry -->
+  <header class="app-header" role="banner">
+    <div class="brand-unit">
+      <svg class="brand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+      </svg>
+      <div>
+        <div class="brand-title">Context Recall <span class="brand-subtitle">v0.1.6</span></div>
+        <div class="brand-subtitle">Evidence-Grounded Engineering Memory</div>
+      </div>
+    </div>
+
+    <div class="header-telemetry">
+      <div class="trust-badge" id="trust-status-badge" role="status" aria-live="polite">
+        <span class="status-dot online" id="trust-status-dot"></span>
+        <span id="trust-status-text">Service Online (10.112.229.254:8765)</span>
+      </div>
+
+      <div class="demo-controls" role="region" aria-label="Prototype State Simulator">
+        <label for="state-simulator-select" class="demo-controls-label">Prototype State:</label>
+        <select id="state-simulator-select" class="demo-select">
+          <option value="service-online">Service Online (Full Stack)</option>
+          <option value="local-fallback">Local Fallback (Offline Mode)</option>
+          <option value="service-unavailable">Service Unavailable (Error)</option>
+          <option value="empty-store">Empty Store (Fresh Setup)</option>
+          <option value="loading">Loading State</option>
+          <option value="contested-knowledge">Contested Knowledge</option>
+        </select>
+      </div>
+    </div>
+  </header>
+
+  <!-- Dynamic System Notification Banner -->
+  <aside id="system-banner-container" aria-live="polite"></aside>
+
+  <!-- Main Application Container -->
+  <main id="main-content" class="layout-container" role="main">
+
+    <!-- HERO SECTION: The Complete Customer Story & Knowledge Stratum Instrument -->
+    <section class="hero-story-deck" aria-labelledby="hero-story-title">
+      <div class="narrative-pane">
+        <div class="story-header">
+          <div class="kicker">
+            <span class="kicker-tag">LIFECYCLE ARCHITECTURE</span>
+            <span>IMMUTABLE EVIDENCE TO AUDITABLE ACTION</span>
+          </div>
+          <h1 id="hero-story-title" class="story-headline">Engineering memory that proves its rationale before you act.</h1>
+          <p class="story-abstract">
+            Scattered engineering work—discussions, investigations, specs, and triage decisions—settles into immutable evidence. Context Recall distills raw turns into candidate claims, validates them across documents, and serves active, cited knowledge back to future engineers without silent promotion or hallucinations.
+          </p>
+        </div>
+
+        <!-- Primary Customer Action Hub -->
+        <div class="customer-action-toolbar" role="region" aria-label="Primary Engineering Tasks">
+          <div class="action-bar-label">PRIMARY CUSTOMER TASKS</div>
+          <div class="action-buttons-row" role="tablist">
+            <button type="button" class="customer-task-btn active" id="task-btn-ask" role="tab" aria-selected="true" aria-controls="panel-ask-history">
+              <div class="task-btn-title">
+                <span>Ask History</span>
+                <span class="task-badge">Grounding</span>
+              </div>
+              <div class="task-btn-desc">Query prior rationale with exact citations and next actions.</div>
+            </button>
+
+            <button type="button" class="customer-task-btn" id="task-btn-inspect" role="tab" aria-selected="false" aria-controls="panel-inspect-evidence">
+              <div class="task-btn-title">
+                <span>Inspect Evidence</span>
+                <span class="task-badge">Traceability</span>
+              </div>
+              <div class="task-btn-desc">Audit immutable turns, PDF page chunks, and hash chains.</div>
+            </button>
+
+            <button type="button" class="customer-task-btn" id="task-btn-review" role="tab" aria-selected="false" aria-controls="panel-review-candidates">
+              <div class="task-btn-title">
+                <span>Review Candidates</span>
+                <span class="task-badge" id="badge-candidate-count">1,030 pending</span>
+              </div>
+              <div class="task-btn-desc">Promote or reject candidate memory across strict quality gates.</div>
+            </button>
+
+            <button type="button" class="customer-task-btn" id="task-btn-continue" role="tab" aria-selected="false" aria-controls="panel-continue-work">
+              <div class="task-btn-title">
+                <span>Continue Work</span>
+                <span class="task-badge">Continuity</span>
+              </div>
+              <div class="task-btn-desc">Resume active session scope, verified outcomes, and files.</div>
+            </button>
+          </div>
+        </div>
+
+        <!-- Verified Inventory Telemetry Strip -->
+        <div class="inventory-telemetry-strip" role="region" aria-label="Verified Knowledge Inventory">
+          <div class="inventory-cell raw" id="inv-raw" tabindex="0" role="button" aria-label="View 11,448 Raw Records">
+            <div class="inventory-label"><span>RAW EVIDENCE</span><span>draft/raw</span></div>
+            <div class="inventory-value" id="val-raw">11,448</div>
+            <div class="inventory-sub">Immutable turns &amp; chunks</div>
+          </div>
+
+          <div class="inventory-cell candidate" id="inv-candidate" tabindex="0" role="button" aria-label="View 1,030 Candidate Records">
+            <div class="inventory-label"><span>CANDIDATES</span><span>draft/candidate</span></div>
+            <div class="inventory-value" id="val-candidate">1,030</div>
+            <div class="inventory-sub">Awaiting verification</div>
+          </div>
+
+          <div class="inventory-cell active" id="inv-active" tabindex="0" role="button" aria-label="View 5,569 Active Records">
+            <div class="inventory-label"><span>ACTIVE KNOWLEDGE</span><span>active/memory</span></div>
+            <div class="inventory-value" id="val-active">5,569</div>
+            <div class="inventory-sub">Eligible for default recall</div>
+          </div>
+
+          <div class="inventory-cell contested" id="inv-contested" tabindex="0" role="button" aria-label="View 1 Contested Record">
+            <div class="inventory-label"><span>CONTESTED</span><span>status:contested</span></div>
+            <div class="inventory-value" id="val-contested">1</div>
+            <div class="inventory-sub">Conflicting or bounded</div>
+          </div>
+
+          <div class="inventory-cell graph" id="inv-graph" tabindex="0" role="button" aria-label="View 1,842 Linked Relationships">
+            <div class="inventory-label"><span>RELATIONSHIPS</span><span>cross-doc links</span></div>
+            <div class="inventory-value" id="val-graph">1,842</div>
+            <div class="inventory-sub">Graph &amp; 256-d vectors</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- The Knowledge Settling Stratum Instrument (Hourglass System Visual) -->
+      <div class="instrument-pane" role="region" aria-label="Knowledge Settling Stratum Architecture">
+        <div class="instrument-title-bar">
+          <span>KNOWLEDGE SETTLING INSTRUMENT</span>
+          <span id="instrument-live-mode">LAYERED PIPELINE ACTIVE</span>
+        </div>
+
+        <div class="instrument-wrapper">
+          <svg class="stratum-svg" viewBox="0 0 400 480" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Stratum diagram showing evidence ingestion, candidate distillation, active memory reservoir, and recall return path">
+            <defs>
+              <linearGradient id="gradRawChamber" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.18"/>
+                <stop offset="100%" stop-color="#38bdf8" stop-opacity="0.04"/>
+              </linearGradient>
+              <linearGradient id="gradCandidateChamber" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#f59e0b" stop-opacity="0.18"/>
+                <stop offset="100%" stop-color="#f59e0b" stop-opacity="0.04"/>
+              </linearGradient>
+              <linearGradient id="gradActiveChamber" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#10b981" stop-opacity="0.04"/>
+                <stop offset="100%" stop-color="#10b981" stop-opacity="0.22"/>
+              </linearGradient>
+              <filter id="glowEffect" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur stdDeviation="3" result="blur"/>
+                <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+              </filter>
+            </defs>
+
+            <!-- Chamber 1: Top Intake (Raw Evidence Ingestion) -->
+            <path d="M 40 40 L 360 40 L 260 140 L 140 140 Z" fill="url(#gradRawChamber)" stroke="#38bdf8" stroke-width="1.5"/>
+            <text x="200" y="65" fill="#f1f5f9" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle">1. RAW EVIDENCE INGESTION</text>
+            <text x="200" y="85" fill="#94a3b8" font-family="sans-serif" font-size="9.5" text-anchor="middle">@recall Turns, PDF Page Chunks, Continuity Logs</text>
+            <text x="200" y="105" fill="#38bdf8" font-family="monospace" font-size="10" text-anchor="middle">11,448 Records (Immutable)</text>
+
+            <!-- Chamber 2: Mid Sieve & Review Gate (Candidate Distillation) -->
+            <path d="M 140 148 L 260 148 L 230 230 L 170 230 Z" fill="url(#gradCandidateChamber)" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="3,3"/>
+            <text x="200" y="172" fill="#f59e0b" font-family="monospace" font-size="10" font-weight="bold" text-anchor="middle">2. CANDIDATE REVIEW GATE</text>
+            <text x="200" y="190" fill="#94a3b8" font-family="sans-serif" font-size="9" text-anchor="middle">Deterministic Entity Linking &amp; Audit</text>
+            <text x="200" y="208" fill="#f59e0b" font-family="monospace" font-size="9.5" text-anchor="middle">1,030 Under Review</text>
+
+            <!-- Chamber 3: Bottom Reservoir (Active Reusable Knowledge) -->
+            <path d="M 170 238 L 230 238 L 360 370 L 40 370 Z" fill="url(#gradActiveChamber)" stroke="#10b981" stroke-width="1.5"/>
+            <text x="200" y="275" fill="#10b981" font-family="monospace" font-size="11" font-weight="bold" text-anchor="middle">3. ACTIVE REUSABLE RESERVOIR</text>
+            <text x="200" y="295" fill="#f1f5f9" font-family="sans-serif" font-size="9.5" text-anchor="middle">5,569 Active Facts, Decisions &amp; Workflows</text>
+            <text x="200" y="315" fill="#94a3b8" font-family="sans-serif" font-size="9" text-anchor="middle">256-d Semantic Vectors &bull; Neo4j Entities (1,842 Links)</text>
+            <text x="200" y="335" fill="#10b981" font-family="monospace" font-size="9" text-anchor="middle">1 Contested Case Bounded</text>
+
+            <!-- Stream Flow Particles -->
+            <line x1="200" y1="115" x2="200" y2="145" stroke="#38bdf8" stroke-width="2" class="svg-flow-path"/>
+            <line x1="200" y1="215" x2="200" y2="235" stroke="#f59e0b" stroke-width="2" class="svg-flow-path"/>
+
+            <!-- Recall Loop Returning to Future Engineer -->
+            <path d="M 340 370 C 390 410, 390 460, 200 460 C 50 460, 15 260, 35 180 C 45 140, 90 90, 140 60" fill="none" stroke="#8b5cf6" stroke-width="1.75" class="svg-recall-arc"/>
+            
+            <circle cx="200" cy="460" r="16" fill="#131d33" stroke="#8b5cf6" stroke-width="1.5"/>
+            <text x="200" y="464" fill="#f1f5f9" font-family="monospace" font-size="9" font-weight="bold" text-anchor="middle">RECALL</text>
+
+            <rect x="120" y="415" width="160" height="24" rx="4" fill="#0f172a" stroke="#8b5cf6" stroke-width="1"/>
+            <text x="200" y="431" fill="#8b5cf6" font-family="monospace" font-size="9" font-weight="bold" text-anchor="middle">&larr; Evidence-Cited Recall Loop &larr;</text>
+          </svg>
+        </div>
+
+        <div class="instrument-caption">
+          <span>Evidence flows down strictly via review gate; recall queries return cited evidence to future work.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: Interactive Task Panes (Driven by 4 Customer Tasks) -->
+    <section class="task-workstation-deck" id="task-workstation" aria-labelledby="task-workstation-title">
+      
+      <!-- TASK PANEL 1: Ask History (Grounding Console) -->
+      <div class="task-panel-content is-active" id="panel-ask-history" role="tabpanel" aria-labelledby="task-btn-ask">
+        <div class="task-panel-header">
+          <div>
+            <h2 class="task-panel-title">Ask History &amp; Grounded Rationale</h2>
+            <p class="task-panel-desc">Retrieve historical decisions and technical specs with strict evidence citations and actionable next steps.</p>
+          </div>
+          <div class="preset-pill-group" role="region" aria-label="Scenario Presets">
+            <span class="preset-label">SCENARIOS:</span>
+            <button type="button" class="preset-pill active" data-query="TSOD temperature threshold fault handling">TSOD Thermal Threshold</button>
+            <button type="button" class="preset-pill" data-query="PECI crashdump bus arbitration warm reset">PECI Bus Arbitration</button>
+            <button type="button" class="preset-pill" data-query="IPMI PAM migration credential safety">IPMI PAM Migration</button>
+          </div>
+        </div>
+
+        <div class="ask-grid-layout">
+          <!-- Left: Query Bar & Synthesis -->
+          <div class="query-synthesis-column">
+            <form class="search-form-bar" id="search-form" onsubmit="event.preventDefault(); window.ContextRecallStory.executeSearch();">
+              <label for="history-search-input" class="visually-hidden">Search historical memory</label>
+              <input type="text" id="history-search-input" class="search-input-field" value="TSOD temperature threshold fault handling" placeholder="Ask technical history (e.g. TSOD thresholds, PECI arbitration)...">
+              <button type="submit" class="search-submit-btn">Search Memory</button>
+            </form>
+
+            <div class="synthesis-result-card" id="synthesis-card">
+              <div class="synthesis-card-header">
+                <span class="synthesis-status-badge">GROUNDED SYNTHESIS</span>
+                <span class="synthesis-meta-tag" id="synthesis-confidence-tag">Confidence: HIGH &bull; 3 Evidence Sources</span>
+              </div>
+              <div class="synthesis-body-text" id="synthesis-body">
+                The TSOD (Thermal Sensor on DIMM) fault handling protocol requires the BMC to mask transient SMBus timeout errors during host warm-reset cycles <cite data-ref="1">[1]</cite>. Historical register dumps from the GlenRock platform confirm that unmasked alerts trigger spurious VR_HOT shutdown assertions <cite data-ref="2">[2]</cite>. The verified mitigation sets the debouncing window to 250ms and forces PECI-over-eSPI arbitration during post-code 0x7E <cite data-ref="3">[3]</cite>.
+              </div>
+              <div class="next-action-box" id="synthesis-next-action">
+                <div class="action-box-title">RECOMMENDED NEXT ACTION</div>
+                <div class="action-box-desc">Verify `/etc/thermal-config.json` contains `debounce_ms: 250` and confirm PECI mux driver patch `04feab0` is cherry-picked into local branch.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Citation & Evidence Traceability List -->
+          <div class="citations-column">
+            <div class="column-section-title">RETRIEVED EVIDENCE CITATIONS</div>
+            <div class="citation-cards-list" id="citation-cards-container">
+              <!-- Item 1 -->
+              <div class="citation-record-item" data-ref="1">
+                <div class="citation-head">
+                  <span class="citation-number">[1]</span>
+                  <span class="citation-source-name">Intel Birch Stream EDS Vol 2 &bull; p. 142</span>
+                  <span class="citation-match-kind">vector:256d</span>
+                </div>
+                <div class="citation-excerpt">
+                  "Section 4.12.3: TSOD thermal polling over I3C/SMBus must be suspended when S0_RESET_N transitions low to prevent register contention."
+                </div>
+                <div class="citation-foot">
+                  <span>SHA256: 8f9b2c41...</span>
+                  <span>Confidence: HIGH</span>
+                </div>
+              </div>
+
+              <!-- Item 2 -->
+              <div class="citation-record-item" data-ref="2">
+                <div class="citation-head">
+                  <span class="citation-number">[2]</span>
+                  <span class="citation-source-name">Session: GlenRock VR_HOT Triage &bull; Turn 14</span>
+                  <span class="citation-match-kind">lexical:fts5</span>
+                </div>
+                <div class="citation-excerpt">
+                  "Assistant: Confirmed via oscilloscope capture that 50ms pulse on VR_HOT was caused by TSOD read timeout during CPU warm reset."
+                </div>
+                <div class="citation-foot">
+                  <span>Session: sess_glr_9041</span>
+                  <span>Turn ID: turn_8829</span>
+                </div>
+              </div>
+
+              <!-- Item 3 -->
+              <div class="citation-record-item" data-ref="3">
+                <div class="citation-head">
+                  <span class="citation-number">[3]</span>
+                  <span class="citation-source-name">Continuity Decision: decision-17891594</span>
+                  <span class="citation-match-kind">graph:link</span>
+                </div>
+                <div class="citation-excerpt">
+                  "Resolution: Configured TSOD debouncing to 250ms and routed PECI arbitration via eSPI driver during host reset."
+                </div>
+                <div class="citation-foot">
+                  <span>Tags: bmc, peci, tsod</span>
+                  <span>Status: ACTIVE</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TASK PANEL 2: Inspect Evidence (Traceability Inspector) -->
+      <div class="task-panel-content" id="panel-inspect-evidence" role="tabpanel" aria-labelledby="task-btn-inspect">
+        <div class="task-panel-header">
+          <div>
+            <h2 class="task-panel-title">Evidence Traceability Inspector</h2>
+            <p class="task-panel-desc">Inspect immutable source evidence records, checksums, raw turns, and extracted PDF chunks.</p>
+          </div>
+          <div class="evidence-stats-counter">
+            <span>Total Captured Turns: <strong id="trace-turns-count">11,448</strong></span>
+          </div>
+        </div>
+
+        <div class="inspector-grid-layout">
+          <!-- Evidence Selection Tree -->
+          <div class="evidence-tree-pane">
+            <div class="tree-pane-header">IMMUTABLE EVIDENCE LOG</div>
+            <div class="evidence-tree-list" id="evidence-tree-list">
+              <button type="button" class="evidence-tree-item active" data-id="ev-1">
+                <span class="tree-item-type">TURN</span>
+                <span class="tree-item-title">Turn 14 &bull; VR_HOT Oscilloscope Analysis</span>
+                <span class="tree-item-meta">sess_glr_9041 &bull; 2026-09-08</span>
+              </button>
+              <button type="button" class="evidence-tree-item" data-id="ev-2">
+                <span class="tree-item-type">PDF</span>
+                <span class="tree-item-title">Intel Birch Stream EDS Vol 2 &bull; Chunk #48</span>
+                <span class="tree-item-meta">birch_stream_vol2.pdf &bull; p. 142</span>
+              </button>
+              <button type="button" class="evidence-tree-item" data-id="ev-3">
+                <span class="tree-item-type">DECISION</span>
+                <span class="tree-item-title">Continuity decision-17891594</span>
+                <span class="tree-item-meta">.continuity/decisions.jsonl</span>
+              </button>
+              <button type="button" class="evidence-tree-item" data-id="ev-4">
+                <span class="tree-item-type">TURN</span>
+                <span class="tree-item-title">Turn 03 &bull; PECI Post-code 0x7E Register Dump</span>
+                <span class="tree-item-meta">sess_peci_1102 &bull; 2026-09-10</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Evidence Inspector Card -->
+          <div class="evidence-payload-viewer" id="evidence-payload-viewer">
+            <div class="viewer-head">
+              <div>
+                <span class="viewer-type-badge" id="view-item-type">TURN RECORD</span>
+                <h3 class="viewer-record-title" id="view-item-title">Turn 14: Oscilloscope VR_HOT Pulse Analysis</h3>
+              </div>
+              <div class="viewer-id-box" id="view-item-id">ID: turn_8829_0x4a21</div>
+            </div>
+
+            <div class="viewer-meta-table">
+              <div class="meta-row">
+                <span class="meta-key">Session ID:</span>
+                <span class="meta-val" id="view-meta-session">sess_glr_9041 (GlenRock Thermal Triage)</span>
+              </div>
+              <div class="meta-row">
+                <span class="meta-key">Immutable Checksum:</span>
+                <span class="meta-val" id="view-meta-hash">sha256:9c8411b0e7d01859bfae83...</span>
+              </div>
+              <div class="meta-row">
+                <span class="meta-key">Captured At:</span>
+                <span class="meta-val" id="view-meta-time">2026-09-08 14:22:10 UTC</span>
+              </div>
+              <div class="meta-row">
+                <span class="meta-key">Lifecycle State:</span>
+                <span class="meta-val" id="view-meta-state">IMMUTABLE RAW RECORD (Read-Only)</span>
+              </div>
+            </div>
+
+            <div class="viewer-raw-box">
+              <div class="raw-box-title">IMMUTABLE PAYLOAD TEXT</div>
+              <pre class="raw-content-code" id="view-raw-content">User: "Did we figure out why the BMC triggers a false thermal trip during warm reset?"
+Assistant: "Yes. Oscilloscope channel 2 captured a 50ms low pulse on VR_HOT right as the host entered post-code 0x7E. At that instant, TSOD polling on the SMBus times out because the CPU bus controller is resetting. Because the timeout handler didn't debounce the signal, it treated the bus float as an emergency overheat."</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TASK PANEL 3: Review Candidates (Candidate Review Gate) -->
+      <div class="task-panel-content" id="panel-review-candidates" role="tabpanel" aria-labelledby="task-btn-review">
+        <div class="task-panel-header">
+          <div>
+            <h2 class="task-panel-title">Candidate Knowledge Review Gate</h2>
+            <p class="task-panel-desc">Model-proposed claims require explicit review before becoming active memory. No silent promotion.</p>
+          </div>
+          <div class="review-gate-stats">
+            <span>Pending Review: <strong>1,030 Candidates</strong></span>
+          </div>
+        </div>
+
+        <div class="candidates-cards-deck" id="candidates-deck">
+          <!-- Candidate Item 1 -->
+          <div class="candidate-review-card">
+            <div class="candidate-card-top">
+              <span class="candidate-type-tag">CANDIDATE LESSON</span>
+              <span class="candidate-score-badge">Evidence Links: 2</span>
+            </div>
+            <h3 class="candidate-summary-title">PECI bus arbitration lockup under warm reset</h3>
+            <p class="candidate-resolution-text">
+              When warm reset occurs during PECI Mailbox transactions, the BMC must assert PECI_DIS before S0_RESET_N to avoid I/O deadlock.
+            </p>
+            <div class="candidate-audit-checklist">
+              <div class="check-row valid">
+                <span class="check-icon">&check;</span>
+                <span>Evidence turn references verified (turn_peci_03, turn_peci_05)</span>
+              </div>
+              <div class="check-row valid">
+                <span class="check-icon">&check;</span>
+                <span>No conflict with existing active decisions</span>
+              </div>
+              <div class="check-row warning">
+                <span class="check-icon">!</span>
+                <span>Requires human sign-off for global workspace scope</span>
+              </div>
+            </div>
+            <div class="candidate-card-bottom">
+              <span class="candidate-source-origin">Source: sess_peci_1102</span>
+              <div class="candidate-btn-group">
+                <button type="button" class="btn-review-reject" onclick="window.ContextRecallStory.handleCandidateAction('reject', 'PECI lockup')">Reject</button>
+                <button type="button" class="btn-review-promote" onclick="window.ContextRecallStory.handleCandidateAction('promote', 'PECI lockup')">Promote to Active</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Candidate Item 2 -->
+          <div class="candidate-review-card">
+            <div class="candidate-card-top">
+              <span class="candidate-type-tag">CANDIDATE FACT</span>
+              <span class="candidate-score-badge">Evidence Links: 1</span>
+            </div>
+            <h3 class="candidate-summary-title">IPMI PAM pam_tally2 deprecation in glibc 2.38+</h3>
+            <p class="candidate-resolution-text">
+              OpenBMC GlenRock build requires pam-ipmi recipe upgrade to 565237cd04 to replace deprecated pam_tally2 with pam_faillock.
+            </p>
+            <div class="candidate-audit-checklist">
+              <div class="check-row valid">
+                <span class="check-icon">&check;</span>
+                <span>Commit reference 6fddef2 verified in openbmc-openbmc</span>
+              </div>
+              <div class="check-row valid">
+                <span class="check-icon">&check;</span>
+                <span>Compatibility with OpenBMC security baseline verified</span>
+              </div>
+            </div>
+            <div class="candidate-card-bottom">
+              <span class="candidate-source-origin">Source: build-glibc-cve triage</span>
+              <div class="candidate-btn-group">
+                <button type="button" class="btn-review-reject" onclick="window.ContextRecallStory.handleCandidateAction('reject', 'PAM migration')">Reject</button>
+                <button type="button" class="btn-review-promote" onclick="window.ContextRecallStory.handleCandidateAction('promote', 'PAM migration')">Promote to Active</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- TASK PANEL 4: Continue Work (Active Session Continuity) -->
+      <div class="task-panel-content" id="panel-continue-work" role="tabpanel" aria-labelledby="task-btn-continue">
+        <div class="task-panel-header">
+          <div>
+            <h2 class="task-panel-title">Session Continuity &amp; Working State</h2>
+            <p class="task-panel-desc">Bounded session context, completed actions, intermediate conclusions, and active files.</p>
+          </div>
+          <div class="session-active-badge">
+            <span>Session: <strong>agent-v4 GlenRock Alignment</strong></span>
+          </div>
+        </div>
+
+        <div class="continuity-grid-layout">
+          <!-- Left: Structured Context Properties -->
+          <div class="continuity-main-flow">
+            <div class="context-card-block">
+              <div class="context-block-header">CURRENT WORKING GOAL</div>
+              <div class="context-block-content">
+                Align GlenRock OpenBMC build recipes with upstream, resolve pam-ipmi deprecations, and verify TSOD thermal debounce parameters without dirtying meta-intel layer.
+              </div>
+            </div>
+
+            <div class="context-card-block">
+              <div class="context-block-header">COMPLETED &amp; VERIFIED ACTIONS</div>
+              <ul class="context-task-list">
+                <li><span class="task-tick">&check;</span> Upgraded pam-ipmi recipe srcrev bump to 565237cd04 (decision-17891581)</li>
+                <li><span class="task-tick">&check;</span> Verified SQLite memory and vector stores integrity check passed with 18,048 records</li>
+                <li><span class="task-tick">&check;</span> Confirmed Neo4j document links query filtering for KnowledgeEntity TSOD</li>
+              </ul>
+            </div>
+
+            <div class="context-card-block">
+              <div class="context-block-header">OPEN ISSUES &amp; NEXT ACTIONS</div>
+              <ul class="context-task-list">
+                <li><span class="task-warn">!</span> Verify PECI driver warm reset debounce behavior under real hardware bench</li>
+                <li><span class="task-warn">!</span> Complete review on 1,030 candidate items staged from legacy database migration</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Right: Changed Files & Scope -->
+          <div class="continuity-sidebar-flow">
+            <div class="side-info-card">
+              <div class="side-card-title">CHANGED REPOSITORY FILES</div>
+              <div class="file-tags-wrap">
+                <span class="file-chip">meta-phosphor/recipes-auth/pam-ipmi</span>
+                <span class="file-chip">.continuity/decisions.jsonl</span>
+                <span class="file-chip">meta-intel-openbmc/thermal-config.json</span>
+              </div>
+            </div>
+
+            <div class="side-info-card">
+              <div class="side-card-title">EVIDENCE CITATION REFS</div>
+              <div class="file-tags-wrap">
+                <span class="file-chip">decision-17891594</span>
+                <span class="file-chip">sess_glr_9041</span>
+                <span class="file-chip">birch_stream_vol2.pdf#p142</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- SECTION 3: Step-by-Step Evidence-to-Answer Journey Walkthrough -->
+    <section class="walkthrough-section" aria-labelledby="walkthrough-title">
+      <div class="section-head">
+        <div class="section-title-wrap">
+          <div class="section-kicker">STEP-BY-STEP TRACEABILITY</div>
+          <h2 id="walkthrough-title" class="section-title">The Complete Evidence-to-Answer Journey</h2>
+        </div>
+
+        <div class="journey-step-nav" role="tablist" aria-label="Walkthrough Steps">
+          <button type="button" class="step-nav-btn active" data-step="1" role="tab" aria-selected="true">1. Raw Incident</button>
+          <button type="button" class="step-nav-btn" data-step="2" role="tab" aria-selected="false">2. Distillation</button>
+          <button type="button" class="step-nav-btn" data-step="3" role="tab" aria-selected="false">3. Review Gate</button>
+          <button type="button" class="step-nav-btn" data-step="4" role="tab" aria-selected="false">4. Active Graph</button>
+          <button type="button" class="step-nav-btn" data-step="5" role="tab" aria-selected="false">5. Grounded Recall</button>
+        </div>
+      </div>
+
+      <div class="journey-stage-deck" id="journey-stage-display">
+        <!-- Left Explanation Pane -->
+        <div class="stage-explanation-pane">
+          <div class="stage-badge-strip">
+            <span class="stage-phase-tag step-1" id="journey-badge">STAGE 1 &bull; CAPTURE</span>
+            <span class="brand-subtitle" id="journey-subtag">IMMUTABLE EVIDENCE LAYER</span>
+          </div>
+          <h3 class="stage-heading" id="journey-heading">Engineering Work Produces Raw Evidence</h3>
+          <p class="stage-narrative-text" id="journey-narrative">
+            During a severe VR_HOT shutdown bug on the GlenRock platform, an engineer and Copilot debugged oscilloscope captures. Context Recall records every completed turn into immutable storage. Checksums and timestamps ensure source evidence cannot be rewritten.
+          </p>
+
+          <div class="stage-key-facts" id="journey-facts">
+            <div class="fact-item">
+              <span class="fact-bullet">&bull;</span>
+              <span><strong>Immutable Evidence:</strong> Raw turns and PDF page extracts receive stable sha256 checksums.</span>
+            </div>
+            <div class="fact-item">
+              <span class="fact-bullet">&bull;</span>
+              <span><strong>Zero Silent Promotion:</strong> Raw records enter as `draft/raw` and are never queried as active facts.</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Terminal / Payload Display -->
+        <div class="stage-interactive-terminal">
+          <div class="terminal-header">
+            <span id="terminal-pane-title">RECORD PAYLOAD [RAW TURN]</span>
+            <span id="terminal-hash-display">SHA256: 9c8411b0e7d01859...</span>
+          </div>
+          <div class="terminal-body" id="journey-terminal-body">
+            <div class="payload-card">
+              <div class="payload-header">
+                <span>ID: turn_8829_0x4a21</span>
+                <span>Session: sess_glr_9041</span>
+              </div>
+              <div>
+                <strong>Role:</strong> assistant<br>
+                <strong>Text:</strong> "Confirmed via oscilloscope channel 2: 50ms low pulse on VR_HOT occurs because TSOD polling times out during host reset."
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: Secondary Architecture Details (Collapsible Drawer) -->
+    <section class="secondary-storage-section" aria-label="System Storage Subsystems">
+      <div class="accordion-wrapper">
+        <button type="button" class="accordion-trigger" id="storage-accordion-btn" aria-expanded="false" aria-controls="storage-accordion-body">
+          <span>&blacktriangledown; TECHNICAL SYSTEM DETAILS (STORAGE &amp; SUBSYSTEM BOUNDARIES)</span>
+          <span id="storage-status-pill">SQLite + 256-d Vectors + Neo4j Graph</span>
+        </button>
+        <div class="accordion-body" id="storage-accordion-body" hidden>
+          <div class="storage-system-card">
+            <div class="storage-card-head">
+              <span class="storage-engine-name">SQLite Memory Store</span>
+              <span class="storage-status-tag">WAL + FTS5</span>
+            </div>
+            <div class="storage-meta-list">
+              <span>Path: ~/.local/share/knowledge-agent-service/memory.sqlite3</span>
+              <span>Features: FTS5 Full-Text, JSON1, WAL Mode</span>
+              <span>Integrity: PRAGMA integrity_check = ok</span>
+            </div>
+          </div>
+
+          <div class="storage-system-card">
+            <div class="storage-card-head">
+              <span class="storage-engine-name">SQLite Vector Index</span>
+              <span class="storage-status-tag">256 Dimensions</span>
+            </div>
+            <div class="storage-meta-list">
+              <span>Path: ~/.local/share/knowledge-agent-service/vectors.sqlite3</span>
+              <span>Dimensions: 256 Local Float Embeddings</span>
+              <span>Scope: Scoped semantic candidate retrieval</span>
+            </div>
+          </div>
+
+          <div class="storage-system-card">
+            <div class="storage-card-head">
+              <span class="storage-engine-name">Neo4j Graph Store</span>
+              <span class="storage-status-tag">Additive Only</span>
+            </div>
+            <div class="storage-meta-list">
+              <span>Endpoint: bolt://10.112.229.254:7687</span>
+              <span>Operations: MERGE without reset/delete</span>
+              <span>Degradation: Clear fallback when offline</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Site Footer -->
+  <footer class="site-footer" role="contentinfo">
+    <div>Context Recall &bull; Evidence-Linked Engineering Memory &bull; Strict Provenance Architecture</div>
+    <div class="footer-links">
+      <span>Contract: VS Code &harr; Companion Service</span>
+      <span>No Host-Injection Fabrications</span>
+    </div>
+  </footer>
+
+  <script src="context-recall-story.js"></script>
+</body>
+</html>

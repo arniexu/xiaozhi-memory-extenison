@@ -136,21 +136,14 @@ export class SidebarProvider implements vscode.WebviewViewProvider {
 	<header>
 		<span>CONTEXT RECALL</span><h1>Layered intelligence</h1><div id="backend" class="backend"></div>
 	</header>
-	<section class="service-section" aria-labelledby="serviceTitle">
-		<div class="section-title"><h2 id="serviceTitle">Layered service</h2><span id="serviceMode"></span></div>
-		<div id="serviceDetails"></div>
-	</section>
 	<section class="search-section" aria-labelledby="searchTitle">
-		<div class="section-title"><h2 id="searchTitle">Search knowledge</h2><span id="searchHint">Graph · Semantic · FTS5</span></div>
+		<div class="section-title"><h2 id="searchTitle">Search knowledge</h2><span id="searchSummary">Graph · Semantic · FTS5</span></div>
 		<div class="search-row">
 			<input id="searchInput" type="search" placeholder="Search decisions, tools, sessions..." aria-label="Search knowledge">
 			<button id="searchButton" type="button">Search</button>
 		</div>
+		<button id="clearSearch" class="tertiary" type="button" hidden>Clear search</button>
 		<div id="searchResults" class="search-results" role="status" aria-live="polite"><p class="search-empty">Enter a query to search the layered knowledge base.</p></div>
-	</section>
-	<section aria-labelledby="localTitle">
-		<div class="section-title"><h2 id="localTitle">Local fallback</h2><span>Portable snapshot</span></div>
-		<div id="metrics" class="metrics" aria-label="Local knowledge metrics"></div>
 	</section>
 	<div class="actions">
 		<button id="startChat" type="button">Start chat</button>
@@ -159,7 +152,21 @@ export class SidebarProvider implements vscode.WebviewViewProvider {
 	<button id="organizeSessions" class="organize" type="button">Organize Copilot sessions</button>
 	<button id="syncService" class="organize" type="button">Sync local data to layered service</button>
 	<section><div class="section-title"><h2>Recent sessions</h2><span id="sessionTotal"></span></div><div id="sessions"></div></section>
-	<section><div class="section-title"><h2>Recent activity</h2></div><div id="events"></div></section>
+	<details>
+		<summary>Storage and service details</summary>
+		<section class="service-section" aria-labelledby="serviceTitle">
+			<div class="section-title"><h2 id="serviceTitle">Layered service</h2><span id="serviceMode"></span></div>
+			<div id="serviceDetails"></div>
+		</section>
+		<section aria-labelledby="localTitle">
+			<div class="section-title"><h2 id="localTitle">Local fallback</h2><span>Portable snapshot</span></div>
+			<div id="metrics" class="metrics" aria-label="Local knowledge metrics"></div>
+		</section>
+	</details>
+	<details>
+		<summary>Recent activity</summary>
+		<div id="events"></div>
+	</details>
 	<script nonce="${token}" src="${scriptUri}"></script>
 </body>
 </html>`;

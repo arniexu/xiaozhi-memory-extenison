@@ -13,6 +13,8 @@ The service owns the production multi-layer path:
 3. Neo4j stores normalized entities and relationships through additive operations only.
 4. Hybrid retrieval combines lexical and vector results while preserving evidence references.
 
+The proposed routing and presentation contract for combining technical evidence with Continuity project history is documented in [Historical Decision Reference Design](docs/decision-reference-design.md). It keeps technical sources, historical decisions, and current user judgment as separate authority layers.
+
 ## Data Model
 
 Context Recall deliberately keeps three data layers separate:

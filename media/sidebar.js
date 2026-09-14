@@ -5,8 +5,11 @@ const events = document.getElementById('events');
 const syncService = document.getElementById('syncService');
 const searchInput = document.getElementById('searchInput');
 const searchButton = document.getElementById('searchButton');
+const clearSearch = document.getElementById('clearSearch');
 const searchResults = document.getElementById('searchResults');
+const searchSummary = document.getElementById('searchSummary');
 let renderedQuery = '';
+let searchPending = false;
 
 function escapeHtml(value) {
 	return String(value).replace(/[&<>'"]/g, (character) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' })[character]);
@@ -26,9 +29,12 @@ function searchMessage(text, className = 'search-empty') {
 function renderSearch(state) {
 	renderedQuery = state.query;
 	if (document.activeElement !== searchInput) searchInput.value = state.query;
+	searchPending = false;
 	searchButton.disabled = false;
 	searchButton.textContent = 'Search';
+	clearSearch.hidden = !state.query;
 	if (!state.query) {
+		searchSummary.textContent = 'Graph · Semantic · FTS5';
 		searchResults.replaceChildren(searchMessage('Enter a query to search the layered knowledge base.'));
 		return;
 	}
@@ -39,21 +45,51 @@ function renderSearch(state) {
 		article.className = 'search-result';
 		article.dataset.source = result.source;
 		const source = document.createElement('strong');
-		source.textContent = `${result.source} · ${result.sourceKind}`;
+		source.textContent = result.source;
+		const kind = document.createElement('span');
+		kind.className = 'result-kind';
+		kind.textContent = result.sourceKind;
+		const heading = document.createElement('div');
+		heading.className = 'result-heading';
+		heading.append(source, kind);
 		const text = document.createElement('p');
 		text.textContent = result.text;
-		article.append(source, text);
+		article.append(heading, text);
 		content.push(article);
 	}
 	if (!state.searchResults.length) content.push(searchMessage('No matching graph, knowledge, or session evidence.'));
+	searchSummary.textContent = `${state.searchResults.length} ${state.searchResults.length === 1 ? 'result' : 'results'}`;
 	searchResults.replaceChildren(...content);
 }
 
 function submitSearch() {
+	const query = searchInput.value.trim();
+	if (searchPending || query === renderedQuery) return;
+	if (!query) {
+		clearSearch.hidden = true;
+		searchSummary.textContent = 'Graph · Semantic · FTS5';
+		searchResults.replaceChildren(searchMessage('Enter a query to search the layered knowledge base.'));
+		if (renderedQuery) vscode.postMessage({ type: 'search', query: '' });
+		return;
+	}
+	searchPending = true;
 	searchButton.disabled = true;
 	searchButton.textContent = 'Searching...';
+	clearSearch.hidden = false;
+	searchSummary.textContent = 'Searching';
 	searchResults.replaceChildren(searchMessage('Searching graph, semantic knowledge, and FTS5...'));
-	vscode.postMessage({ type: 'search', query: searchInput.value });
+	vscode.postMessage({ type: 'search', query });
+}
+
+function resetSearch() {
+	searchInput.value = '';
+	searchPending = false;
+	renderedQuery = '';
+	clearSearch.hidden = true;
+	searchSummary.textContent = 'Graph · Semantic · FTS5';
+	searchResults.replaceChildren(searchMessage('Enter a query to search the layered knowledge base.'));
+	vscode.postMessage({ type: 'search', query: '' });
+	searchInput.focus();
 }
 
 function render(state) {
@@ -96,8 +132,15 @@ document.getElementById('openDashboard').addEventListener('click', () => vscode.
 document.getElementById('organizeSessions').addEventListener('click', () => vscode.postMessage({ type: 'organizeSessions' }));
 syncService.addEventListener('click', () => vscode.postMessage({ type: 'syncService' }));
 searchButton.addEventListener('click', submitSearch);
+clearSearch.addEventListener('click', resetSearch);
 searchInput.addEventListener('keydown', (event) => { if (event.key === 'Enter') submitSearch(); });
-searchInput.addEventListener('input', () => { if (!searchInput.value && renderedQuery) submitSearch(); });
+searchInput.addEventListener('input', () => { clearSearch.hidden = !searchInput.value; });
+document.addEventListener('keydown', (event) => {
+	if (event.key === '/' && document.activeElement !== searchInput) {
+		event.preventDefault();
+		searchInput.focus();
+	}
+});
 window.addEventListener('message', (event) => { if (event.data.type === 'state') render(event.data.state); });
 window.setInterval(() => vscode.postMessage({ type: 'refresh' }), 15000);
 document.addEventListener('visibilitychange', () => { if (!document.hidden) vscode.postMessage({ type: 'refresh' }); });

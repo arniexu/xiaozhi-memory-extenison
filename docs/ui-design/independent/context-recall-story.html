@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="Independent Context Recall product-story prototype for an IDE-native continuity workbench.">
+	<title>Context Recall - Continuity Workbench</title>
+	<link rel="stylesheet" href="context-recall-story.css">
+</head>
+<body>
+	<a class="skip-link" href="#main">Skip to main content</a>
+
+	<header class="app-header">
+		<div class="brand-block">
+			<div class="brand-mark" aria-hidden="true">
+				<span></span>
+				<span></span>
+			</div>
+			<div>
+				<p class="eyebrow">CONTEXT RECALL</p>
+				<h1 class="brand-title">Continuity Workbench</h1>
+				<p class="brand-subtitle">Evidence-linked engineering memory for repeated daily use inside VS Code</p>
+			</div>
+		</div>
+
+		<div class="header-meta">
+			<div id="trustPill" class="trust-pill" aria-live="polite">
+				<strong id="trustLabel">Checking backend</strong>
+				<span id="trustDetail">--</span>
+			</div>
+			<p id="refreshTime" class="refresh-time">Refreshed --:--:--</p>
+			<div class="header-controls">
+				<label for="stateSelect">State</label>
+				<select id="stateSelect">
+					<option value="online" selected>Online service</option>
+					<option value="local">Local fallback</option>
+					<option value="unavailable">Service unavailable</option>
+					<option value="empty">Empty</option>
+					<option value="loading">Loading</option>
+					<option value="contested">Contested</option>
+				</select>
+				<button id="refreshButton" type="button">Refresh</button>
+			</div>
+		</div>
+	</header>
+
+	<main id="main">
+		<div id="stateBanner" class="state-banner" role="status" aria-live="polite" hidden></div>
+
+		<section class="story-intro" aria-labelledby="storyTitle">
+			<div>
+				<p class="eyebrow">ENGINEERING STORY</p>
+				<h2 id="storyTitle">Work leaves evidence. Evidence settles into knowledge. Knowledge returns with rationale and next action.</h2>
+				<p class="story-copy">This prototype treats Context Recall like an operational workbench rather than a dashboard. The hourglass is the lifecycle navigator. The ledger shows what can be trusted now, what is still under review, and what remains inspectable when the service is offline.</p>
+			</div>
+			<p class="outcome-statement">Customer outcome: a future engineer can continue work with evidence, historical rationale, and bounded uncertainty instead of reconstructing prior investigation by hand.</p>
+		</section>
+
+		<section class="workbench" aria-labelledby="workbenchTitle">
+			<h2 id="workbenchTitle" class="visually-hidden">Continuity workbench</h2>
+
+			<aside class="task-pane" aria-labelledby="taskTitle">
+				<div class="pane-head">
+					<p class="eyebrow">CUSTOMER TASKS</p>
+					<h3 id="taskTitle">Start from the job at hand</h3>
+				</div>
+				<div class="task-list" role="list" aria-label="Primary customer tasks">
+					<button class="task-button" data-action="continue" type="button">
+						<span class="task-name">Continue work</span>
+						<span class="task-status current">Current capability</span>
+					</button>
+					<button class="task-button" data-action="ask" type="button">
+						<span class="task-name">Ask history</span>
+						<span class="task-status current">Current capability</span>
+					</button>
+					<button class="task-button" data-action="inspect" type="button">
+						<span class="task-name">Inspect evidence</span>
+						<span class="task-status current">Current capability</span>
+					</button>
+					<button class="task-button" data-action="review" type="button">
+						<span class="task-name">Review candidates</span>
+						<span class="task-status proposed">Proposed workflow</span>
+					</button>
+				</div>
+
+				<div class="evidence-inbox" aria-labelledby="inboxTitle">
+					<div class="pane-head compact">
+						<p class="eyebrow">CAPTURED EVIDENCE</p>
+						<h3 id="inboxTitle">What enters the system</h3>
+					</div>
+					<ul>
+						<li>Conversation turn: migration review accepted an adapter as the explicit trade-off</li>
+						<li>Decision import: compatibility constraints recorded with evidence references</li>
+						<li>Document chunk: platform guide clarifies reset sequencing and owner scope</li>
+						<li>Investigation note: unresolved rollout risk remains open for review</li>
+					</ul>
+				</div>
+			</aside>
+
+			<section class="hourglass-pane" aria-labelledby="hourglassTitle">
+				<div class="pane-head">
+					<p class="eyebrow">LIFECYCLE NAVIGATION</p>
+					<h3 id="hourglassTitle">Knowledge hourglass</h3>
+				</div>
+				<p class="hourglass-summary">Counts show current inventory only. They do not imply conversion, throughput, ROI, or quality improvement.</p>
+
+				<div class="hourglass-shell" id="hourglassShell" data-stage="raw">
+					<div class="hourglass-frame" aria-hidden="true"></div>
+					<div class="hourglass-stage stage-raw" data-stage="raw">
+						<button class="stage-button" data-stage="raw" type="button" aria-current="step">
+							<span class="stage-label">Raw evidence</span>
+							<strong id="rawCount">--</strong>
+							<small>Immutable source material</small>
+						</button>
+					</div>
+					<div class="hourglass-stage stage-candidate" data-stage="candidate">
+						<button class="stage-button" data-stage="candidate" type="button">
+							<span class="stage-label">Candidate knowledge</span>
+							<strong id="candidateCount">--</strong>
+							<small>Awaiting review</small>
+						</button>
+					</div>
+					<div class="hourglass-stage stage-active" data-stage="active">
+						<button class="stage-button" data-stage="active" type="button">
+							<span class="stage-label">Active knowledge</span>
+							<strong id="activeCount">--</strong>
+							<small>Eligible for default recall</small>
+						</button>
+					</div>
+					<div class="hourglass-stage stage-recall" data-stage="recall">
+						<button class="stage-button" data-stage="recall" type="button">
+							<span class="stage-label">Grounded recall</span>
+							<strong id="relationshipCount">--</strong>
+							<small>Linked relationships</small>
+						</button>
+					</div>
+				</div>
+
+				<ol class="path-strip" aria-label="Example path from evidence to answer">
+					<li><span>1</span>Captured from work</li>
+					<li><span>2</span>Held for review</li>
+					<li><span>3</span>Linked as reusable knowledge</li>
+					<li><span>4</span>Returned with evidence and next step</li>
+				</ol>
+			</section>
+
+			<section class="continuity-pane" aria-labelledby="continuityTitle">
+				<div class="pane-head">
+					<p class="eyebrow">CONTINUITY WORKSPACE</p>
+					<h3 id="continuityTitle">One evidence-backed recall journey</h3>
+				</div>
+
+				<div class="journey-nav">
+					<button id="prevStage" type="button">Prev</button>
+					<p id="stageCounter" aria-live="polite">Step 1 of 4</p>
+					<button id="nextStage" type="button">Next</button>
+				</div>
+
+				<article class="journey-detail" aria-labelledby="detailTitle">
+					<div class="detail-header">
+						<p id="detailTag" class="detail-tag">RAW</p>
+						<h4 id="detailTitle">Captured evidence remains intact</h4>
+					</div>
+					<p id="detailBody" class="detail-body"></p>
+					<dl id="detailMeta" class="detail-meta"></dl>
+					<div id="detailActions" class="detail-actions"></div>
+				</article>
+
+				<div class="question-pane" aria-labelledby="questionTitle">
+					<div class="question-head">
+						<p class="eyebrow">ASK HISTORY</p>
+						<h4 id="questionTitle">What the next engineer receives</h4>
+					</div>
+					<label for="questionSelect">Representative question</label>
+					<select id="questionSelect">
+						<option value="adapter">Why was the compatibility adapter kept instead of rewriting all consumers?</option>
+						<option value="rollout">What did the team agree about rollout order and ownership?</option>
+						<option value="risk">Which risk was accepted and what should be checked next?</option>
+					</select>
+					<div class="answer-block">
+						<p id="answerText" class="answer-text"></p>
+						<p id="nextAction" class="next-action"></p>
+						<p class="answer-disclaimer">Current capability: retrieval can restore context and evidence links. Proposed presentation: this integrated continuity workspace. A returned answer is not proof that any Host injected the context into a model request.</p>
+					</div>
+				</div>
+
+				<div class="ledger" aria-labelledby="ledgerTitle">
+					<div class="pane-head compact">
+						<p class="eyebrow">EVIDENCE LEDGER</p>
+						<h4 id="ledgerTitle">Trace behind the answer</h4>
+					</div>
+					<ol id="ledgerList" class="ledger-list"></ol>
+				</div>
+			</section>
+		</section>
+
+		<section class="inventory-section" aria-labelledby="inventoryTitle">
+			<div class="pane-head split">
+				<div>
+					<p class="eyebrow">CURRENT INVENTORY</p>
+					<h2 id="inventoryTitle">What currently sits in the system</h2>
+				</div>
+				<p class="inventory-source">Numeric claims map only to verified fields in current extension types and service health.</p>
+			</div>
+			<dl id="inventoryGrid" class="inventory-grid"></dl>
+		</section>
+
+		<section class="details-section" aria-labelledby="detailsTitle">
+			<details>
+				<summary id="detailsTitle">System details and implementation boundaries</summary>
+				<div class="details-grid">
+					<div>
+						<h3>Currently implemented</h3>
+						<ul>
+							<li>Backend trust state and safe record counts from service health</li>
+							<li>Local snapshot stats for evidence-backed, contested, and relationships</li>
+							<li>Search across service retrieval and offline local fallback</li>
+							<li>Session context, recent turns, and evidence-linked knowledge structures</li>
+						</ul>
+					</div>
+					<div>
+						<h3>Proposed in this design</h3>
+						<ul>
+							<li>One integrated continuity workbench combining lifecycle navigation and recall</li>
+							<li>Inline candidate review workspace inside the extension UI</li>
+							<li>A persistent evidence ledger that follows the selected answer journey</li>
+							<li>State-driven onboarding and contested-work review prompts</li>
+						</ul>
+					</div>
+					<div>
+						<h3>Kept secondary on purpose</h3>
+						<ul>
+							<li>SQLite, vectors, FTS5, and Neo4j are implementation details, not the main story</li>
+							<li>No ROI, time-saved, quality, avoided-incident, or Host-injection claims</li>
+							<li>Offline fallback is a valid operating mode, not an error-only condition</li>
+						</ul>
+					</div>
+				</div>
+			</details>
+		</section>
+	</main>
+
+	<script src="context-recall-story.js"></script>
+</body>
+</html>

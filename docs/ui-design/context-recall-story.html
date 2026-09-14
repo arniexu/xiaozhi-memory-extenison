@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="Context Recall product story: a high-fidelity interactive design prototype showing how engineering evidence becomes reusable, evidence-linked knowledge.">
+	<title>Context Recall - Product Story</title>
+	<link rel="stylesheet" href="context-recall-story.css">
+</head>
+<body>
+	<a class="skip-link" href="#main">Skip to content</a>
+
+	<header class="site-header">
+		<div class="brand">
+			<svg class="brand-mark" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true" focusable="false">
+				<path d="M5 3h14M6.5 3v3.6c0 3.2 1.9 5.4 5.5 5.4s5.5-2.2 5.5-5.4V3M6.5 21v-3.6c0-3.2 1.9-5.4 5.5-5.4s5.5 2.2 5.5 5.4V21" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+			</svg>
+			<div class="brand-text">
+				<span class="brand-name">Context Recall</span>
+				<span class="brand-tag">Engineering memory, linked to evidence</span>
+			</div>
+		</div>
+
+		<div class="header-right">
+			<div id="trustPill" class="trust-pill" aria-live="polite">
+				<span class="trust-dot" aria-hidden="true"></span>
+				<span class="trust-text">Checking backend</span>
+				<span class="trust-sub">--</span>
+			</div>
+			<div class="refresh">
+				<span id="refreshTime" class="refresh-time">Refreshed --:--:--</span>
+				<button id="refreshButton" class="refresh-button" type="button" aria-label="Refresh data">Refresh</button>
+			</div>
+			<div class="demo">
+				<label class="demo-label" for="demoState">Prototype state</label>
+				<select id="demoState" class="demo-select">
+					<option value="loading">Loading</option>
+					<option value="online" selected>Online service</option>
+					<option value="local">Local fallback</option>
+					<option value="unavailable">Service unavailable</option>
+					<option value="empty">Empty</option>
+					<option value="contested">Contested</option>
+				</select>
+			</div>
+		</div>
+	</header>
+
+	<main id="main">
+		<div id="banner" class="banner" hidden role="status"></div>
+
+		<section class="story" aria-labelledby="story-title">
+			<div class="story-copy">
+				<p class="eyebrow">THE PRODUCT STORY</p>
+				<h1 id="story-title">Work becomes evidence.<br>Evidence becomes knowledge.<br>Knowledge returns as answers.</h1>
+				<p class="outcome">Engineering work creates scattered evidence. Context Recall captures it without replacing it, lets knowledge settle through explicit stages, and returns answers that stay linked to their source - so the next engineer can continue instead of re-investigating.</p>
+				<div class="primary-actions" aria-label="Primary customer tasks">
+					<button class="action" data-action="continue" type="button"><span class="action-name">Continue work</span><span class="action-hint">Resume where work left off</span></button>
+					<button class="action" data-action="ask" type="button"><span class="action-name">Ask history</span><span class="action-hint">Question past work</span></button>
+					<button class="action" data-action="inspect" type="button"><span class="action-name">Inspect evidence</span><span class="action-hint">See the source behind an answer</span></button>
+					<button class="action" data-action="review" type="button"><span class="action-name">Review candidates</span><span class="action-hint">Promote or contest what is under review</span><span id="reviewBadge" class="action-badge" hidden>0</span></button>
+				</div>
+			</div>
+
+			<div class="story-visual" aria-label="Knowledge hourglass and the evidence to recall journey">
+				<div id="hourglass" class="hourglass" data-active-stage="raw">
+					<div class="hg-caption">
+						<span id="hgCaptionLabel" class="hg-caption-label">Captured</span>
+						<strong id="hgCaptionCount" class="hg-caption-count">--</strong>
+						<span id="hgCaptionNote" class="hg-caption-note">records across all lifecycle states</span>
+					</div>
+					<div class="hg-row hg-raw" data-stage="raw">
+						<span id="hgRawLabel" class="hg-label">Raw evidence</span>
+						<strong id="hgRawCount" class="hg-count">--</strong>
+					</div>
+					<div class="hg-row hg-candidate" data-stage="candidate">
+						<span id="hgCandidateLabel" class="hg-label">Candidate</span>
+						<strong id="hgCandidateCount" class="hg-count">--</strong>
+					</div>
+					<div class="hg-row hg-active" data-stage="active">
+						<span id="hgActiveLabel" class="hg-label">Active knowledge</span>
+						<strong id="hgActiveCount" class="hg-count">--</strong>
+					</div>
+					<div class="hg-row hg-recall" data-stage="recall">
+						<span id="hgRecallLabel" class="hg-label">Grounded recall</span>
+						<strong id="hgRecallCount" class="hg-count">--</strong>
+						<span id="hgRecallNote" class="hg-recall-note">linked relationships</span>
+					</div>
+				</div>
+
+				<nav class="journey-rail" aria-label="Evidence to recall journey">
+					<ol>
+						<li><button class="journey-step" data-step="1" aria-current="step" type="button"><span class="step-num">1</span><span class="step-label">Source evidence</span><small class="step-stage">raw</small></button></li>
+						<li><button class="journey-step" data-step="2" type="button"><span class="step-num">2</span><span class="step-label">Candidate review</span><small class="step-stage">candidate</small></button></li>
+						<li><button class="journey-step" data-step="3" type="button"><span class="step-num">3</span><span class="step-label">Active knowledge</span><small class="step-stage">active</small></button></li>
+						<li><button class="journey-step" data-step="4" type="button"><span class="step-num">4</span><span class="step-label">Grounded answer</span><small class="step-stage">recall</small></button></li>
+					</ol>
+				</nav>
+			</div>
+		</section>
+
+		<section class="journey-detail" id="journeyDetail" aria-labelledby="journey-title">
+			<div class="journey-flow" id="journeyFlow">
+				<div class="journey-head">
+					<div class="journey-heading">
+						<p class="eyebrow">EXAMPLE JOURNEY</p>
+						<h2 id="journey-title">One record, from evidence to answer</h2>
+					</div>
+					<div class="stepper">
+						<button id="prevStep" class="stepper-button" type="button">Prev</button>
+						<span id="stepCounter" class="step-counter" aria-live="polite">Step 1 of 4</span>
+						<button id="nextStep" class="stepper-button" type="button">Next</button>
+					</div>
+				</div>
+
+				<article class="step-panel" data-panel="evidence">
+					<div class="step-tag tag-evidence">CAPTURED EVIDENCE</div>
+					<h3>What entered the system</h3>
+					<blockquote class="turn-quote">"We kept the compatibility-first migration because rewriting every consumer at once would block the other three teams. The interim adapter was accepted as the explicit trade-off."</blockquote>
+					<dl class="step-meta">
+						<div><dt>Status</dt><dd>raw - not yet promoted</dd></div>
+						<div><dt>Stored</dt><dd>as-is, immutable</dd></div>
+						<div><dt>Source</dt><dd>Session: compatibility migration review</dd></div>
+					</dl>
+				</article>
+
+				<article class="step-panel" data-panel="candidate" hidden>
+					<div class="step-tag tag-candidate">CANDIDATE - AWAITING REVIEW</div>
+					<h3>What is under review</h3>
+					<div class="node-card">
+						<span class="node-kind">decision</span>
+						<strong class="node-label">Compatibility-first migration</strong>
+						<p class="node-summary">Migrate consumers through a compatibility adapter so each team can move independently instead of a single breaking rewrite.</p>
+					</div>
+					<dl class="step-meta">
+						<div><dt>Status</dt><dd>candidate</dd></div>
+						<div><dt>Confidence</dt><dd>medium</dd></div>
+						<div><dt>Evidence</dt><dd>2 source turns</dd></div>
+					</dl>
+					<p class="review-note">Promotion to active knowledge requires a human review. Nothing is promoted automatically.</p>
+				</article>
+
+				<article class="step-panel" data-panel="active" hidden>
+					<div class="step-tag tag-active">ACTIVE - READY FOR RECALL</div>
+					<h3>What became reusable knowledge</h3>
+					<div class="node-card">
+						<span class="node-kind">decision</span>
+						<strong class="node-label">Compatibility-first migration</strong>
+						<p class="node-summary">Migrate consumers through a compatibility adapter so each team can move independently instead of a single breaking rewrite.</p>
+					</div>
+					<dl class="step-meta">
+						<div><dt>Status</dt><dd>active</dd></div>
+						<div><dt>Confidence</dt><dd>high</dd></div>
+						<div><dt>Evidence</dt><dd>2 source turns linked</dd></div>
+					</dl>
+					<p class="review-note">Active knowledge keeps its evidence, scope, and confidence attached and is eligible for default recall.</p>
+				</article>
+
+				<article class="step-panel" data-panel="recall" hidden>
+					<div class="step-tag tag-recall">GROUNDED ANSWER</div>
+					<h3>What the next engineer receives</h3>
+					<div class="recall-ask">
+						<label for="questionSelect">Ask history</label>
+						<select id="questionSelect">
+							<option value="adapter">Why did we use a compatibility adapter instead of rewriting consumers?</option>
+							<option value="rollout">How did we sequence the rollout to the other teams?</option>
+							<option value="risk">What risk did we accept with the interim adapter?</option>
+						</select>
+					</div>
+					<div class="answer-card">
+						<p id="answerText" class="answer-text"></p>
+						<div id="answerSources" class="answer-sources">
+							<span class="answer-sources-title">Evidence behind this answer</span>
+							<ol id="answerSourcesList"></ol>
+						</div>
+					</div>
+					<p id="nextAction" class="next-action"></p>
+					<p class="disclaimer">Retrieved for your review. Context Recall does not confirm that this context was injected into any model request.</p>
+				</article>
+			</div>
+
+			<div id="journeyPlaceholder" class="journey-placeholder" hidden></div>
+		</section>
+
+		<section class="inventory" aria-labelledby="inventory-title">
+			<div class="inventory-head">
+				<div>
+					<p class="eyebrow">CURRENT INVENTORY</p>
+					<h2 id="inventory-title">How much sits at each stage today</h2>
+				</div>
+				<p class="inventory-note">Counts show current inventory, not historical conversion, throughput, or time saved.</p>
+			</div>
+			<dl id="inventoryGrid" class="inventory-grid"></dl>
+		</section>
+
+		<section class="system-details" aria-labelledby="system-title">
+			<details>
+				<summary><span id="system-title">System details - storage and retrieval</span><span class="summary-hint">Kept secondary to the story</span></summary>
+				<div class="system-grid">
+					<div class="system-item">
+						<strong>Memory store</strong>
+						<p>Records with lifecycle state, evidence references, scope, and audit events. Lives behind search, not in front of it.</p>
+						<span class="system-engine">Engine: SQLite + FTS5</span>
+					</div>
+					<div class="system-item">
+						<strong>Semantic index</strong>
+						<p>A derived 256-dimension similarity index that is reproducible from source text - search data, not evidence.</p>
+						<span class="system-engine">Engine: SQLite vector store</span>
+					</div>
+					<div class="system-item">
+						<strong>Knowledge graph</strong>
+						<p>Optional normalized entities and relationships, written additively. Retrieval degrades clearly without it.</p>
+						<span class="system-engine">Engine: Neo4j, optional</span>
+					</div>
+					<div class="system-item">
+						<strong>Local snapshot</strong>
+						<p>A portable fallback so the extension keeps working offline, with no service and no repository checkout.</p>
+						<span class="system-engine">Engine: local JSON snapshot</span>
+					</div>
+				</div>
+			</details>
+		</section>
+	</main>
+
+	<footer class="site-footer">
+		<p>Design prototype - representative demo data only. No production records, no claimed Host injection.</p>
+	</footer>
+
+	<script src="context-recall-story.js"></script>
+</body>
+</html>

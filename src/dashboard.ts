@@ -22,6 +22,7 @@ interface DashboardState {
 	snapshot: KnowledgeSnapshot;
 	searchResults: DashboardSearchResult[];
 	query: string;
+	searchError: string;
 	backend: ServiceHealth;
 	usage: ValueUsageMetrics;
 }
@@ -102,9 +103,15 @@ export class DashboardPanel {
 		}
 		const snapshot = this.store.getSnapshot();
 		const localResults = this.query ? this.store.search(this.query, 12) : [];
-		const serviceResults = this.query
-			? await this.service.search(this.query, embed(this.query), { workspaceId: '', sessionId: '' }, 12)
-			: undefined;
+		let serviceResults: Awaited<ReturnType<KnowledgeServiceClient['search']>>;
+		let searchError = '';
+		if (this.query) {
+			try {
+				serviceResults = await this.service.search(this.query, embed(this.query), { workspaceId: '', sessionId: '' }, 12);
+			} catch (error) {
+				searchError = error instanceof Error ? error.message : String(error);
+			}
+		}
 		const searchResults: DashboardSearchResult[] = [];
 		for (const result of serviceResults ?? []) {
 			searchResults.push({
@@ -134,6 +141,7 @@ export class DashboardPanel {
 			snapshot,
 			searchResults: searchResults.slice(0, 16),
 			query: this.query,
+			searchError,
 			backend: await this.service.health(),
 			usage: this.valueMetrics.get(),
 		};
@@ -303,6 +311,27 @@ export class DashboardPanel {
 			<div id="serviceMetrics" class="service-metrics" aria-label="Layered service metrics"></div>
 		</section>
 
+		<section class="knowledge-hourglass" aria-labelledby="hourglassTitle">
+			<div class="hourglass-copy">
+				<p class="eyebrow">KNOWLEDGE MATURITY</p>
+				<h2 id="hourglassTitle">From captured evidence to reusable knowledge</h2>
+				<p>See how much knowledge currently rests at each lifecycle stage. Counts show inventory, not historical conversion.</p>
+				<div class="maturity-summary">
+					<strong id="maturityRate">—</strong>
+					<span>of captured records are active and ready for default recall</span>
+				</div>
+			</div>
+			<div class="hourglass-visual" aria-label="Knowledge maturity counts">
+				<div class="hourglass-total"><span>Captured records</span><strong id="capturedCount">—</strong></div>
+				<div class="hourglass-shell">
+					<div class="hourglass-layer raw"><span>Raw evidence</span><strong id="rawCount">—</strong></div>
+					<div class="hourglass-layer candidate"><span>Candidate knowledge</span><strong id="candidateCount">—</strong></div>
+					<div class="hourglass-layer active"><span>Reusable knowledge</span><strong id="activeCount">—</strong></div>
+				</div>
+				<div class="hourglass-output"><span>Evidence-linked relations</span><strong id="relationCount">—</strong></div>
+			</div>
+		</section>
+
 		<section class="document-upload" aria-labelledby="documentUploadTitle">
 			<div>
 				<p class="eyebrow">DOCUMENT EVIDENCE</p>
@@ -334,12 +363,13 @@ export class DashboardPanel {
 		</section>
 
 		<section class="search-band">
-			<label for="searchInput">Search graph, semantic knowledge, FTS5, and local evidence</label>
+			<div class="search-heading"><label for="searchInput">Search graph, semantic knowledge, FTS5, and local evidence</label><span id="searchSummary">Ready</span></div>
 			<div class="search-row">
 				<input id="searchInput" type="search" placeholder="Search decisions, concepts, tools, sessions...">
 				<button id="searchButton" type="button">Search</button>
 			</div>
-			<div id="searchResults" class="search-results"></div>
+			<button id="clearSearch" class="search-clear" type="button" hidden>Clear search</button>
+			<div id="searchResults" class="search-results" role="status" aria-live="polite"></div>
 		</section>
 
 		<div class="dashboard-grid">

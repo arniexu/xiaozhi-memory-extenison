@@ -1,6 +1,6 @@
 :root { color-scheme: light dark; }
 * { box-sizing: border-box; }
-body { margin: 0; padding: 16px 14px 28px; color: var(--vscode-foreground); background: var(--vscode-sideBar-background); font-family: var(--vscode-font-family); }
+body { margin: 0; padding: 14px 12px 28px; color: var(--vscode-foreground); background: var(--vscode-sideBar-background); font-family: var(--vscode-font-family); }
 header { padding: 4px 0 15px; border-bottom: 1px solid var(--vscode-sideBar-border, var(--vscode-widget-border)); }
 header span { color: var(--vscode-textLink-foreground); font-size: 10px; font-weight: 700; }
 h1 { margin: 5px 0 0; font-size: 19px; font-weight: 600; letter-spacing: 0; }
@@ -8,7 +8,7 @@ h1 { margin: 5px 0 0; font-size: 19px; font-weight: 600; letter-spacing: 0; }
 .backend i { width: 7px; height: 7px; background: var(--vscode-testing-iconSkipped); border-radius: 50%; }
 .backend i.ready { background: var(--vscode-testing-iconPassed); }
 h2 { margin: 0; font-size: 12px; font-weight: 600; letter-spacing: 0; }
-.service-section { margin-top: 16px; }
+.service-section { margin-top: 18px; }
 .service-state { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 11px 0; }
 .service-state > div { min-width: 0; }
 .service-state strong, .service-state span { display: block; }
@@ -21,7 +21,7 @@ h2 { margin: 0; font-size: 12px; font-weight: 600; letter-spacing: 0; }
 .service-metrics strong, .service-metrics span { display: block; overflow-wrap: anywhere; }
 .service-metrics strong { font-family: var(--vscode-editor-font-family); font-size: 15px; }
 .service-metrics span { margin-top: 4px; color: var(--vscode-descriptionForeground); font-size: 9px; line-height: 1.3; }
-.search-section { margin-top: 22px; }
+.search-section { margin-top: 16px; }
 .search-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 7px; margin-top: 10px; }
 .search-row input { min-width: 0; min-height: 34px; padding: 0 9px; color: var(--vscode-input-foreground); background: var(--vscode-input-background); border: 1px solid var(--vscode-input-border, var(--vscode-widget-border)); border-radius: 2px; font: inherit; font-size: 11px; outline: none; }
 .search-row input:focus { border-color: var(--vscode-focusBorder); }
@@ -31,7 +31,9 @@ h2 { margin: 0; font-size: 12px; font-weight: 600; letter-spacing: 0; }
 .search-result:last-child { border-bottom: 0; }
 .search-result[data-source="graph"] { border-left-color: var(--vscode-charts-green); }
 .search-result[data-source="lexical"] { border-left-color: var(--vscode-charts-yellow); }
-.search-result strong { color: var(--vscode-textLink-foreground); font-family: var(--vscode-editor-font-family); font-size: 9px; text-transform: uppercase; white-space: normal; }
+.result-heading { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.search-result strong { min-width: 0; overflow: hidden; color: var(--vscode-textLink-foreground); font-family: var(--vscode-editor-font-family); font-size: 9px; text-overflow: ellipsis; text-transform: uppercase; white-space: nowrap; }
+.result-kind { flex: 0 0 auto; margin: 0; padding: 2px 5px; color: var(--vscode-badge-foreground); background: var(--vscode-badge-background); border-radius: 2px; font-size: 8px; line-height: 1.2; }
 .search-result p { margin: 5px 0 0; color: var(--vscode-foreground); font-size: 10px; line-height: 1.45; overflow-wrap: anywhere; }
 .search-answer { padding: 13px 11px; border-left: 3px solid var(--vscode-testing-iconPassed); }
 .search-answer > p { margin: 0; color: var(--vscode-foreground); font-size: 11px; line-height: 1.65; overflow-wrap: anywhere; }
@@ -55,6 +57,9 @@ button.secondary:hover { background: var(--vscode-button-secondaryHoverBackgroun
 button.organize { width: 100%; margin-top: 7px; color: var(--vscode-button-secondaryForeground); background: var(--vscode-button-secondaryBackground); }
 button.organize:hover { background: var(--vscode-button-secondaryHoverBackground); }
 button:disabled { cursor: not-allowed; opacity: 0.55; }
+button.tertiary { min-height: 28px; margin-top: 7px; padding: 0; color: var(--vscode-textLink-foreground); background: transparent; font-weight: 400; }
+button.tertiary:hover { color: var(--vscode-textLink-activeForeground); background: transparent; text-decoration: underline; }
+[hidden] { display: none !important; }
 section { margin-top: 22px; }
 .section-title { display: flex; align-items: center; justify-content: space-between; padding-bottom: 7px; border-bottom: 1px solid var(--vscode-widget-border); }
 .section-title span { color: var(--vscode-descriptionForeground); font-size: 10px; }
@@ -67,3 +72,7 @@ article span { margin-top: 4px; color: var(--vscode-descriptionForeground); font
 .event span { margin: 0; color: var(--vscode-foreground); }
 .event small { margin-top: 3px; color: var(--vscode-descriptionForeground); }
 .empty { padding: 14px 0; color: var(--vscode-descriptionForeground); font-size: 11px; text-align: center; }
+details { margin-top: 20px; border-top: 1px solid var(--vscode-widget-border); }
+summary { padding: 11px 0; color: var(--vscode-descriptionForeground); cursor: pointer; font-size: 11px; font-weight: 600; }
+details[open] summary { color: var(--vscode-foreground); }
+details section { margin-top: 8px; }

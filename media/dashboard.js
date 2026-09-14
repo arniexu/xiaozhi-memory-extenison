@@ -8,10 +8,15 @@ const graphLegend = document.getElementById('graphLegend');
 const kindFilter = document.getElementById('kindFilter');
 const searchInput = document.getElementById('searchInput');
 const searchResults = document.getElementById('searchResults');
+const searchButton = document.getElementById('searchButton');
+const clearSearch = document.getElementById('clearSearch');
+const searchSummary = document.getElementById('searchSummary');
 const syncButton = document.getElementById('syncButton');
 const documentUploadButton = document.getElementById('documentUploadButton');
 const documentImportStatus = document.getElementById('documentImportStatus');
 let currentState;
+let renderedQuery = '';
+let searchPending = false;
 
 function escapeHtml(value) {
 	return String(value).replace(/[&<>'"]/g, (character) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' })[character]);
@@ -88,6 +93,20 @@ function renderService(state) {
 	documentUploadButton.title = backend.available ? 'Choose one or more PDF documents' : 'Layered service is unavailable';
 }
 
+function renderHourglass(state) {
+	const memory = state.backend.memory;
+	const total = memory?.total;
+	const active = memory?.active;
+	document.getElementById('capturedCount').textContent = formatCount(total);
+	document.getElementById('rawCount').textContent = formatCount(memory?.raw);
+	document.getElementById('candidateCount').textContent = formatCount(memory?.candidate);
+	document.getElementById('activeCount').textContent = formatCount(active);
+	document.getElementById('relationCount').textContent = formatCount(state.backend.neo4j?.relationships ?? state.stats.edges);
+	document.getElementById('maturityRate').textContent = Number.isFinite(total) && total > 0 && Number.isFinite(active)
+		? `${Math.round(active / total * 100)}%`
+		: '—';
+}
+
 function renderMetrics(state) {
 	const stats = state.stats;
 	metrics.innerHTML = [
@@ -124,11 +143,46 @@ function renderActivity(state) {
 }
 
 function renderSearch(state) {
-	searchInput.value = state.query;
+	renderedQuery = state.query;
+	searchPending = false;
+	if (document.activeElement !== searchInput) searchInput.value = state.query;
+	searchButton.disabled = false;
+	searchButton.textContent = 'Search';
+	clearSearch.hidden = !state.query;
+	searchSummary.textContent = state.query ? `${state.searchResults.length} ${state.searchResults.length === 1 ? 'result' : 'results'}` : 'Ready';
 	const results = state.searchResults.length ? state.searchResults.map((result) => `
 		<div class="result"><strong>${escapeHtml(result.source)} · ${escapeHtml(result.sourceKind)}${Number.isFinite(result.score) ? ` · ${(result.score * 100).toFixed(0)}%` : ''}</strong><p>${escapeHtml(result.text)}</p></div>`).join('') : state.query ? '<div class="result"><p>No matching graph, knowledge, or session evidence.</p></div>' : '';
 	searchResults.classList.toggle('visible', Boolean(state.query));
-	searchResults.innerHTML = results;
+	searchResults.innerHTML = `${state.searchError ? `<div class="answer-error">${escapeHtml(state.searchError)} · Showing available local evidence.</div>` : ''}${results}`;
+}
+
+function submitSearch() {
+	const query = searchInput.value.trim();
+	if (searchPending || query === renderedQuery) return;
+	if (!query) {
+		resetSearch();
+		return;
+	}
+	searchPending = true;
+	searchButton.disabled = true;
+	searchButton.textContent = 'Searching...';
+	clearSearch.hidden = false;
+	searchSummary.textContent = 'Searching';
+	searchResults.classList.add('visible');
+	searchResults.innerHTML = '<div class="result"><p>Searching graph, semantic knowledge, FTS5, and local evidence...</p></div>';
+	vscode.postMessage({ type: 'search', query });
+}
+
+function resetSearch() {
+	searchInput.value = '';
+	searchPending = false;
+	renderedQuery = '';
+	clearSearch.hidden = true;
+	searchSummary.textContent = 'Ready';
+	searchResults.classList.remove('visible');
+	searchResults.replaceChildren();
+	vscode.postMessage({ type: 'search', query: '' });
+	searchInput.focus();
 }
 
 function renderGraph(state) {
@@ -177,7 +231,7 @@ function renderGraph(state) {
 
 function render(state) {
 	currentState = state;
-	renderService(state); renderMetrics(state); renderSystems(state); renderSessions(state); renderDistribution(state); renderActivity(state); renderSearch(state); renderGraph(state);
+	renderService(state); renderHourglass(state); renderMetrics(state); renderSystems(state); renderSessions(state); renderDistribution(state); renderActivity(state); renderSearch(state); renderGraph(state);
 }
 
 document.getElementById('refreshButton').addEventListener('click', () => vscode.postMessage({ type: 'refresh' }));
@@ -185,8 +239,10 @@ document.getElementById('exportButton').addEventListener('click', () => vscode.p
 document.getElementById('importButton').addEventListener('click', () => vscode.postMessage({ type: 'import' }));
 documentUploadButton.addEventListener('click', () => vscode.postMessage({ type: 'importDocuments' }));
 syncButton.addEventListener('click', () => vscode.postMessage({ type: 'syncService' }));
-document.getElementById('searchButton').addEventListener('click', () => vscode.postMessage({ type: 'search', query: searchInput.value }));
-searchInput.addEventListener('keydown', (event) => { if (event.key === 'Enter') vscode.postMessage({ type: 'search', query: searchInput.value }); });
+searchButton.addEventListener('click', submitSearch);
+clearSearch.addEventListener('click', resetSearch);
+searchInput.addEventListener('keydown', (event) => { if (event.key === 'Enter') submitSearch(); });
+searchInput.addEventListener('input', () => { clearSearch.hidden = !searchInput.value; });
 kindFilter.addEventListener('change', () => { if (currentState) renderGraph(currentState); });
 window.addEventListener('message', (event) => {
 	if (event.data.type === 'state') render(event.data.state);

@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Context Recall - Engineering Continuity Workbench</title>
+  <link rel="stylesheet" href="context-recall-story.css">
+</head>
+<body>
+  <div class="app-container">
+    
+    <!-- Top Telemetry & Trust Header -->
+    <header class="top-header" role="banner">
+      <div class="brand-section">
+        <span class="brand-logo">CR</span>
+        <div>
+          <h1 class="brand-title">Context Recall <span style="font-size:11px; font-weight:normal; color:var(--text-muted);">v0.1.6</span></h1>
+          <p class="brand-tagline">Evidence-Linked Engineering Memory &amp; Continuity Workbench</p>
+        </div>
+      </div>
+
+      <div class="telemetry-section">
+        <div id="trustBadge" class="trust-badge" data-status="online" aria-live="polite">
+          <span class="trust-indicator" aria-hidden="true"></span>
+          <span class="trust-label">Service Online (auto @ 127.0.0.1:8765)</span>
+        </div>
+
+        <span id="refreshTimestamp" style="font-size:10px; font-family:var(--font-mono); color:var(--text-muted);">Updated 10:45:12</span>
+
+        <button id="refreshBtn" class="btn" title="Refresh state and re-verify connections">Refresh</button>
+
+        <div class="state-controls">
+          <label for="protoStateSelect" class="control-label">State Sim:</label>
+          <select id="protoStateSelect" class="select-input" aria-label="Simulate Lifecycle State">
+            <option value="service-online">1. Service Online (Healthy)</option>
+            <option value="local-fallback">2. Local Fallback (Offline)</option>
+            <option value="service-unavailable">3. Service Unavailable (Strict)</option>
+            <option value="loading">4. Loading / Re-indexing</option>
+            <option value="empty">5. Empty / Fresh Store</option>
+            <option value="contested">6. Contested Knowledge Flagged</option>
+          </select>
+        </div>
+      </div>
+    </header>
+
+    <!-- State Alert Banner -->
+    <div id="stateBanner" class="state-banner" role="alert">
+      <span class="banner-text">State alert message placeholder</span>
+    </div>
+
+    <!-- Main Grid: Integrated Hourglass Funnel (Left) + Engineering Workbench (Right) -->
+    <main class="workbench-grid" role="main">
+      
+      <!-- Left Column: The Continuous Knowledge Hourglass Funnel -->
+      <aside class="hourglass-panel" aria-label="Knowledge Lifecycle Hourglass">
+        <div class="panel-header">
+          <span class="panel-title">Knowledge Funnel</span>
+          <span class="panel-subtitle">Lifecycle Inventory</span>
+        </div>
+
+        <!-- The Hourglass Visual Funnel -->
+        <div class="hourglass-funnel">
+          
+          <!-- Top Chamber: Raw Evidence Intake -->
+          <div id="funnelRawStage" class="funnel-stage stage-top" data-stage="raw" tabindex="0" role="button" aria-label="Raw Evidence Intake Chamber">
+            <div class="stage-header">
+              <span id="topStageTitle" class="stage-name">1. Raw Evidence Intake</span>
+              <span id="topStageTag" class="stage-tag">draft/raw</span>
+            </div>
+            <div id="stageRawCount" class="stage-count">11,448</div>
+            <p id="topStageDesc" class="stage-desc">Read-only turns, PDF specs, logs hashed with SHA-256.</p>
+            <div class="stage-meta">
+              <span>IMMUTABLE EVIDENCE</span>
+              <span>READ-ONLY</span>
+            </div>
+          </div>
+
+          <!-- Neck Chamber: Candidate Review Gate -->
+          <div id="funnelNeckStage" class="funnel-stage stage-neck" data-stage="neck" tabindex="0" role="button" aria-label="Candidate Review Gate Chamber">
+            <div class="stage-header">
+              <span class="stage-name">2. Candidate Gate</span>
+              <span class="stage-tag">draft/candidate</span>
+            </div>
+            <div id="stageCandidateCount" class="stage-count">1,030</div>
+            <p class="stage-desc">Extracted claims awaiting review. Zero silent promotion.</p>
+            <div class="stage-meta">
+              <span>AUDITABLE GATE</span>
+              <span>LINKED EVIDENCE</span>
+            </div>
+          </div>
+
+          <!-- Bottom Chamber: Active Reusable Memory -->
+          <div id="funnelBottomStage" class="funnel-stage stage-bottom" data-stage="bottom" tabindex="0" role="button" aria-label="Active Knowledge Reservoir Chamber">
+            <div class="stage-header">
+              <span id="bottomStageTitle" class="stage-name">3. Active Knowledge</span>
+              <span id="bottomStageTag" class="stage-tag">active/memory</span>
+            </div>
+            <div id="stageActiveCount" class="stage-count">5,569</div>
+            <p id="bottomStageDesc" class="stage-desc">Verified, vectorized (256-d), entity-linked knowledge.</p>
+            <div class="stage-meta">
+              <span>RECALL READY</span>
+              <span>CITED OUTPUTS</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Verified Inventory Breakdown -->
+        <div class="inventory-summary">
+          <div class="inventory-cell">
+            <div id="rawCount" class="cell-num">11,448</div>
+            <div class="cell-label">Raw Turns &amp; Chunks</div>
+          </div>
+          <div class="inventory-cell">
+            <div id="candidateCount" class="cell-num">1,030</div>
+            <div class="cell-label">Candidate Claims</div>
+          </div>
+          <div class="inventory-cell">
+            <div id="activeCount" class="cell-num">5,569</div>
+            <div class="cell-label">Active Units</div>
+          </div>
+          <div class="inventory-cell contested-cell">
+            <div id="contestedCount" class="cell-num">1</div>
+            <div class="cell-label">Contested / Quarantined</div>
+          </div>
+          <div class="inventory-cell">
+            <div id="edgeCount" class="cell-num">1,842</div>
+            <div class="cell-label">Graph Relationships</div>
+          </div>
+          <div class="inventory-cell">
+            <div id="continuityCount" class="cell-num">64</div>
+            <div class="cell-label">Continuity Decisions</div>
+          </div>
+        </div>
+
+      </aside>
+
+      <!-- Right Column: Active Engineering Workbench -->
+      <section class="workbench-main" aria-label="Engineering Workbench">
+        
+        <!-- Mission & Customer Outcome Header -->
+        <div class="mission-card">
+          <h2 class="mission-headline">Engineering Continuity &amp; Auditable Recall</h2>
+          <p class="mission-lead">
+            Turn scattered debugging sessions, PDF hardware specifications, and triage decisions into immutable, evidence-linked memory.
+            Eliminate duplicate root-cause investigations, enable frictionless shift handoffs, and ensure every engineering decision cites verifiable historical ground truth.
+          </p>
+        </div>
+
+        <!-- Task Tabs -->
+        <nav class="task-tabs" role="tablist" aria-label="Workbench Tasks">
+          <button class="tab-btn active" role="tab" aria-selected="true" data-tab="tab-continuity" id="tabBtnContinuity">
+            Active Workstream <span class="tab-badge">Current Goal</span>
+          </button>
+          <button class="tab-btn" role="tab" aria-selected="false" data-tab="tab-ask" id="tabBtnAsk">
+            Ask History &amp; Precedents <span class="tab-badge">Cited Recall</span>
+          </button>
+          <button class="tab-btn" role="tab" aria-selected="false" data-tab="tab-journey" id="tabBtnJourney">
+            Traceable Incident Journey <span class="tab-badge">5 Steps</span>
+          </button>
+          <button class="tab-btn" role="tab" aria-selected="false" data-tab="tab-review" id="tabBtnReview">
+            Review Candidates <span class="tab-badge">Gate</span>
+          </button>
+          <button class="tab-btn" role="tab" aria-selected="false" data-tab="tab-contested" id="tabBtnContested">
+            Contested Issues <span class="tab-badge" style="color:var(--accent-red);">Quarantine</span>
+          </button>
+        </nav>
+
+        <!-- Tab Content Area -->
+        <div class="tab-panel-container">
+          
+          <!-- TAB 1: Active Workstream & Continuity -->
+          <div id="tab-continuity" class="tab-panel active" role="tabpanel" aria-labelledby="tabBtnContinuity">
+            <div class="section-header">
+              <div>
+                <h3 class="section-title">Active Engineering Workstream: GlenRock Platform Thermal Triage</h3>
+                <span style="font-size:11px; color:var(--text-muted); font-family:var(--font-mono);">Workspace: /home/xuqj/openbmc-openbmc | Branch: agent-v4</span>
+              </div>
+              <div class="section-actions">
+                <button class="btn btn-primary" onclick="alert('Exporting session context handoff markdown [Proposed]...')">Generate Handoff</button>
+              </div>
+            </div>
+
+            <!-- Current Session Goal & Verification -->
+            <div class="evidence-card highlight">
+              <div class="evidence-meta">
+                <span>SESSION CONTEXT: session_glr_thermal_0911</span>
+                <span>STATUS: In Progress</span>
+              </div>
+              <div class="evidence-body">
+                <strong>Current Goal:</strong> Resolve false TSOD 0x7F sensor trip point during BMC warm reboot without regression on phosphor-hwmon.
+                <br>
+                <strong>Reasoning Summary:</strong> Confirmed I2C bus byte-order mismatch between kernel driver (little-endian read) and Intel GlenRock specification v2.1 Section 8.4 (big-endian 11-bit twos-complement).
+              </div>
+            </div>
+
+            <!-- Ongoing Action Checklist -->
+            <div class="checklist-container">
+              <span style="font-size:11px; font-weight:600; color:var(--text-secondary); text-transform:uppercase;">Continuity Action Deck</span>
+              
+              <label class="checklist-item">
+                <input type="checkbox" checked disabled>
+                <div class="checklist-text">
+                  <strong>Oscilloscope Trace Captured:</strong> Verified I2C transaction waveform on Bus 4 Address 0x48. Hashed as raw turn evidence (turn_8829).
+                  <div class="checklist-meta">Evidence Turn: turn_8829 | SHA256: 7f8a91b</div>
+                </div>
+              </label>
+
+              <label class="checklist-item">
+                <input type="checkbox" checked disabled>
+                <div class="checklist-text">
+                  <strong>Spec Chunk Corroborated:</strong> Linked to Intel GlenRock Platform Spec Rev 2.1 p.44 (chunk_142).
+                  <div class="checklist-meta">Document: intel_glr_spec_v2.pdf | Page: 44</div>
+                </div>
+              </label>
+
+              <label class="checklist-item">
+                <input type="checkbox">
+                <div class="checklist-text">
+                  <strong>Apply Endianness Swap Patch <span class="proposed-tag">[Proposed]</span>:</strong> Insert <code>swab16()</code> before raw threshold evaluation in <code>meta-intel/recipes-bsp/drivers/tsod-hwmon.c</code>.
+                  <div class="checklist-meta">Target: openbmc-openbmc / meta-intel</div>
+                </div>
+              </label>
+
+              <label class="checklist-item">
+                <input type="checkbox">
+                <div class="checklist-text">
+                  <strong>Run vexp Test Suite:</strong> Validate thermal trip regression tests against QEMU GlenRock target.
+                  <div class="checklist-meta">Command: bitbake obmc-phosphor-image -c testimage</div>
+                </div>
+              </label>
+            </div>
+          </div>
+
+          <!-- TAB 2: Ask History & Precedents -->
+          <div id="tab-ask" class="tab-panel" role="tabpanel" aria-labelledby="tabBtnAsk">
+            <div class="section-header">
+              <h3 class="section-title">Query Historical Engineering Precedents</h3>
+              <div class="section-actions">
+                <label for="cannedQuerySelect" class="control-label">Sample Case:</label>
+                <select id="cannedQuerySelect" class="select-input">
+                  <option value="tsod">1. TSOD Warm Reset Thermal Trip</option>
+                  <option value="pam">2. pam-ipmi Lock Timeout Arbitration</option>
+                  <option value="crashdump">3. Dual-Flash Crashdump Sync</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Search Bar -->
+            <div class="search-bar-box">
+              <input type="text" class="search-input" value="Why does BMC trip thermal shutdown on GlenRock warm reboot?" placeholder="Ask engineering memory..." aria-label="Search technical knowledge">
+              <button class="btn btn-primary" onclick="alert('Querying SQLite FTS5, 256-d vectors, and Neo4j graph...')">Ask History</button>
+            </div>
+
+            <!-- Grounded Response Box -->
+            <div id="retrievalAnswerBox" class="answer-box">
+              <div class="answer-header">
+                <strong>Query: "Why does BMC trip thermal shutdown on GlenRock warm reboot?"</strong>
+                <span class="confidence-badge confidence-high">HIGH CONFIDENCE</span>
+              </div>
+              <p style="font-size:12px; color:var(--text-primary); margin-top:6px;">
+                The TSOD sensor register 0x05 returns 11-bit twos-complement data in big-endian format.
+                During warm reboot, the uninitialized hwmon driver reads the register in little-endian order,
+                interpreting 25 degC ambient as 0x7F00 (127 degC), which immediately triggers the kernel thermal trip point <span class="citation-pill">[1]</span><span class="citation-pill">[2]</span>.
+              </p>
+              <div class="citations-list" style="margin-top:8px;">
+                <div class="citation-item">
+                  <span class="citation-pill">[1]</span>
+                  <span>debug_turn_8829: Oscilloscope I2C trace and dmesg log (SHA256: 7f8a91b)</span>
+                </div>
+                <div class="citation-item">
+                  <span class="citation-pill">[2]</span>
+                  <span>Intel GlenRock Platform Spec Rev 2.1, Section 8.4 (Page 44, chunk_142)</span>
+                </div>
+              </div>
+              <div style="margin-top:10px; padding-top:8px; border-top:1px dashed var(--border-subtle); display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:11px; color:var(--accent-cyan); font-family:var(--font-mono);">NEXT ACTION: Apply endianness swap patch in meta-intel/recipes-bsp/drivers/tsod-hwmon.bb</span>
+                <button class="btn btn-primary" onclick="alert('Action applied to workbench checklist [Proposed].')">Apply to Task</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 3: Traceable Incident Journey -->
+          <div id="tab-journey" class="tab-panel" role="tabpanel" aria-labelledby="tabBtnJourney">
+            <div class="section-header">
+              <h3 class="section-title">End-to-End Incident Traceability Walkthrough</h3>
+              <div class="section-actions">
+                <button id="prevStepBtn" class="btn" disabled>&larr; Prev Step</button>
+                <button id="nextStepBtn" class="btn">Next Step &rarr;</button>
+              </div>
+            </div>
+
+            <!-- Stepper Container -->
+            <div class="journey-stepper">
+              <div class="stepper-header">
+                <div>
+                  <h4 id="journeyStepTitle" style="font-size:12px; color:var(--text-primary);">Step 1: Immutable Evidence Intake</h4>
+                  <span id="journeyStepSubtitle" style="font-size:11px; color:var(--text-muted);">Capturing Raw Engineering Artifacts</span>
+                </div>
+                <div class="step-indicators" role="tablist" aria-label="Journey Steps">
+                  <button class="step-dot active" data-step="1" title="Step 1: Raw Intake" aria-label="Step 1">1</button>
+                  <button class="step-dot" data-step="2" title="Step 2: Candidate Distillation" aria-label="Step 2">2</button>
+                  <button class="step-dot" data-step="3" title="Step 3: Lifecycle Review Gate" aria-label="Step 3">3</button>
+                  <button class="step-dot" data-step="4" title="Step 4: Active Reservoir" aria-label="Step 4">4</button>
+                  <button class="step-dot" data-step="5" title="Step 5: Grounded Recall" aria-label="Step 5">5</button>
+                </div>
+              </div>
+
+              <div id="journeyStepContent" style="margin-top:8px;">
+                <!-- Content injected via JS -->
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 4: Review Candidates -->
+          <div id="tab-review" class="tab-panel" role="tabpanel" aria-labelledby="tabBtnReview">
+            <div class="section-header">
+              <h3 class="section-title">Candidate Distillation Gate (1,030 Items Awaiting Promotion)</h3>
+              <div class="section-actions">
+                <button class="btn" onclick="alert('Dry run review simulation [Proposed]...')">Simulate Batch Audit</button>
+              </div>
+            </div>
+
+            <p style="font-size:11px; color:var(--text-secondary);">
+              Candidates are derived facts proposed by model extraction or document ingestion. They remain in <code>draft/candidate</code> and are excluded from default search until verified.
+            </p>
+
+            <div class="evidence-card" style="border-left:3px solid var(--accent-amber);">
+              <div class="evidence-meta">
+                <span>CANDIDATE: cand_tsod_endian_swap</span>
+                <span>CONFIDENCE: HIGH (0.94)</span>
+              </div>
+              <div class="evidence-body">
+                <strong>Claim:</strong> GlenRock TSOD register 0x05 requires 16-bit word byte-swap before evaluating thermal shutdown thresholds.
+                <div class="citations-list" style="margin-top:6px;">
+                  <div class="citation-item">
+                    <span class="citation-pill">SRC 1</span>
+                    <span>turn_8829 (Debugging transcript - OpenBMC session 2026-09-11)</span>
+                  </div>
+                  <div class="citation-item">
+                    <span class="citation-pill">SRC 2</span>
+                    <span>intel_glr_spec_v2.pdf p.44 (I2C Sensor Register Definition)</span>
+                  </div>
+                </div>
+              </div>
+              <div style="display:flex; justify-content:flex-end; gap:6px; margin-top:8px;">
+                <button class="btn" onclick="alert('Marked candidate as rejected/quarantined [Proposed].')">Reject</button>
+                <button class="btn btn-primary" onclick="alert('Promoted candidate to active/memory [Proposed].')">Approve to Active</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- TAB 5: Contested Issues -->
+          <div id="tab-contested" class="tab-panel" role="tabpanel" aria-labelledby="tabBtnContested">
+            <div class="section-header">
+              <h3 class="section-title" style="color:var(--accent-red);">Contested Knowledge &amp; Disagreement Bounding</h3>
+              <span class="confidence-badge confidence-low">1 QUARANTINED ITEM</span>
+            </div>
+
+            <div class="contested-banner">
+              <span class="contested-title">Warning: Specification Version Conflict Detected</span>
+              <p style="font-size:11px; color:var(--text-primary);">
+                When two engineering sources assert conflicting register offsets, Context Recall does <strong>not</strong> silently overwrite the older truth. Both items are marked <code>contested</code> and quarantined until human engineering arbitration.
+              </p>
+            </div>
+
+            <div class="evidence-card" style="border-left:3px solid var(--accent-red);">
+              <div class="evidence-meta">
+                <span>CONFLICT ID: conflict_peci_addr_0x30</span>
+                <span>STATUS: Quarantined</span>
+              </div>
+              <div class="evidence-body">
+                <strong>Disagreement Detail:</strong>
+                <ul style="padding-left:16px; margin-top:4px; font-size:11px;">
+                  <li><strong>Assertion A (Active):</strong> PECI client address is fixed at <code>0x30</code> per Intel Platform Spec Rev 1.9 (chunk_88).</li>
+                  <li><strong>Assertion B (Candidate):</strong> PECI client address relocated to <code>0x38</code> on GlenRock Rev 2.1 (chunk_149).</li>
+                </ul>
+              </div>
+              <div style="display:flex; justify-content:flex-end; gap:6px; margin-top:8px;">
+                <button class="btn" onclick="alert('Retain Rev 1.9 legacy definition [Proposed].')">Keep 0x30</button>
+                <button class="btn btn-primary" onclick="alert('Supersede older definition and promote Rev 2.1 to active [Proposed].')">Adopt Rev 2.1 (0x38)</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </section>
+
+    </main>
+
+    <!-- Collapsible Secondary Technical Drawer -->
+    <details class="tech-details">
+      <summary class="tech-summary">System Storage Mechanics &amp; Architecture (Secondary View)</summary>
+      <div class="tech-grid">
+        <div class="tech-box">
+          <span class="tech-box-title">SQLite Memory Store</span>
+          <span class="tech-box-detail">File: <code>~/.context-recall/memory.sqlite3</code></span>
+          <span class="tech-box-detail">Engine: SQLite 3.45 with WAL + FTS5</span>
+          <span class="tech-box-detail">Tables: <code>records</code>, <code>session_contexts</code>, <code>events</code></span>
+        </div>
+        <div class="tech-box">
+          <span class="tech-box-title">Vector Store (256-d)</span>
+          <span class="tech-box-detail">File: <code>~/.context-recall/vectors.sqlite3</code></span>
+          <span class="tech-box-detail">Dimension: 256 float vectors</span>
+          <span class="tech-box-detail">Cosine similarity ranking for semantic recall</span>
+        </div>
+        <div class="tech-box">
+          <span class="tech-box-title">Neo4j Graph Store (Optional)</span>
+          <span class="tech-box-detail">Endpoint: <code>bolt://127.0.0.1:7687</code></span>
+          <span class="tech-box-detail">Nodes: <code>KnowledgeEntity</code>, <code>DocumentChunk</code></span>
+          <span class="tech-box-detail">Degrades gracefully to SQLite when offline</span>
+        </div>
+        <div class="tech-box">
+          <span class="tech-box-title">Data Safety Boundaries</span>
+          <span class="tech-box-detail">Read-only MCP server interface</span>
+          <span class="tech-box-detail">No model credential logging or raw secret leak</span>
+          <span class="tech-box-detail">Additive, idempotent migrations only</span>
+        </div>
+      </div>
+    </details>
+
+    <!-- Footer: Engineering Safety & Boundaries -->
+    <footer style="margin-top:var(--space-sm); text-align:center; font-size:10px; color:var(--text-muted); font-family:var(--font-mono);">
+      Context Recall Prototype | Pure UI Specification | No Production Code Modified | Evidence Grounding Guaranteed
+    </footer>
+
+  </div>
+
+  <script src="context-recall-story.js"></script>
+</body>
+</html>
