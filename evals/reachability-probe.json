@@ -1,0 +1,212 @@
+{
+  "schemaVersion": 1,
+  "capturedAt": "2026-09-14T07:54:30Z",
+  "source": "/home/xuqj/.local/share/knowledge-agent-service/memory.sqlite3",
+  "corpusAtCapture": {
+    "total": 18184,
+    "searchable": 5576
+  },
+  "sampling": "按 id 排序等距抽样：文档页 20 条（query=resolution 前 70 字符）+ 非文档记忆 20 条（query=summary 前 70 字符）",
+  "samples": [
+    {
+      "id": "document:16f12e61df472e7cb2f23346c9d60503bf8d0630bdf31675ceab851f645d8ff8:page:100:chunk:0",
+      "kind": "document-page",
+      "query": "R | Intel Server System Integrated OpenBMC* (Birch Stream OpenBMC* Fir"
+    },
+    {
+      "id": "document:16f12e61df472e7cb2f23346c9d60503bf8d0630bdf31675ceab851f645d8ff8:page:135:chunk:0",
+      "kind": "document-page",
+      "query": "Sensor Monitoring—Intel Server System Integrated OpenBMC* (Birch Strea"
+    },
+    {
+      "id": "document:16f12e61df472e7cb2f23346c9d60503bf8d0630bdf31675ceab851f645d8ff8:page:170:chunk:2",
+      "kind": "document-page",
+      "query": "ALLOWED | 2Dh | USER | Get Sensor Reading BLOCKED | 2Eh | OPERATOR | S"
+    },
+    {
+      "id": "document:16f12e61df472e7cb2f23346c9d60503bf8d0630bdf31675ceab851f645d8ff8:page:219:chunk:2",
+      "kind": "document-page",
+      "query": "Block size table. The values for the four ASCII characters are 5F 50 4"
+    },
+    {
+      "id": "document:16f12e61df472e7cb2f23346c9d60503bf8d0630bdf31675ceab851f645d8ff8:page:262:chunk:0",
+      "kind": "document-page",
+      "query": "R Intel Server System Integrated OpenBMC* (Birch Stream OpenBMC* Firmw"
+    },
+    {
+      "id": "document:16f12e61df472e7cb2f23346c9d60503bf8d0630bdf31675ceab851f645d8ff8:page:303:chunk:2",
+      "kind": "document-page",
+      "query": "PowerConsumedWatts | GET | The actual power being consumed by the chas"
+    },
+    {
+      "id": "document:16f12e61df472e7cb2f23346c9d60503bf8d0630bdf31675ceab851f645d8ff8:page:48:chunk:3",
+      "kind": "document-page",
+      "query": "These two streams are mutually exclusive. Intel ® Server System Integr"
+    },
+    {
+      "id": "document:16f12e61df472e7cb2f23346c9d60503bf8d0630bdf31675ceab851f645d8ff8:page:82:chunk:1",
+      "kind": "document-page",
+      "query": "The reset button is a momentary contact button on the front panel. Its"
+    },
+    {
+      "id": "document:5994dbfc32100a0a228030e1aea4251b811dc21286574784a690a18390de917e:page:32:chunk:1",
+      "kind": "document-page",
+      "query": "memory device usage model, all of the protocols or only a subset of th"
+    },
+    {
+      "id": "document:5994dbfc32100a0a228030e1aea4251b811dc21286574784a690a18390de917e:page:7:chunk:0",
+      "kind": "document-page",
+      "query": "Gem Mountain Platform Architecture Specification (PAS) Figure 39 Propo"
+    },
+    {
+      "id": "document:ea2a23f828d682e6f5e7ac2fd279403ae8a8f47fac7620cbd6d48f26d9712387:page:127:chunk:0",
+      "kind": "document-page",
+      "query": "Coherency and Home Agent (CHA) Functional Description—Intel ® Xeon ® 6"
+    },
+    {
+      "id": "document:ea2a23f828d682e6f5e7ac2fd279403ae8a8f47fac7620cbd6d48f26d9712387:page:157:chunk:0",
+      "kind": "document-page",
+      "query": "Power Management Functional Description—Intel ® Xeon ® 6900/6700/6500-"
+    },
+    {
+      "id": "document:ea2a23f828d682e6f5e7ac2fd279403ae8a8f47fac7620cbd6d48f26d9712387:page:194:chunk:3",
+      "kind": "document-page",
+      "query": "temperatures and so on. Return data size can be either 4 bytes (Dword)"
+    },
+    {
+      "id": "document:ea2a23f828d682e6f5e7ac2fd279403ae8a8f47fac7620cbd6d48f26d9712387:page:231:chunk:0",
+      "kind": "document-page",
+      "query": "Reliability, Availability, and Serviceability (RAS) Functional Descrip"
+    },
+    {
+      "id": "document:ea2a23f828d682e6f5e7ac2fd279403ae8a8f47fac7620cbd6d48f26d9712387:page:264:chunk:1",
+      "kind": "document-page",
+      "query": "the poisoned data in the main memory. Further handling of such poisone"
+    },
+    {
+      "id": "document:ea2a23f828d682e6f5e7ac2fd279403ae8a8f47fac7620cbd6d48f26d9712387:page:295:chunk:2",
+      "kind": "document-page",
+      "query": "failed device. Hot-Add involves the addition of a PCIe* device into a "
+    },
+    {
+      "id": "document:ea2a23f828d682e6f5e7ac2fd279403ae8a8f47fac7620cbd6d48f26d9712387:page:331:chunk:0",
+      "kind": "document-page",
+      "query": "Secured Startup Services Module (S3M)—Intel ® Xeon ® 6900/6700/6500-Se"
+    },
+    {
+      "id": "document:ea2a23f828d682e6f5e7ac2fd279403ae8a8f47fac7620cbd6d48f26d9712387:page:376:chunk:1",
+      "kind": "document-page",
+      "query": "operate as a single application within a shared address space. 17.7 | "
+    },
+    {
+      "id": "document:ea2a23f828d682e6f5e7ac2fd279403ae8a8f47fac7620cbd6d48f26d9712387:page:420:chunk:3",
+      "kind": "document-page",
+      "query": "multiple internal thermal sensors that are monitored by the DTS. Simul"
+    },
+    {
+      "id": "document:ea2a23f828d682e6f5e7ac2fd279403ae8a8f47fac7620cbd6d48f26d9712387:page:6:chunk:1",
+      "kind": "document-page",
+      "query": "243 11.2.9 Memory Corrected Error Reporting..........................."
+    },
+    {
+      "id": "continuity:00127751-1e98-4b52-9cc4-289deb905716",
+      "kind": "memory",
+      "query": "商业化闭环验证通过，样例状态明确为 pending_repro，无真实 BMC 流量或 Host 注入证据，保留只读执行建议；仅追加 SES"
+    },
+    {
+      "id": "continuity:1788612384271-tei4o4",
+      "kind": "memory",
+      "query": "为什么 Knowledge Agent 的 Sync Service 会失败，如何修复？"
+    },
+    {
+      "id": "continuity:73d251d0-d930-49d0-83ae-2895dea73172",
+      "kind": "memory",
+      "query": "Upgrade the stable API to support a full tool loop with up to 8 rounds"
+    },
+    {
+      "id": "continuity:e1761e98-054e-41d1-9f4d-22f1217ee2cd",
+      "kind": "memory",
+      "query": "Prioritize identifying target customers before drafting communication,"
+    },
+    {
+      "id": "knowledge:0dca9f7bedffacbca3de",
+      "kind": "memory",
+      "query": "Intel Code of Conduct Hub"
+    },
+    {
+      "id": "knowledge:1ce78f8c390185b9fd3d",
+      "kind": "memory",
+      "query": "Local LAN Discovery"
+    },
+    {
+      "id": "knowledge:2dd9eb4ee31954e94b51",
+      "kind": "memory",
+      "query": "astpcie TX Error"
+    },
+    {
+      "id": "knowledge:3c46e8c31404a52ec39b",
+      "kind": "memory",
+      "query": "clangd"
+    },
+    {
+      "id": "knowledge:4ba731585db3267a7971",
+      "kind": "memory",
+      "query": "OK3568-C Layer"
+    },
+    {
+      "id": "knowledge:5ab1a8bb793b6f082d6a",
+      "kind": "memory",
+      "query": "Linux I3C Hub DTS Validation"
+    },
+    {
+      "id": "knowledge:6b3c3d48470f58e52bda",
+      "kind": "memory",
+      "query": "BMC Agent Operational Constraints"
+    },
+    {
+      "id": "knowledge:7c0a0d96fa96b88239e6",
+      "kind": "memory",
+      "query": "LangGraph Extraction Agent"
+    },
+    {
+      "id": "knowledge:8bea7615a81de909233e",
+      "kind": "memory",
+      "query": "Yocto Recipe Source Attribution"
+    },
+    {
+      "id": "knowledge:9b656b341c4f965b9ea9",
+      "kind": "memory",
+      "query": "CPLD Register"
+    },
+    {
+      "id": "knowledge:a82b3efd55c0682ed1c9",
+      "kind": "memory",
+      "query": "PDF-to-Markdown Cleanup Workflow"
+    },
+    {
+      "id": "knowledge:b721d3df23bb4d3313fe",
+      "kind": "memory",
+      "query": "MP2971 Driver Re-enumeration"
+    },
+    {
+      "id": "knowledge:c483f143f3025a5d5b34",
+      "kind": "memory",
+      "query": "Credentials Non-Persistence Rule"
+    },
+    {
+      "id": "knowledge:d1e10e8a4413a5bb1125",
+      "kind": "memory",
+      "query": "Coverity Issue Analyzer Agent"
+    },
+    {
+      "id": "knowledge:e068bb8afa1bfb4d57e9",
+      "kind": "memory",
+      "query": "Host Distro Warning"
+    },
+    {
+      "id": "knowledge:ef6c05e19054ef7d82ff",
+      "kind": "memory",
+      "query": "compilation"
+    }
+  ]
+}

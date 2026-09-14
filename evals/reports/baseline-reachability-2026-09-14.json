@@ -1,0 +1,69 @@
+{
+  "capturedAt": "2026-09-14T07:57:13.807Z",
+  "service": "http://10.112.229.254:8765",
+  "corpusAtRun": {
+    "total": 18184,
+    "active": 5576,
+    "candidate": 1040,
+    "raw": 11448,
+    "continuity": 568
+  },
+  "probeCapturedAt": "2026-09-14T07:54:30Z",
+  "rows": [
+    {
+      "caller": "chat-multiroot",
+      "workspaceId": "1486067004dac72425f2",
+      "reachable": 0,
+      "total": 40,
+      "misses": [
+        "document:16f12e61df472e7cb2f23346c9d6050",
+        "document:16f12e61df472e7cb2f23346c9d6050",
+        "document:16f12e61df472e7cb2f23346c9d6050"
+      ]
+    },
+    {
+      "caller": "chat-single",
+      "workspaceId": "f378c72e6fdb2270b506",
+      "reachable": 0,
+      "total": 40,
+      "misses": [
+        "document:16f12e61df472e7cb2f23346c9d6050",
+        "document:16f12e61df472e7cb2f23346c9d6050",
+        "document:16f12e61df472e7cb2f23346c9d6050"
+      ]
+    },
+    {
+      "caller": "mcp",
+      "workspaceId": "1486067004dac72425f2",
+      "reachable": 0,
+      "total": 40,
+      "misses": [
+        "document:16f12e61df472e7cb2f23346c9d6050",
+        "document:16f12e61df472e7cb2f23346c9d6050",
+        "document:16f12e61df472e7cb2f23346c9d6050"
+      ]
+    },
+    {
+      "caller": "dashboard",
+      "workspaceId": "",
+      "reachable": 17,
+      "total": 40,
+      "misses": [
+        "document:16f12e61df472e7cb2f23346c9d6050",
+        "document:16f12e61df472e7cb2f23346c9d6050",
+        "document:16f12e61df472e7cb2f23346c9d6050"
+      ]
+    },
+    {
+      "caller": "legacy-uri",
+      "workspaceId": "file:///home/xuqj/openbmc-openbmc",
+      "reachable": 17,
+      "total": 40,
+      "misses": [
+        "document:16f12e61df472e7cb2f23346c9d6050",
+        "document:16f12e61df472e7cb2f23346c9d6050",
+        "document:16f12e61df472e7cb2f23346c9d6050"
+      ]
+    }
+  ]
+}
