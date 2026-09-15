@@ -1,0 +1,534 @@
+{
+  "capturedAt": "2026-09-14T08:23:05.593Z",
+  "service": "http://10.112.229.254:8765",
+  "corpusAtRun": {
+    "total": 18184,
+    "active": 5576,
+    "searchable": 5576,
+    "candidate": 1040,
+    "raw": 11448,
+    "continuity": 568
+  },
+  "goldenCapturedAt": "2026-09-14",
+  "metrics": {
+    "hitAt1": 0.5,
+    "precisionAtK": 0.4375,
+    "recallAtK": 0.5185185185185185,
+    "smokeRate": 1,
+    "noResultAccuracy": 1,
+    "supersededLeakage": 0,
+    "diversityRate": 0.9230769230769231,
+    "pageEvidenceCoverage": 0.23972602739726026,
+    "technicalTop3PageCoverage": 0.425,
+    "casesScored": 24,
+    "casesTotal": 24
+  },
+  "targets": {
+    "hitAt1": 0.6,
+    "precisionAtK": 0.6,
+    "recallAtK": 0.7,
+    "noResultAccuracy": 0.9,
+    "smokeRate": 1,
+    "supersededLeakageMax": 0,
+    "diversityRate": 0.85,
+    "technicalTop3PageCoverage": 0.8,
+    "pageEvidenceCoverageDiagnosticOnly": 0.8
+  },
+  "checks": [
+    {
+      "name": "hitAt1",
+      "passed": false,
+      "detail": "0.500 / >= 0.6"
+    },
+    {
+      "name": "precisionAtK",
+      "passed": false,
+      "detail": "0.438 / >= 0.6"
+    },
+    {
+      "name": "recallAtK",
+      "passed": false,
+      "detail": "0.519 / >= 0.7"
+    },
+    {
+      "name": "smokeRate",
+      "passed": true,
+      "detail": "1.000 / >= 1"
+    },
+    {
+      "name": "noResultAccuracy",
+      "passed": true,
+      "detail": "1.000 / >= 0.9"
+    },
+    {
+      "name": "supersededLeakage",
+      "passed": true,
+      "detail": "0 / <= 0"
+    },
+    {
+      "name": "diversityRate",
+      "passed": true,
+      "detail": "0.923 / >= 0.85"
+    },
+    {
+      "name": "technicalTop3PageCoverage",
+      "passed": false,
+      "detail": "0.425 / >= 0.8"
+    }
+  ],
+  "regressions": [
+    "supersededLeakage: 0.000 < baseline 5.000"
+  ],
+  "cases": [
+    {
+      "id": "tech-tsod-temperature",
+      "intent": "technical",
+      "caller": "chat-multiroot",
+      "query": "TSOD 温度阈值",
+      "returned": 8,
+      "smoke": false,
+      "unrelated": false,
+      "hitAt1": true,
+      "precision": 0.5,
+      "recall": 0.6666666666666666,
+      "smokePass": null,
+      "unrelatedPass": null,
+      "diversity": true,
+      "pageTop3": {
+        "withPage": 3,
+        "total": 3
+      },
+      "top1": "776846_Intel® Server System Integrated OpenBMC_Rev1_0 3.pdf - page 107"
+    },
+    {
+      "id": "tech-crashdump-autonomous",
+      "intent": "technical",
+      "caller": "chat-multiroot",
+      "query": "Autonomous Crash Dump",
+      "returned": 8,
+      "smoke": false,
+      "unrelated": false,
+      "hitAt1": true,
+      "precision": 1,
+      "recall": 1,
+      "smokePass": null,
+      "unrelatedPass": null,
+      "diversity": null,
+      "pageTop3": {
+        "withPage": 3,
+        "total": 3
+      },
+      "top1": "776846_Intel® Server System Integrated OpenBMC_Rev1_0 3.pdf - page 195"
+    },
+    {
+      "id": "tech-redfish-eventservice",
+      "intent": "technical",
+      "caller": "chat-multiroot",
+      "query": "Redfish EventService 订阅",
+      "returned": 8,
+      "smoke": false,
+      "unrelated": false,
+      "hitAt1": false,
+      "precision": 0.25,
+      "recall": 1,
+      "smokePass": null,
+      "unrelatedPass": null,
+      "diversity": true,
+      "pageTop3": {
+        "withPage": 1,
+        "total": 3
+      },
+      "top1": "bmcweb"
+    },
+    {
+      "id": "tech-memory-mirroring",
+      "intent": "technical",
+      "caller": "chat-multiroot",
+      "query": "memory mirroring",
+      "returned": 8,
+      "smoke": false,
+      "unrelated": false,
+      "hitAt1": false,
+      "precision": 0.375,
+      "recall": 0.5,
+      "smokePass": null,
+      "unrelatedPass": null,
+      "diversity": false,
+      "pageTop3": {
+        "withPage": 0,
+        "total": 3
+      },
+      "top1": "Continuity CLI"
+    },
+    {
+      "id": "tech-pirom-offset",
+      "intent": "technical",
+      "caller": "chat-multiroot",
+      "query": "PIROM offset",
+      "returned": 8,
+      "smoke": false,
+      "unrelated": false,
+      "hitAt1": true,
+      "precision": 1,
+      "recall": 0.5,
+      "smokePass": null,
+      "unrelatedPass": null,
+      "diversity": null,
+      "pageTop3": {
+        "withPage": 3,
+        "total": 3
+      },
+      "top1": "639866_GNR_EDS-A_Rev_2_4 (1).pdf - page 388"
+    },
+    {
+      "id": "tech-peci-temperature",
+      "intent": "technical",
+      "caller": "chat-multiroot",
+      "query": "PECI 温度读取",
+      "returned": 8,
+      "smoke": false,
+      "unrelated": false,
+      "hitAt1": false,
+      "precision": 0,
+      "recall": 0,
+      "smokePass": null,
+      "unrelatedPass": null,
+      "diversity": true,
+      "pageTop3": {
+        "withPage": 0,
+        "total": 3
+      },
+      "top1": "Linux PECI 子系统"
+    },
+    {
+      "id": "tech-cpld-register",
+      "intent": "technical",
+      "caller": "chat-multiroot",
+      "query": "CPLD register",
+      "returned": 8,
+      "smoke": false,
+      "unrelated": false,
+      "hitAt1": false,
+      "precision": 0,
+      "recall": 0,
+      "smokePass": null,
+      "unrelatedPass": null,
+      "diversity": true,
+      "pageTop3": {
+        "withPage": 0,
+        "total": 3
+      },
+      "top1": "GMM CPLD register definition sources"
+    },
+    {
+      "id": "tech-mctp",
+      "intent": "technical",
+      "caller": "chat-multiroot",
+      "query": "MCTP",
+      "returned": 8,
+      "smoke": false,
+      "unrelated": false,
+      "hitAt1": false,
+      "precision": 0.25,
+      "recall": 0.3333333333333333,
+      "smokePass": null,
+      "unrelatedPass": null,
+      "diversity": true,
+      "pageTop3": {
+        "withPage": 1,
+        "total": 3
+      },
+      "top1": "mctpd"
+    },
+    {
+      "id": "tech-spd-bus",
+      "intent": "technical",
+      "caller": "chat-multiroot",
+      "query": "SPD bus",
+      "returned": 8,
+      "smoke": false,
+      "unrelated": false,
+      "hitAt1": false,
+      "precision": 0,
+      "recall": 0,
+      "smokePass": null,
+      "unrelatedPass": null,
+      "diversity": true,
+      "pageTop3": {
+        "withPage": 0,
+        "total": 3
+      },
+      "top1": "/CPU D-Bus manager"
+    },
+    {
+      "id": "tech-smm-status",
+      "intent": "technical",
+      "caller": "chat-multiroot",
+      "query": "SMM status register",
+      "returned": 8,
+      "smoke": false,
+      "unrelated": false,
+      "hitAt1": false,
+      "precision": 0,
+      "recall": 0,
+      "smokePass": null,
+      "unrelatedPass": null,
+      "diversity": true,
+      "pageTop3": {
+        "withPage": 0,
+        "total": 3
+      },
+      "top1": "GMM DAM register validation"
+    },
+    {
+      "id": "dec-coverity-triage",
+      "intent": "decision",
+      "caller": "chat-multiroot",
+      "query": "coverity 误报 triage",
+      "returned": 8,
+      "smoke": false,
+      "unrelated": false,
+      "hitAt1": true,
+      "precision": 0.5,
+      "recall": 1,
+      "smokePass": null,
+      "unrelatedPass": null,
+      "diversity": true,
+      "pageTop3": null,
+      "top1": "coverity-triage-agent-hardening"
+    },
+    {
+      "id": "dec-coverity-workflow",
+      "intent": "decision",
+      "caller": "chat-multiroot",
+      "query": "Coverity Triage Agent Workflow",
+      "returned": 8,
+      "smoke": false,
+      "unrelated": false,
+      "hitAt1": false,
+      "precision": 0,
+      "recall": 0,
+      "smokePass": null,
+      "unrelatedPass": null,
+      "diversity": true,
+      "pageTop3": null,
+      "top1": "DAM pin control via CPLD CSR"
+    },
+    {
+      "id": "dec-loop1-orchestrator",
+      "intent": "decision",
+      "caller": "chat-multiroot",
+      "query": "loop1_orchestrator",
+      "returned": 3,
+      "smoke": false,
+      "unrelated": false,
+      "hitAt1": true,
+      "precision": 1,
+      "recall": 1,
+      "smokePass": null,
+      "unrelatedPass": null,
+      "diversity": null,
+      "pageTop3": null,
+      "top1": "loop1_orchestrator"
+    },
+    {
+      "id": "dec-crossdoc-fix",
+      "intent": "decision",
+      "caller": "chat-multiroot",
+      "query": "跨文档链接与查询无关 怎么修的",
+      "returned": 1,
+      "smoke": false,
+      "unrelated": false,
+      "hitAt1": true,
+      "precision": 1,
+      "recall": 1,
+      "smokePass": null,
+      "unrelatedPass": null,
+      "diversity": null,
+      "pageTop3": null,
+      "top1": "跨文档链接与查询无关（固定注入全局 top-N）怎么修的？"
+    },
+    {
+      "id": "cjk-smoke-threshold",
+      "intent": "cjk",
+      "caller": "chat-multiroot",
+      "query": "阈值",
+      "returned": 8,
+      "smoke": true,
+      "unrelated": false,
+      "hitAt1": true,
+      "precision": 0.25,
+      "recall": 1,
+      "smokePass": true,
+      "unrelatedPass": null,
+      "diversity": null,
+      "pageTop3": null,
+      "top1": "用户要求阈值与时间窗口必须可配置且掉电不丢失，并要求立即将这些约束加入实现。"
+    },
+    {
+      "id": "cjk-smoke-register",
+      "intent": "cjk",
+      "caller": "chat-multiroot",
+      "query": "寄存器",
+      "returned": 8,
+      "smoke": true,
+      "unrelated": false,
+      "hitAt1": true,
+      "precision": 1,
+      "recall": 1,
+      "smokePass": true,
+      "unrelatedPass": null,
+      "diversity": null,
+      "pageTop3": null,
+      "top1": "BMC"
+    },
+    {
+      "id": "cjk-smoke-falsepositive",
+      "intent": "cjk",
+      "caller": "chat-multiroot",
+      "query": "误报",
+      "returned": 5,
+      "smoke": true,
+      "unrelated": false,
+      "hitAt1": false,
+      "precision": 0.8,
+      "recall": 1,
+      "smokePass": true,
+      "unrelatedPass": null,
+      "diversity": null,
+      "pageTop3": null,
+      "top1": "将防误报机制设为硬验收条件：待办未清零或未明确标记为外部阻塞时，不允许输出“已完成”；returned/context_returned 不能自动升级为 injected。"
+    },
+    {
+      "id": "cjk-precise-threshold",
+      "intent": "cjk",
+      "caller": "chat-multiroot",
+      "query": "阈值 时间窗口 掉电不丢失",
+      "returned": 1,
+      "smoke": false,
+      "unrelated": false,
+      "hitAt1": true,
+      "precision": 1,
+      "recall": 1,
+      "smokePass": null,
+      "unrelatedPass": null,
+      "diversity": null,
+      "pageTop3": {
+        "withPage": 0,
+        "total": 1
+      },
+      "top1": "用户要求阈值与时间窗口必须可配置且掉电不丢失，并要求立即将这些约束加入实现。"
+    },
+    {
+      "id": "cjk-precise-cpld",
+      "intent": "cjk",
+      "caller": "chat-multiroot",
+      "query": "寄存器 读写 CPLD",
+      "returned": 8,
+      "smoke": false,
+      "unrelated": false,
+      "hitAt1": false,
+      "precision": 0,
+      "recall": 0,
+      "smokePass": null,
+      "unrelatedPass": null,
+      "diversity": true,
+      "pageTop3": {
+        "withPage": 0,
+        "total": 3
+      },
+      "top1": "GMM CPLD D-Bus mapping"
+    },
+    {
+      "id": "unrelated-weather",
+      "intent": "unrelated",
+      "caller": "chat-multiroot",
+      "query": "今天天气怎么样",
+      "returned": 0,
+      "smoke": false,
+      "unrelated": true,
+      "hitAt1": false,
+      "precision": 0,
+      "recall": 0,
+      "smokePass": null,
+      "unrelatedPass": true,
+      "diversity": null,
+      "pageTop3": null,
+      "top1": ""
+    },
+    {
+      "id": "unrelated-lottery",
+      "intent": "unrelated",
+      "caller": "chat-multiroot",
+      "query": "彩票中奖号码预测",
+      "returned": 0,
+      "smoke": false,
+      "unrelated": true,
+      "hitAt1": false,
+      "precision": 0,
+      "recall": 0,
+      "smokePass": null,
+      "unrelatedPass": true,
+      "diversity": null,
+      "pageTop3": null,
+      "top1": ""
+    },
+    {
+      "id": "unrelated-quantum",
+      "intent": "unrelated",
+      "caller": "chat-multiroot",
+      "query": "量子纠缠退相干",
+      "returned": 0,
+      "smoke": false,
+      "unrelated": true,
+      "hitAt1": false,
+      "precision": 0,
+      "recall": 0,
+      "smokePass": null,
+      "unrelatedPass": true,
+      "diversity": null,
+      "pageTop3": null,
+      "top1": ""
+    },
+    {
+      "id": "global-tsod",
+      "intent": "technical",
+      "caller": "dashboard",
+      "query": "TSOD 温度阈值",
+      "returned": 8,
+      "smoke": false,
+      "unrelated": false,
+      "hitAt1": true,
+      "precision": 0.5,
+      "recall": 0.6666666666666666,
+      "smokePass": null,
+      "unrelatedPass": null,
+      "diversity": true,
+      "pageTop3": {
+        "withPage": 3,
+        "total": 3
+      },
+      "top1": "776846_Intel® Server System Integrated OpenBMC_Rev1_0 3.pdf - page 107"
+    },
+    {
+      "id": "legacy-tsod",
+      "intent": "technical",
+      "caller": "legacy-uri",
+      "query": "TSOD 温度阈值",
+      "returned": 8,
+      "smoke": false,
+      "unrelated": false,
+      "hitAt1": true,
+      "precision": 0.5,
+      "recall": 0.6666666666666666,
+      "smokePass": null,
+      "unrelatedPass": null,
+      "diversity": true,
+      "pageTop3": {
+        "withPage": 3,
+        "total": 3
+      },
+      "top1": "776846_Intel® Server System Integrated OpenBMC_Rev1_0 3.pdf - page 107"
+    }
+  ]
+}

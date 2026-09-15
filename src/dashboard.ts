@@ -6,6 +6,7 @@ import { DashboardStats, KnowledgeEdge, KnowledgeNode, KnowledgeSnapshot } from 
 import { extractPdfDocument } from './pdf-documents';
 import { connectServiceSearchResults, formatSearchConnection } from './search-connections';
 import { KnowledgeServiceClient, ServiceHealth } from './service-client';
+import { resolveWorkspaceIdentity } from './scope';
 import { KnowledgeStore } from './store';
 import { ValueMetrics, ValueUsageMetrics } from './value-metrics';
 import { embed } from './vector';
@@ -107,7 +108,8 @@ export class DashboardPanel {
 		let searchError = '';
 		if (this.query) {
 			try {
-				serviceResults = await this.service.search(this.query, embed(this.query), { workspaceId: '', sessionId: '' }, 12);
+				const identity = resolveWorkspaceIdentity();
+				serviceResults = await this.service.search(this.query, embed(this.query), { workspaceId: identity.canonicalId, sessionId: '', workspaceAliases: identity.aliases }, 12);
 			} catch (error) {
 				searchError = error instanceof Error ? error.message : String(error);
 			}
@@ -187,7 +189,7 @@ export class DashboardPanel {
 						values: embed(`${decision.question} ${decision.answer ?? ''} ${(decision.tags ?? []).join(' ')}`),
 					})),
 					source: vscode.workspace.asRelativePath(selected[0], false),
-					workspaceId: workspace?.uri.toString() ?? '',
+					workspaceId: resolveWorkspaceIdentity().canonicalId,
 					repoId: workspace?.name ?? '',
 				}));
 				void vscode.window.showInformationMessage(
@@ -233,7 +235,7 @@ export class DashboardPanel {
 					const result = await this.service.importDocuments({
 						documents: [document],
 						embeddings: document.chunks.map((chunk) => ({ chunkId: chunk.id, values: embed(chunk.text) })),
-						workspaceId: workspace?.uri.toString() ?? '',
+						workspaceId: resolveWorkspaceIdentity().canonicalId,
 						repoId: workspace?.name ?? '',
 					});
 					totals.documents += Number(result.imported_documents ?? 0);

@@ -1,4 +1,4 @@
-import { createHash, randomUUID } from 'node:crypto';
+import { randomUUID } from 'node:crypto';
 import * as vscode from 'vscode';
 import { DashboardPanel } from './dashboard';
 import { organizeConversation } from './organizer';
@@ -6,6 +6,7 @@ import { formatConnectedSearchContext } from './search-connections';
 import { resolveSessionContext } from './session-context';
 import { getKnowledgeServiceConfiguration, KnowledgeServiceClient } from './service-client';
 import { recordServiceResolution, resolveServiceUrl } from './service-resolver';
+import { resolveWorkspaceIdentity } from './scope';
 import { SidebarProvider } from './sidebar';
 import { KnowledgeStore } from './store';
 import { organizeCopilotHistory } from './transcript';
@@ -29,8 +30,7 @@ function registerRenamedCommand(id: string, handler: (...args: any[]) => any): v
 }
 
 function workspaceId(): string {
-	const roots = vscode.workspace.workspaceFolders?.map((folder) => folder.uri.toString()).sort().join('|') ?? 'empty-workspace';
-	return createHash('sha256').update(roots).digest('hex').slice(0, 20);
+	return resolveWorkspaceIdentity().canonicalId;
 }
 
 function sessionId(chatContext: vscode.ChatContext): string {
@@ -46,7 +46,8 @@ function sessionId(chatContext: vscode.ChatContext): string {
 }
 
 async function memoryContext(service: KnowledgeServiceClient, store: KnowledgeStore, currentSessionId: string, query: string): Promise<string> {
-	const serviceResults = await service.search(query, embed(query), { workspaceId: workspaceId(), sessionId: currentSessionId }, 6);
+	const identity = resolveWorkspaceIdentity();
+	const serviceResults = await service.search(query, embed(query), { workspaceId: identity.canonicalId, sessionId: currentSessionId, workspaceAliases: identity.aliases }, 6);
 	if (serviceResults) {
 		return serviceResults.length
 			? formatConnectedSearchContext(serviceResults)
@@ -108,6 +109,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
 					CONTEXT_RECALL_SERVICE_URL: resolution.url,
 					CONTEXT_RECALL_SNAPSHOT: vscode.Uri.joinPath(context.globalStorageUri, 'context-recall.json').fsPath,
 					CONTEXT_RECALL_WORKSPACE_ID: workspaceId(),
+					CONTEXT_RECALL_WORKSPACE_ALIASES: resolveWorkspaceIdentity().aliases.join(','),
 				},
 				String(context.extension.packageJSON.version),
 			);

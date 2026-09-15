@@ -1,0 +1,39 @@
+{
+  "capturedAt": "2026-09-14T07:58:06.033Z",
+  "metrics": {
+    "hitAt1": 0,
+    "precisionAtK": 0.013888888888888888,
+    "recallAtK": 0.05555555555555555,
+    "smokeRate": 0,
+    "noResultAccuracy": 1,
+    "supersededLeakage": 5,
+    "diversityRate": 1,
+    "pageEvidenceCoverage": 0.13114754098360656,
+    "casesScored": 24,
+    "casesTotal": 24
+  },
+  "targets": {
+    "hitAt1": 0.6,
+    "precisionAtK": 0.6,
+    "recallAtK": 0.7,
+    "noResultAccuracy": 0.9,
+    "smokeRate": 1,
+    "supersededLeakageMax": 0,
+    "diversityRate": 0.85,
+    "pageEvidenceCoverage": 0.8
+  },
+  "note": "由 baseline-retrieval-2026-09-14.json 抽取；--compare evals/baseline.json 用于拦截回退",
+  "comparable": [
+    "hitAt1",
+    "precisionAtK",
+    "smokeRate",
+    "noResultAccuracy",
+    "supersededLeakage"
+  ],
+  "notComparable": {
+    "diversityRate": "指标口径 2026-09-14 改为“不同文档数足够时才计分”，与基线不可比",
+    "technicalTop3PageCoverage": "本次新增指标，无基线",
+    "recallAtK": "分母口径 2026-09-14 改为 keyPages/文档覆盖，与基线不可比",
+    "documentRecallAtK": "本次新增指标，无基线"
+  }
+}

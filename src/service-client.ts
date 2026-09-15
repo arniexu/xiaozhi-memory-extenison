@@ -68,7 +68,9 @@ export function rankServiceSearchResults(query: string, result: ServiceSearchRes
 		semanticScore: semanticScores.get(memory.id),
 	}));
 	return rankRetrievalResults(query, [
-		{ items: semanticMemories, name: 'semantic', weight: 1.4, relevanceScore: (item) => item.semanticScore },
+		// 语义通道是 256 维 FNV 哈希词袋，不是真嵌入：实测域内外分数区间重叠，
+		// 因此权重从 1.4 降到与 lexical 持平，避免噪声通道主导排序。
+		{ items: semanticMemories, name: 'semantic', weight: 1.0, relevanceScore: (item) => item.semanticScore },
 		{ items: result.lexical ?? [], name: 'lexical', weight: 1.2 },
 		{ items: result.graph ?? [], name: 'graph', weight: 0.8, requireTermOverlap: true },
 	], limit);
@@ -145,7 +147,7 @@ export class KnowledgeServiceClient {
 		}
 	}
 
-	async search(query: string, embedding: number[], scope: { workspaceId: string; sessionId: string }, limit = 6): Promise<ServiceMemory[] | undefined> {
+	async search(query: string, embedding: number[], scope: { workspaceId: string; sessionId: string; workspaceAliases?: string[] }, limit = 6): Promise<ServiceMemory[] | undefined> {
 		const health = await this.health();
 		if (!health.available) {
 			if (health.mode === 'service') {
@@ -157,7 +159,10 @@ export class KnowledgeServiceClient {
 			query,
 			embedding,
 			workspace_id: scope.workspaceId,
+			workspace_ids: scope.workspaceAliases ?? [],
 			session_id: scope.sessionId,
+			min_similarity: 0.35,
+			per_document_limit: 2,
 			limit,
 		});
 		return rankServiceSearchResults(query, result, limit);

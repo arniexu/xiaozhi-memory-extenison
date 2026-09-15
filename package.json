@@ -2,7 +2,7 @@
   "name": "memory",
   "displayName": "Context Recall",
   "description": "A cross-project engineering memory and context retrieval assistant for VS Code",
-  "version": "0.3.22",
+  "version": "0.3.23",
   "publisher": "xuqj-local",
   "engines": {
     "vscode": "^1.103.0"
@@ -153,6 +153,8 @@
     "package": "npm run check-types && npm run lint && node esbuild.js --production",
     "test:mcp": "npm run package && node scripts/test-mcp.mjs",
     "test:continuity": "npm run compile-tests && node scripts/evaluate-session-continuity.mjs",
+
+    "test:retrieval": "npm run compile-tests && node scripts/evaluate-retrieval.mjs",
     "compile-tests": "tsc -p . --outDir out",
     "watch-tests": "tsc -p . -w --outDir out",
     "pretest": "npm run compile-tests && npm run compile && npm run lint",

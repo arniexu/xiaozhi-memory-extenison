@@ -47,6 +47,7 @@ const backend = (process.env.CONTEXT_RECALL_BACKEND ?? process.env.KNOWLEDGE_AGE
 const serviceUrl = (process.env.CONTEXT_RECALL_SERVICE_URL ?? process.env.KNOWLEDGE_AGENT_SERVICE_URL ?? 'http://127.0.0.1:8765').replace(/\/+$/, '');
 const snapshotPath = process.env.CONTEXT_RECALL_SNAPSHOT ?? process.env.KNOWLEDGE_AGENT_SNAPSHOT ?? '';
 const workspaceId = process.env.CONTEXT_RECALL_WORKSPACE_ID ?? process.env.KNOWLEDGE_AGENT_WORKSPACE_ID ?? '';
+const workspaceAliases = (process.env.CONTEXT_RECALL_WORKSPACE_ALIASES ?? '').split(',').map((item) => item.trim()).filter(Boolean);
 
 async function requestJson<T>(path: string, body?: unknown): Promise<T> {
 	const controller = new AbortController();
@@ -74,7 +75,7 @@ function mergeServiceResults(result: ServiceSearchResponse, query: string, limit
 		semanticScore: semanticScores.get(memory.id),
 	}));
 	return rankRetrievalResults(query, [
-		{ items: semanticMemories, name: 'semantic', weight: 1.4, relevanceScore: (item) => item.semanticScore },
+		{ items: semanticMemories, name: 'semantic', weight: 1.0, relevanceScore: (item) => item.semanticScore },
 		{ items: result.lexical ?? [], name: 'lexical', weight: 1.2 },
 		{ items: result.graph ?? [], name: 'graph', weight: 0.8, requireTermOverlap: true },
 	], limit) as SearchItem[];
@@ -121,7 +122,10 @@ async function searchKnowledge(query: string, limit: number): Promise<{ backend:
 				query,
 				embedding: embed(query),
 				workspace_id: workspaceId,
+				workspace_ids: workspaceAliases,
 				session_id: '',
+				min_similarity: 0.35,
+				per_document_limit: 2,
 				limit,
 			});
 			const results = mergeServiceResults(response, query, limit);

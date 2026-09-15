@@ -1,6 +1,7 @@
 import * as vscode from 'vscode';
 import { connectServiceSearchResults, formatSearchConnection } from './search-connections';
 import { KnowledgeServiceClient } from './service-client';
+import { resolveWorkspaceIdentity } from './scope';
 import { KnowledgeStore } from './store';
 import { ValueMetrics } from './value-metrics';
 import { embed } from './vector';
@@ -74,7 +75,8 @@ export class SidebarProvider implements vscode.WebviewViewProvider {
 		let searchError = '';
 		if (query) {
 			try {
-				serviceResults = await this.service.search(query, embed(query), { workspaceId: '', sessionId: '' }, 8);
+				const identity = resolveWorkspaceIdentity();
+				serviceResults = await this.service.search(query, embed(query), { workspaceId: identity.canonicalId, sessionId: '', workspaceAliases: identity.aliases }, 8);
 			} catch (error) {
 				searchError = error instanceof Error ? error.message : String(error);
 			}

@@ -1,5 +1,12 @@
 # Change Log
 
+## 0.3.23
+
+- Unify workspace identity: chat, sidebar, dashboard and the MCP server now share one canonical workspace key plus its alias set (URI, path, basename, hashes), so retrieval is no longer limited to the half of the corpus that the calling path happened to write. Live reachability probe: 0/40 to 32/40.
+- Send `workspace_ids`, `min_similarity` and `per_document_limit` with every search so the service can match historical scopes and keep page-level evidence in the head of the result list.
+- Lower the semantic channel weight from 1.4 to 1.0: the local 256-dimension FNV hash bag is not a learned embedding, and its similarity bands overlap between in-domain and out-of-domain queries.
+
+
 ## 0.3.19
 
 - Rebuild page text from PDF text-item coordinates so table rows survive extraction: items are clustered by Y into rows, ordered by X, and large column gaps become ` | ` cell separators.

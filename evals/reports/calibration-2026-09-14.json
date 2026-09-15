@@ -1,0 +1,69 @@
+{
+  "capturedAt": "2026-09-14T08:26:16.905Z",
+  "values": [
+    0.5,
+    1,
+    2,
+    4
+  ],
+  "rows": [
+    {
+      "pageBoost": 0.5,
+      "hitAt1": 0.5,
+      "precisionAtK": 0.4791666666666667,
+      "recallAtK": 0.42427248677248675,
+      "smokeRate": 1,
+      "noResultAccuracy": 1,
+      "supersededLeakage": 0,
+      "diversityRate": 1,
+      "pageEvidenceCoverage": 0.2945205479452055,
+      "technicalTop3PageCoverage": 0.5,
+      "casesScored": 24,
+      "casesTotal": 24
+    },
+    {
+      "pageBoost": 1,
+      "hitAt1": 0.8333333333333334,
+      "precisionAtK": 0.5416666666666666,
+      "recallAtK": 0.4312169312169312,
+      "smokeRate": 1,
+      "noResultAccuracy": 1,
+      "supersededLeakage": 0,
+      "diversityRate": 1,
+      "pageEvidenceCoverage": 0.3561643835616438,
+      "technicalTop3PageCoverage": 0.725,
+      "casesScored": 24,
+      "casesTotal": 24
+    },
+    {
+      "pageBoost": 2,
+      "hitAt1": 0.8888888888888888,
+      "precisionAtK": 0.5486111111111112,
+      "recallAtK": 0.4312169312169312,
+      "smokeRate": 1,
+      "noResultAccuracy": 1,
+      "supersededLeakage": 0,
+      "diversityRate": 1,
+      "pageEvidenceCoverage": 0.363013698630137,
+      "technicalTop3PageCoverage": 0.775,
+      "casesScored": 24,
+      "casesTotal": 24
+    },
+    {
+      "pageBoost": 4,
+      "hitAt1": 0.8888888888888888,
+      "precisionAtK": 0.5486111111111112,
+      "recallAtK": 0.4312169312169312,
+      "smokeRate": 1,
+      "noResultAccuracy": 1,
+      "supersededLeakage": 0,
+      "diversityRate": 1,
+      "pageEvidenceCoverage": 0.363013698630137,
+      "technicalTop3PageCoverage": 0.775,
+      "casesScored": 24,
+      "casesTotal": 24
+    }
+  ],
+  "winner": 2,
+  "viableCount": 4
+}
