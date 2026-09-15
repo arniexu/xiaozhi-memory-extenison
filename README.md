@@ -35,7 +35,7 @@ Fallback data is persisted under the extension's VS Code `globalStorageUri`. Ser
 4. Continue the conversation normally. The participant is sticky, so `@recall` does not need to be repeated. Every completed turn is stored and indexed.
 5. Run `Context Recall: Open Data Overview` from the Command Palette, or use `@recall /overview`.
 
-Use `knowledgeAgent.backend` to select `auto`, `service`, or `local`, and `knowledgeAgent.serviceUrl` to change the default `http://127.0.0.1:8765` endpoint. Run `Context Recall: Sync Local Data To Layered Service` for an explicit additive synchronization. Existing local data remains available as a fallback. The `knowledgeAgent.*` identifiers are retained for compatibility with existing settings, shortcuts, and stored data.
+Use `contextRecall.backend` to select `auto`, `service`, or `local`, and `contextRecall.serviceUrl` to change the default service endpoint. Run `Context Recall: Sync Local Data To Layered Service` for an explicit additive synchronization. Existing local data remains available as a fallback. The legacy `knowledgeAgent.*` identifiers are retained as compatibility aliases and still apply when the new keys are unset.
 
 The Activity Bar view includes a hybrid search box and result panel for graph, semantic, lexical, and local evidence. The full overview shows sessions, turns, vector coverage, knowledge nodes, relationships, confidence state, recent organization activity, vector search, and a graph view.
 
@@ -81,6 +81,81 @@ The overview also has an **Import documents** entry. It extracts each PDF page, 
 After a document is indexed, Context Recall asks the active chat model to read a bounded set of evenly sampled excerpts and propose canonical entities, their alternate surface forms, and the relationships this document states. Extraction is anchored to the originating chunk IDs, so every resulting node and relationship keeps its evidence. Proposals are merged into the local snapshot and synced additively to the layered service once per import.
 
 This is what makes cross-document discovery work. A document that only produced `Document` and `DocumentChunk` nodes stays isolated; once documents contribute entities, two documents that mention the same entity are related, and later imports link into that shared vocabulary automatically. Extraction is best-effort: an unreadable excerpt is skipped, a cancelled import keeps whatever was already indexed, and if no chat model is available the import still completes with structure, provenance, and vectors intact.
+
+## Measured Capability
+
+The numbers below are reproducible measurements, not claims. They come from a fixed
+24-case evaluation set plus a 40-sample reachability probe, run against a live
+layered service.
+
+### How To Reproduce
+
+```bash
+npm run test:retrieval                                  # 24-case retrieval evaluation
+node scripts/evaluate-retrieval.mjs --reachability      # per-caller reachability probe
+node scripts/evaluate-retrieval.mjs --compare evals/baseline.json   # fail on regression
+node scripts/calibrate-ranking.mjs                      # page-evidence prior calibration grid
+```
+
+Inputs are `evals/retrieval-golden.json` (cases, per-case intent, ground-truth
+document pages, thresholds) and `evals/reachability-probe.json` (40 evenly sampled
+memories). Reports are written to `evals/reports/`. A run exits non-zero when a
+gated metric misses its target or regresses against `evals/baseline.json`.
+
+Ground truth for technical cases is "any document page whose text contains the
+query term", extracted read-only from the memory database, so precision and recall
+are measured against the corpus rather than against a hand-picked sample.
+
+### Retrieval Quality (2026-09-14, service v0.1.7)
+
+| Metric | Baseline | Current | Gate |
+| --- | --- | --- | --- |
+| Reachability, chat / MCP path | 0/40 (0%) | **32/40 (80%)** | >= 80% |
+| Reachability, dashboard | 17/40 (42.5%) | 33/40 (82.5%) | - |
+| hit@1, technical + decision cases | 0.000 | **0.889** | >= 0.60 |
+| Document recall@K | - | **0.800** | >= 0.70 |
+| Chinese query smoke (阈值 / 寄存器 / 误报) | 0/3 | **3/3** | 3/3 |
+| No-result accuracy, unrelated prompts | 1.000 | **1.000** | = 1.000 |
+| Retired-memory leakage | 5 | **0** | = 0 |
+| Top-8 diversity | - | **1.000** | >= 0.85 |
+| Precision@K | 0.014 | 0.549 | 0.60 (not met) |
+| Top-3 page-evidence coverage | - | 0.775 | 0.80 (not met) |
+
+Corpus at measurement time: 18,184 stored records of which 5,576 were active,
+searchable memory, 4 indexed PDF documents, 5,920 knowledge-graph nodes.
+
+Reachability is measured by querying each sampled memory with its own text and
+checking whether it comes back in the top 8 — it is "can this be found at all",
+not "does the answer look reasonable".
+
+### How Retrieval Scopes A Query
+
+Scope is a ranking boundary, not a hard partition. A caller supplies its canonical
+workspace key plus every alias the same workspace may have been stored under (URI,
+path, basename, hash), and the service merges the scoped and global candidate sets
+by score while preferring in-scope results. This is what moved chat-path
+reachability from 0% to 80%: before the change, a caller could only ever see the
+fraction of the corpus that its own identity convention happened to write.
+
+### Known Limits
+
+- The semantic channel is a 256-dimensional FNV hash bag, not a learned embedding.
+  Its in-domain and out-of-domain similarity bands overlap, so the channel carries
+  the same weight as lexical retrieval (1.0), and hits below `min_similarity`
+  (default 0.35) are dropped. Local vector generation is what keeps document and
+  session content from needing an embedding service.
+- `Precision@K` and top-3 page-evidence coverage miss their gates. A single global
+  page-evidence prior cannot serve both technical questions (page-level evidence
+  should lead) and decision questions (a memory should lead); the fix is a
+  two-class query intent routed by the caller, recorded as a design decision and
+  not yet implemented.
+- Documents are indexed at page-chunk level. Schematic connectivity (which
+  component connects to which through which signal) is not modeled.
+- `recallAtK` is reported as a diagnostic only: for terms that occur on hundreds of
+  pages, recall against the full relevant set is not meaningful for a top-K
+  retriever, so document-level recall is the gated metric.
+- On a database created before the Chinese character index existed, run
+  `knowledge-agent-service reindex-cjk` once after upgrading the service.
 
 ## Independence And Preservation
 
