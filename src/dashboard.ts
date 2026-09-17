@@ -54,7 +54,7 @@ export class DashboardPanel {
 
 		this.panel = vscode.window.createWebviewPanel(
 			'contextRecall.dashboard',
-			'Context Recall Overview',
+			'OpenBMC 知识助手 Overview',
 			vscode.ViewColumn.One,
 			{
 				enableScripts: true,
@@ -152,7 +152,7 @@ export class DashboardPanel {
 
 	private async exportData(): Promise<void> {
 		const target = await vscode.window.showSaveDialog({
-			title: 'Export Context Recall Data',
+			title: 'Export OpenBMC 知识助手 Data',
 			filters: { JSON: ['json'] },
 			defaultUri: vscode.Uri.file('context-recall-export.json'),
 		});
@@ -165,7 +165,7 @@ export class DashboardPanel {
 
 	private async importData(): Promise<void> {
 		const selected = await vscode.window.showOpenDialog({
-			title: 'Import Context Recall Or Continuity Data',
+			title: 'Import OpenBMC 知识助手 Or Continuity Data',
 			canSelectMany: false,
 			filters: { 'Supported data': ['json', 'jsonl'], JSON: ['json'], 'JSON Lines': ['jsonl'] },
 		});
@@ -176,12 +176,12 @@ export class DashboardPanel {
 			const imported = parseImportData(await readFile(selected[0].fsPath, 'utf8'));
 			if (imported.kind === 'snapshot') {
 				await this.store.importSnapshot(imported.snapshot);
-				void vscode.window.showInformationMessage('Context Recall snapshot imported.');
+				void vscode.window.showInformationMessage('OpenBMC 知识助手 snapshot imported.');
 			} else {
 				const workspace = vscode.workspace.getWorkspaceFolder(selected[0]) ?? vscode.workspace.workspaceFolders?.[0];
 				const result = await vscode.window.withProgress({
 					location: vscode.ProgressLocation.Notification,
-					title: `Context Recall: importing ${imported.decisions.length} Continuity decisions`,
+					title: `OpenBMC 知识助手: importing ${imported.decisions.length} Continuity decisions`,
 				}, () => this.service.importContinuity({
 					decisions: imported.decisions,
 					embeddings: imported.decisions.map((decision) => ({
@@ -204,7 +204,7 @@ export class DashboardPanel {
 
 	private async importDocuments(): Promise<void> {
 		const selected = await vscode.window.showOpenDialog({
-			title: 'Upload PDF Evidence To Context Recall',
+			title: 'Upload PDF Evidence To OpenBMC 知识助手',
 			canSelectMany: true,
 			filters: { 'PDF documents': ['pdf'] },
 		});
@@ -216,7 +216,7 @@ export class DashboardPanel {
 			const [model] = await vscode.lm.selectChatModels({ vendor: 'copilot' });
 			const totals = await vscode.window.withProgress({
 				location: vscode.ProgressLocation.Notification,
-				title: 'Context Recall: importing PDF evidence',
+				title: 'OpenBMC 知识助手: importing PDF evidence',
 				cancellable: true,
 			}, async (progress, token) => {
 				const totals = { documents: 0, chunks: 0, created: 0, updated: 0, skipped: 0, nodes: 0, edges: 0 };
@@ -286,12 +286,12 @@ export class DashboardPanel {
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src ${webview.cspSource} data:; style-src ${webview.cspSource}; script-src 'nonce-${token}';">
 	<link rel="stylesheet" href="${styleUri}">
-	<title>Context Recall Overview</title>
+	<title>OpenBMC 知识助手 Overview</title>
 </head>
 <body>
 	<header class="topbar">
 		<div>
-			<p class="eyebrow">CONTEXT RECALL</p>
+			<p class="eyebrow">OPENBMC 知识助手</p>
 			<h1>Data Overview</h1>
 		</div>
 		<div class="topbar-controls">

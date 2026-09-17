@@ -1,8 +1,8 @@
 {
   "name": "memory",
-  "displayName": "Context Recall",
+  "displayName": "OpenBMC 知识助手",
   "description": "A cross-project engineering memory and context retrieval assistant for VS Code",
-  "version": "0.3.23",
+  "version": "0.3.24",
   "publisher": "xuqj-local",
   "engines": {
     "vscode": "^1.103.0"
@@ -19,33 +19,33 @@
     "mcpServerDefinitionProviders": [
       {
         "id": "contextRecall.mcpServers",
-        "label": "Context Recall"
+        "label": "OpenBMC 知识助手"
       }
     ],
     "commands": [
       {
         "command": "contextRecall.startChat",
-        "title": "Context Recall: Start Chat",
+        "title": "OpenBMC 知识助手: Start Chat",
         "icon": "$(comment-discussion)"
       },
       {
         "command": "contextRecall.openDashboard",
-        "title": "Context Recall: Open Data Overview",
+        "title": "OpenBMC 知识助手: Open Data Overview",
         "icon": "$(graph)"
       },
       {
         "command": "contextRecall.refreshSidebar",
-        "title": "Context Recall: Refresh Overview",
+        "title": "OpenBMC 知识助手: Refresh Overview",
         "icon": "$(refresh)"
       },
       {
         "command": "contextRecall.organizeCopilotSessions",
-        "title": "Context Recall: Organize All Copilot Sessions",
+        "title": "OpenBMC 知识助手: Organize All Copilot Sessions",
         "icon": "$(sparkle)"
       },
       {
         "command": "contextRecall.syncService",
-        "title": "Context Recall: Sync Local Data To Layered Service",
+        "title": "OpenBMC 知识助手: Sync Local Data To Layered Service",
         "icon": "$(sync)"
       }
     ],
@@ -53,7 +53,7 @@
       "activitybar": [
         {
           "id": "contextRecall",
-          "title": "Context Recall",
+          "title": "OpenBMC 知识助手",
           "icon": "media/activitybar-probe.png"
         }
       ]
@@ -92,7 +92,7 @@
       ]
     },
     "configuration": {
-      "title": "Context Recall",
+      "title": "OpenBMC 知识助手",
       "properties": {
         "contextRecall.backend": {
           "type": "string",
@@ -107,7 +107,7 @@
         "contextRecall.serviceUrl": {
           "type": "string",
           "default": "http://127.0.0.1:8765",
-          "description": "Base URL of the independent Context Recall service."
+          "description": "Base URL of the independent companion service."
         },
         "knowledgeAgent.backend": {
           "type": "string",
@@ -131,8 +131,8 @@
     "chatParticipants": [
       {
         "id": "contextRecall.chat",
-        "name": "recall",
-        "fullName": "Context Recall",
+        "name": "openbmc",
+        "fullName": "OpenBMC 知识助手",
         "description": "A cross-project engineering memory assistant with persistent sessions, hybrid recall, and evidence-linked knowledge.",
         "isSticky": true,
         "commands": [

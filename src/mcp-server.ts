@@ -239,7 +239,7 @@ function textResult(value: unknown) {
 const server = new McpServer({ name: 'context-recall', version: '0.3.0' });
 
 server.registerTool('knowledge_search', {
-	title: 'Search Context Recall',
+	title: 'Search OpenBMC 知识助手',
 	description: 'Search persistent technical knowledge before answering. Combines Neo4j relationships, SQLite FTS5, and semantic vectors, with the extension snapshot as an offline fallback.',
 	inputSchema: {
 		query: z.string().min(1).describe('Natural-language technical search query'),
@@ -249,13 +249,13 @@ server.registerTool('knowledge_search', {
 }, async ({ query, limit }) => textResult(await searchKnowledge(query, limit)));
 
 server.registerTool('knowledge_status', {
-	title: 'Inspect Context Recall Status',
-	description: 'Report the active Context Recall backend and safe record counts without exposing credentials.',
+	title: 'Inspect OpenBMC 知识助手 Status',
+	description: 'Report the active OpenBMC 知识助手 backend and safe record counts without exposing credentials.',
 	annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false },
 }, async () => textResult(await knowledgeStatus()));
 
 server.registerTool('session_context', {
-	title: 'Restore Context Recall Session Context',
+	title: 'Restore OpenBMC 知识助手 Session Context',
 	description: 'Return bounded structured state, recent turns, and evidence-linked knowledge for one session. A returned context is not proof that the Host injected it into a model request.',
 	inputSchema: {
 		sessionId: z.string().min(1).optional().describe('Session ID; defaults to the most recently updated session in the current workspace'),
@@ -264,6 +264,6 @@ server.registerTool('session_context', {
 }, async ({ sessionId }) => textResult(await sessionContext(sessionId)));
 
 server.connect(new StdioServerTransport()).catch((error: unknown) => {
-	console.error('Context Recall MCP server failed:', error);
+	console.error('OpenBMC 知识助手 MCP server failed:', error);
 	process.exitCode = 1;
 });

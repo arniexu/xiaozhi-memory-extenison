@@ -1,14 +1,14 @@
 #!/usr/bin/env node
 /**
- * 命名一致性检查器（方案 B：单名制 Context Recall）
+ * 命名一致性检查器（单名制：OpenBMC 知识助手）
  *
  * 用途：小步快跑改名时，每一步都能立刻验证"改干净了没有"。
  * 用法：node scripts/check-naming.mjs [--json]
  * 退出码：发现任何遗留旧名 → 1；干净 → 0
  *
  * 判据（人看得到 vs 机器标识）：
- *   - 人类可见：一律 "Context Recall"（chat 入口 @recall 保持不变）
- *   - 机器标识：一律 context-recall / contextRecall.*
+ *   - 人类可见：一律 "OpenBMC 知识助手"（chat 入口 @openbmc）
+ *   - 机器标识：一律保持 context-recall / contextRecall.* 不变（改名不改 ID，含扩展 ID "memory"）
  */
 
 import { readFileSync, readdirSync } from 'node:fs';
@@ -20,7 +20,7 @@ const json = (p) => JSON.parse(readFileSync(join(root, p), 'utf8'));
 
 /** 目标 vs 遗留：`target` 是终态应当使用的写法 */
 const RULES = [
-  { id: 'ext-id',          target: 'name: "context-recall"',            legacy: /^\s*"name"\s*:\s*"memory"/m },
+  // 扩展 ID 有意保持 "memory"（xuqj-local.memory）：改名不改 ID，避免 globalStorage 与安装身份漂移（2026-09-17 决定）。
   { id: 'command-ns',      target: 'contextRecall.*',                   legacy: /knowledgeAgent\./ },
   { id: 'setting-ns',      target: 'contextRecall.*',                   legacy: /"knowledgeAgent\./ },
   { id: 'provider-id',     target: 'contextRecall.mcpServers',          legacy: /"knowledgeAgent\.mcpServers"/ },
@@ -37,6 +37,7 @@ const ALLOW = [
   { when: /^src\/extension\.ts$/, match: /legacyId|MCP_PROVIDER_ID|affectsConfiguration\('knowledgeAgent|旧 `knowledgeAgent/, reason: '兼容别名与双监听（S6 删除）' },
   { when: /^src\/mcp-server\.ts$/, match: /KNOWLEDGE_AGENT_/, reason: '兼容读取旧环境变量（S6 删除）' },
   { when: /^src\/store\.ts$/, match: /legacy|LEGACY_SNAPSHOT_FILENAME|旧快照文件/, reason: '兼容旧快照文件名与迁移注释（S6 删除）' },
+  { when: /^src\/scope\.ts$/, match: /knowledge-agent-service/, reason: '服务仓库真实目录名（机器标识，不随品牌改名）' },
 ];
 
 const bucket = { unexpected: new Map(), allowed: new Map() };
@@ -73,14 +74,63 @@ for (const file of readdirSync(srcDir)) {
   scan(`src/${file}`, readFileSync(join(srcDir, file), 'utf8'));
 }
 
+// 2b) 用户可见文案不得残留旧品牌（区分大小写；context-recall / CONTEXT_RECALL_ 等机器标识不受影响）。
+// 有意保留旧名称的历史材料（CHANGELOG 历史条目、docs/ui-design/、evals/、自动生成文件、*.code-workspace）不在扫描范围。
+const EXPECTED_BRAND = 'OpenBMC 知识助手';
+const scanVisibleBrand = (file, text) => {
+  text.split('\n').forEach((line, index) => {
+    if (!/Context[ ]Recall|CONTEXT[ ]RECALL/.test(line)) return;
+    bucket.unexpected.set(`${file}:${index + 1}`, {
+      file,
+      line: index + 1,
+      rules: ['brand-stale'],
+      target: EXPECTED_BRAND,
+      snippet: line.trim().slice(0, 96),
+    });
+  });
+};
+const walk = (dir) => readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
+  const path = join(dir, entry.name);
+  return entry.isDirectory() ? walk(path) : [path];
+});
+const visibleScanTargets = [
+  'package.json',
+  'README.md',
+  'website/index.html',
+  'media/dashboard.js',
+  'media/sidebar.js',
+  'docs/decision-reference-design.md',
+  '.github/copilot-instructions.md',
+  '.github/agents/context-recall-china-commercial.agent.md',
+  '.github/agents/context-recall-story-ui.agent.md',
+];
+for (const file of visibleScanTargets) {
+  scanVisibleBrand(file, readFileSync(join(root, file), 'utf8'));
+}
+for (const path of walk(join(root, 'src'))) {
+  if (path.endsWith('.ts')) scanVisibleBrand(path.slice(root.length + 1), readFileSync(path, 'utf8'));
+}
+if (pkg.displayName !== EXPECTED_BRAND) {
+  bucket.unexpected.set('package.json:displayName', {
+    file: 'package.json', line: 3, rules: ['brand-expected'], target: `displayName = ${EXPECTED_BRAND}`, snippet: String(pkg.displayName),
+  });
+}
+const chatName = pkg.contributes?.chatParticipants?.[0]?.name;
+if (chatName !== 'openbmc') {
+  bucket.unexpected.set('package.json:chatParticipant.name', {
+    file: 'package.json', line: 134, rules: ['handle-expected'], target: 'chatParticipant.name = openbmc', snippet: String(chatName),
+  });
+}
+
 const unexpected = [...bucket.unexpected.values()].sort((a, b) => a.file.localeCompare(b.file) || a.line - b.line);
 const allowed = [...bucket.allowed.values()].sort((a, b) => a.file.localeCompare(b.file) || a.line - b.line);
 
-// 3) 人类可见文案自查：应当出现 "Context Recall" / "recall"，不应出现别的产品名
+// 3) 人类可见文案自查：应为 "OpenBMC 知识助手" / @openbmc
 const visible = [
   ['displayName', pkg.displayName],
   ['description', pkg.description],
   ...(pkg.contributes?.commands ?? []).map((c) => [`command.title:${c.command}`, c.title]),
+  ...(pkg.contributes?.mcpServerDefinitionProviders ?? []).map((p) => [`mcpProvider.label:${p.id}`, p.label]),
   ...(pkg.contributes?.viewsContainers?.activitybar ?? []).map((v) => [`viewContainer.title:${v.id}`, v.title]),
   ...(pkg.contributes?.chatParticipants ?? []).flatMap((p) => [
     [`chatParticipant.name:${p.id}`, p.name],
@@ -89,7 +139,7 @@ const visible = [
 ];
 
 const report = {
-  target: 'Context Recall (single-name)',
+  target: 'OpenBMC 知识助手 (single-name)',
   status: unexpected.length === 0 ? 'CLEAN' : 'PENDING_RENAME',
   unexpectedTotal: unexpected.length,
   allowedTotal: allowed.length,
@@ -120,7 +170,7 @@ if (process.argv.includes('--json')) {
     }
     console.log();
   }
-  console.log('  人可见文案（应为 Context Recall / @recall）:');
+  console.log('  人可见文案（应为 OpenBMC 知识助手 / @openbmc）:');
   for (const { field, value } of report.visibleNames) {
     console.log(`    ${field.padEnd(46)} ${value}`);
   }

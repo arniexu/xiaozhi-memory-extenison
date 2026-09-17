@@ -52,7 +52,7 @@ export function parseImportData(text: string): ParsedImport {
 	}
 	const decisions = decisionsFrom(parsed);
 	if (!decisions) {
-		throw new Error('Unsupported import format. Select a Context Recall snapshot or Continuity decisions JSON/JSONL file.');
+		throw new Error('Unsupported import format. Select an OpenBMC 知识助手 snapshot or Continuity decisions JSON/JSONL file.');
 	}
 	if (!decisions.length) {
 		throw new Error('The Continuity import contains no decisions');

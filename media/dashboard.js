@@ -125,7 +125,7 @@ function renderSessions(state) {
 		<div class="session">
 			<strong>${escapeHtml(session.title)}</strong>
 			<div>${session.turnIds.length} turns · ${new Date(session.updatedAt).toLocaleString()}</div>
-		</div>`).join('') : '<div class="empty">Start a conversation with @recall to create the first session.</div>';
+		</div>`).join('') : '<div class="empty">Start a conversation with @openbmc to create the first session.</div>';
 }
 
 function renderDistribution(state) {

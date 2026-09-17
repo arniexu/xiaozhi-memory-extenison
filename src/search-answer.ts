@@ -25,7 +25,7 @@ export async function synthesizeSearchAnswer(query: string, evidence: PresentedS
 	const evidenceText = evidence.slice(0, 8).map((item, index) =>
 		`[${index + 1}] Title: ${item.title}\nContent: ${item.answer}\nSource: ${item.sourceLabel}\nEvidence count: ${item.evidenceCount}`,
 	).join('\n\n');
-	const prompt = `You are Context Recall, a rigorous context retrieval assistant. Answer the user's question using the retrieved evidence below.
+	const prompt = `You are OpenBMC 知识助手, a rigorous context retrieval assistant. Answer the user's question using the retrieved evidence below.
 
 Requirements:
 - Use only the supplied evidence. Do not add external knowledge or speculate.

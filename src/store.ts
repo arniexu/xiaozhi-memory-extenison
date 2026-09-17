@@ -87,7 +87,7 @@ async function migrateLegacySnapshot(directory: string, current: string): Promis
 		return;
 	}
 	await copyFile(legacy, current);
-	console.info(`Context Recall: migrated snapshot ${LEGACY_SNAPSHOT_FILENAME} -> ${SNAPSHOT_FILENAME}`);
+	console.info(`OpenBMC 知识助手: migrated snapshot ${LEGACY_SNAPSHOT_FILENAME} -> ${SNAPSHOT_FILENAME}`);
 }
 
 export class KnowledgeStore {

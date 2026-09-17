@@ -1,5 +1,11 @@
 # Change Log
 
+## 0.3.24
+
+- Rename the product and all user-facing surfaces to OpenBMC 知识助手.
+- Change the sticky chat participant from `@recall` to `@openbmc`.
+- Preserve existing command, configuration, storage, and environment identifiers for compatibility.
+
 ## 0.3.23
 
 - Unify workspace identity: chat, sidebar, dashboard and the MCP server now share one canonical workspace key plus its alias set (URI, path, basename, hashes), so retrieval is no longer limited to the half of the corpus that the calling path happened to write. Live reachability probe: 0/40 to 32/40.

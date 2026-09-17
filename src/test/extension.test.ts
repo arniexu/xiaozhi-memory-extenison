@@ -104,7 +104,7 @@ suite('Extension Test Suite', () => {
 	});
 
 	test('hybrid ranking rejects graph matches on generic query terms', () => {
-		const results = rankRetrievalResults('Context Recall retrieval quality', [
+		const results = rankRetrievalResults('OpenBMC 知识助手 retrieval quality', [
 			{
 				name: 'graph',
 				weight: 0.8,
@@ -114,7 +114,7 @@ suite('Extension Test Suite', () => {
 			{
 				name: 'lexical',
 				weight: 1.2,
-				items: [{ id: 'memory', summary: 'Context Recall retrieval quality benchmark' }],
+				items: [{ id: 'memory', summary: 'OpenBMC 知识助手 retrieval quality benchmark' }],
 			},
 		], 8);
 

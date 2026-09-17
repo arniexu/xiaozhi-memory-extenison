@@ -17,7 +17,7 @@ const PARTICIPANT_ID = 'contextRecall.chat';
 const MCP_PROVIDER_ID = 'contextRecall.mcpServers';
 
 /**
- * 命名迁移（单名制 Context Recall）：`contextRecall.*` 是唯一对外 id。
+ * 命名迁移（v0.3.6 单名制）：`contextRecall.*` 是唯一对外 id。
  * 旧 `knowledgeAgent.*` 只注册为兼容别名，且不再出现在 contributes.commands，
  * 因此命令面板不会出现重复项；待迁移完成后可直接删掉别名注册。
  */
@@ -62,7 +62,7 @@ async function memoryContext(service: KnowledgeServiceClient, store: KnowledgeSt
 
 async function modelMessages(service: KnowledgeServiceClient, store: KnowledgeStore, currentSessionId: string, query: string, retrievalQuery: string): Promise<vscode.LanguageModelChatMessage[]> {
 	const sessionContext = store.getSessionContext(currentSessionId);
-	const instructions = `You are Context Recall, a persistent technical collaborator inside VS Code.
+	const instructions = `You are OpenBMC 知识助手, a persistent technical collaborator inside VS Code.
 Answer the user directly and distinguish stored evidence from inference. Use the retrieved context only when relevant. Treat VERIFIED CONNECTIONS as explicit graph or shared-evidence relationships; do not invent causal links between otherwise separate items. Never claim that retrieved context is automatically verified.
 
 WORKING SESSION CONTEXT:
@@ -98,9 +98,9 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
 			// 服务可能只监听某个具体网卡地址；配置不可达时探测候选地址，并落盘便于排查。
 			const resolution = await resolveServiceUrl(configuration.url);
 			await recordServiceResolution(context.globalStorageUri.fsPath, resolution);
-			console.info(`Context Recall MCP definition requested (backend=${configuration.mode}, service=${resolution.url}, source=${resolution.source}).`);
+			console.info(`OpenBMC 知识助手 MCP definition requested (backend=${configuration.mode}, service=${resolution.url}, source=${resolution.source}).`);
 			const definition = new vscode.McpStdioServerDefinition(
-				'Context Recall',
+				'OpenBMC 知识助手',
 				process.execPath,
 				[vscode.Uri.joinPath(context.extensionUri, 'dist', 'mcp-server.js').fsPath],
 				{
@@ -117,7 +117,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
 			return [definition];
 		},
 	});
-	console.info(`Context Recall MCP provider registered: ${MCP_PROVIDER_ID}`);
+	console.info(`OpenBMC 知识助手 MCP provider registered: ${MCP_PROVIDER_ID}`);
 	const mcpConfigurationListener = vscode.workspace.onDidChangeConfiguration((event) => {
 		if (event.affectsConfiguration('contextRecall.backend') || event.affectsConfiguration('contextRecall.serviceUrl')
 			|| event.affectsConfiguration('knowledgeAgent.backend') || event.affectsConfiguration('knowledgeAgent.serviceUrl')) {
@@ -128,7 +128,7 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
 
 	const startChat = registerRenamedCommand('contextRecall.startChat', async () => {
 		await vscode.commands.executeCommand('workbench.action.chat.open', {
-			query: '@recall ',
+			query: '@openbmc ',
 			isPartialQuery: true,
 		});
 	});
@@ -138,47 +138,47 @@ export async function activate(context: vscode.ExtensionContext): Promise<void> 
 		try {
 			const result = await vscode.window.withProgress({
 				location: vscode.ProgressLocation.Notification,
-				title: 'Context Recall: syncing layered context',
+				title: 'OpenBMC 知识助手: syncing layered context',
 			}, () => service.sync(store.getSnapshot()));
 			await sidebar.refresh();
-			void vscode.window.showInformationMessage(`Context Recall layered sync completed: ${JSON.stringify(result)}`);
+			void vscode.window.showInformationMessage(`OpenBMC 知识助手 layered sync completed: ${JSON.stringify(result)}`);
 		} catch (error) {
-			void vscode.window.showErrorMessage(`Context Recall sync failed: ${error instanceof Error ? error.message : String(error)}`);
+			void vscode.window.showErrorMessage(`OpenBMC 知识助手 sync failed: ${error instanceof Error ? error.message : String(error)}`);
 		}
 	});
 	const organizeSessions = registerRenamedCommand('contextRecall.organizeCopilotSessions', async () => {
 		try {
 			const [model] = await vscode.lm.selectChatModels({ vendor: 'copilot' });
 			if (!model) {
-				void vscode.window.showErrorMessage('Context Recall could not find an available Copilot language model.');
+				void vscode.window.showErrorMessage('OpenBMC 知识助手 could not find an available Copilot language model.');
 				return;
 			}
 			const result = await vscode.window.withProgress({
 				location: vscode.ProgressLocation.Notification,
-				title: 'Context Recall: organizing Copilot sessions',
+				title: 'OpenBMC 知识助手: organizing Copilot sessions',
 				cancellable: true,
 			}, (progress, token) => organizeCopilotHistory(context.globalStorageUri.fsPath, store, model, progress, token));
 			await dashboard.refresh();
 			await sidebar.refresh();
 			const status = result.cancelled ? 'stopped' : 'finished';
 			void vscode.window.showInformationMessage(
-				`Context Recall ${status}: ${result.organized} organized, ${result.failed} failed, ${result.discovered} discovered.`,
+				`OpenBMC 知识助手 ${status}: ${result.organized} organized, ${result.failed} failed, ${result.discovered} discovered.`,
 			);
 		} catch (error) {
-			void vscode.window.showErrorMessage(`Context Recall could not organize sessions: ${error instanceof Error ? error.message : String(error)}`);
+			void vscode.window.showErrorMessage(`OpenBMC 知识助手 could not organize sessions: ${error instanceof Error ? error.message : String(error)}`);
 		}
 	});
 	const sidebarRegistration = vscode.window.registerWebviewViewProvider('contextRecall.sidebar', sidebar);
 	const statusBar = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100);
-	statusBar.name = 'Context Recall';
-	statusBar.text = '$(database) Context Recall';
-	statusBar.tooltip = 'Start a sticky Context Recall chat';
+	statusBar.name = 'OpenBMC 知识助手';
+	statusBar.text = '$(database) OpenBMC 知识助手';
+	statusBar.tooltip = 'Start a sticky OpenBMC 知识助手 chat';
 	statusBar.command = 'contextRecall.startChat';
 	statusBar.show();
 	const participant = vscode.chat.createChatParticipant(PARTICIPANT_ID, async (request, chatContext, stream, token) => {
 		if (request.command === 'overview') {
 			await dashboard.show();
-			stream.markdown('Opened the Context Recall data overview.');
+			stream.markdown('Opened the OpenBMC 知识助手 data overview.');
 			return { metadata: { sessionId: sessionId(chatContext) } };
 		}
 

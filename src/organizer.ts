@@ -126,7 +126,7 @@ export async function organizeSession(
 	evidenceTurnIds: string[],
 	token: vscode.CancellationToken,
 ): Promise<{ summary: string; nodes: KnowledgeNode[]; edges: KnowledgeEdge[] }> {
-	const prompt = `You are Context Recall organizing one historical coding session into durable local knowledge.
+	const prompt = `You are OpenBMC 知识助手 organizing one historical coding session into durable local knowledge.
 Return JSON only, with this shape:
 {"summary":"2-4 sentence outcome-focused session summary","nodes":[{"kind":"fact|decision|concept|person|project|tool|workflow","label":"canonical entity name","summary":"one durable claim","confidence":"low|medium|high","tags":["tag"]}],"edges":[{"from":"exact node label","to":"exact node label","type":"UPPER_SNAKE_CASE","confidence":"low|medium|high"}]}
 

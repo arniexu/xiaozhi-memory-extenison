@@ -1,4 +1,4 @@
-# Context Recall
+# OpenBMC 知识助手
 
 A cross-project engineering memory and context retrieval assistant for VS Code, with an optional independent layered-memory service.
 
@@ -17,25 +17,25 @@ The proposed routing and presentation contract for combining technical evidence 
 
 ## Data Model
 
-Context Recall deliberately keeps three data layers separate:
+OpenBMC 知识助手 deliberately keeps three data layers separate:
 
-1. **Sessions** are immutable evidence: complete user and assistant turns owned by `@recall`.
+1. **Sessions** are immutable evidence: complete user and assistant turns owned by `@openbmc`.
 2. **Vectors** are derived 256-dimensional local indexes used for recall. They are reproducible search data, not evidence or verified facts.
 3. **Knowledge graph** nodes and relationships are model-organized claims linked back to evidence turn IDs, confidence, and lifecycle status.
 
-Each `@recall` session also maintains bounded working context: its goal, current topic and phase, completed and verified work, intermediate conclusions, decisions, open issues, next steps, changed files, and evidence references. Short follow-up prompts are rewritten against this state before retrieval. If context resolution is unavailable, search falls back to the original prompt or a conservative current-topic expansion.
+Each `@openbmc` session also maintains bounded working context: its goal, current topic and phase, completed and verified work, intermediate conclusions, decisions, open issues, next steps, changed files, and evidence references. Short follow-up prompts are rewritten against this state before retrieval. If context resolution is unavailable, search falls back to the original prompt or a conservative current-topic expansion.
 
 Fallback data is persisted under the extension's VS Code `globalStorageUri`. Service data defaults to `~/.local/share/knowledge-agent-service`. No project repository files are modified.
 
 ## Use
 
 1. Start `knowledge-agent-service serve` when layered persistence is required.
-2. Click `Context Recall` in the status bar, or run `Context Recall: Start Chat` from the Command Palette.
-3. Type the first prompt in the focused Chat input. The launcher preselects `@recall` without sending a message.
-4. Continue the conversation normally. The participant is sticky, so `@recall` does not need to be repeated. Every completed turn is stored and indexed.
-5. Run `Context Recall: Open Data Overview` from the Command Palette, or use `@recall /overview`.
+2. Click `OpenBMC 知识助手` in the status bar, or run `OpenBMC 知识助手: Start Chat` from the Command Palette.
+3. Type the first prompt in the focused Chat input. The launcher preselects `@openbmc` without sending a message.
+4. Continue the conversation normally. The participant is sticky, so `@openbmc` does not need to be repeated. Every completed turn is stored and indexed.
+5. Run `OpenBMC 知识助手: Open Data Overview` from the Command Palette, or use `@openbmc /overview`.
 
-Use `contextRecall.backend` to select `auto`, `service`, or `local`, and `contextRecall.serviceUrl` to change the default service endpoint. Run `Context Recall: Sync Local Data To Layered Service` for an explicit additive synchronization. Existing local data remains available as a fallback. The legacy `knowledgeAgent.*` identifiers are retained as compatibility aliases and still apply when the new keys are unset.
+Use `contextRecall.backend` to select `auto`, `service`, or `local`, and `contextRecall.serviceUrl` to change the default service endpoint. Run `OpenBMC 知识助手: Sync Local Data To Layered Service` for an explicit additive synchronization. Existing local data remains available as a fallback. The legacy `knowledgeAgent.*` identifiers are retained as compatibility aliases and still apply when the new keys are unset.
 
 The Activity Bar view includes a hybrid search box and result panel for graph, semantic, lexical, and local evidence. The full overview shows sessions, turns, vector coverage, knowledge nodes, relationships, confidence state, recent organization activity, vector search, and a graph view.
 
@@ -43,7 +43,7 @@ Layered-service synchronization uses an extended operation timeout for full loca
 
 ### GitHub Copilot MCP Tools
 
-The extension registers an embedded `Context Recall` MCP server directly with VS Code. GitHub Copilot Chat can discover and invoke these read-only tools in Agent mode without a separate `.vscode/mcp.json` entry:
+The extension registers an embedded `OpenBMC 知识助手` MCP server directly with VS Code. GitHub Copilot Chat can discover and invoke these read-only tools in Agent mode without a separate `.vscode/mcp.json` entry:
 
 - `knowledge_search` searches Neo4j relationships, SQLite FTS5 records, and semantic vectors, then falls back to the extension snapshot when the service is unavailable in `auto` mode.
 - `knowledge_status` reports the active backend and safe record counts without returning credentials or database paths.
@@ -53,15 +53,15 @@ Tool execution remains controlled by VS Code and GitHub Copilot Chat. Returning 
 
 ### Organize Existing Copilot Sessions
 
-Open the Context Recall Activity Bar view and select **Organize Copilot sessions**, or run **Context Recall: Organize All Copilot Sessions** from the Command Palette. Context Recall discovers local Copilot Chat transcripts, keeps a bounded evidence excerpt for each session, and uses an available VS Code Copilot model to create session summaries, durable knowledge nodes, and evidence-linked relationships.
+Open the OpenBMC 知识助手 Activity Bar view and select **Organize Copilot sessions**, or run **OpenBMC 知识助手: Organize All Copilot Sessions** from the Command Palette. OpenBMC 知识助手 discovers local Copilot Chat transcripts, keeps a bounded evidence excerpt for each session, and uses an available VS Code Copilot model to create session summaries, durable knowledge nodes, and evidence-linked relationships.
 
 The operation is incremental and cancellable. Running it again skips sessions that were already organized and resumes sessions that previously failed. Original transcripts remain in VS Code storage and are not modified.
 
 ## Import And Export
 
-The overview has one **Import data** entry. It automatically recognizes a compatible Context Recall snapshot, a Continuity decisions JSON array, or a Continuity JSONL file.
+The overview has one **Import data** entry. It automatically recognizes a compatible OpenBMC 知识助手 snapshot, a Continuity decisions JSON array, or a Continuity JSONL file.
 
-Context Recall snapshots replace the local fallback snapshot after validation. A snapshot contains:
+OpenBMC 知识助手 snapshots replace the local fallback snapshot after validation. A snapshot contains:
 
 - `sessions` and `turns`
 - `vectors`
@@ -78,7 +78,7 @@ Repeated knowledge organization preserves the original creation time and merges 
 
 The overview also has an **Import documents** entry. It extracts each PDF page, splits it into overlapping page chunks, and imports chunk text, provenance, and vectors into the layered service. The service then links every chunk against the entities it already knows, which is deterministic, model-free, and reproducible.
 
-After a document is indexed, Context Recall asks the active chat model to read a bounded set of evenly sampled excerpts and propose canonical entities, their alternate surface forms, and the relationships this document states. Extraction is anchored to the originating chunk IDs, so every resulting node and relationship keeps its evidence. Proposals are merged into the local snapshot and synced additively to the layered service once per import.
+After a document is indexed, OpenBMC 知识助手 asks the active chat model to read a bounded set of evenly sampled excerpts and propose canonical entities, their alternate surface forms, and the relationships this document states. Extraction is anchored to the originating chunk IDs, so every resulting node and relationship keeps its evidence. Proposals are merged into the local snapshot and synced additively to the layered service once per import.
 
 This is what makes cross-document discovery work. A document that only produced `Document` and `DocumentChunk` nodes stays isolated; once documents contribute entities, two documents that mention the same entity are related, and later imports link into that shared vocabulary automatically. Extraction is best-effort: an unreadable excerpt is skipped, a cancelled import keeps whatever was already indexed, and if no chat model is available the import still completes with structure, provenance, and vectors intact.
 
@@ -173,7 +173,7 @@ The extension uses the language model selected in the VS Code Chat UI for answer
 
 ## Privacy Boundary
 
-The extension stores conversations directed to its own `@recall` participant. Historical organization is an explicit user action that reads local Copilot transcript files, copies only a bounded evidence excerpt, and applies common credential redaction before model processing or persistence. It does not modify the source transcripts.
+The extension stores conversations directed to its own `@openbmc` participant. Historical organization is an explicit user action that reads local Copilot transcript files, copies only a bounded evidence excerpt, and applies common credential redaction before model processing or persistence. It does not modify the source transcripts.
 
-VS Code's default-participant API is private to approved extensions. Context Recall therefore uses a one-click launcher plus the stable sticky-participant behavior instead of relying on private APIs or silently intercepting other chats.
+VS Code's default-participant API is private to approved extensions. OpenBMC 知识助手 therefore uses a one-click launcher plus the stable sticky-participant behavior instead of relying on private APIs or silently intercepting other chats.
 ---

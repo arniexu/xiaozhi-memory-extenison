@@ -151,7 +151,7 @@ export class KnowledgeServiceClient {
 		const health = await this.health();
 		if (!health.available) {
 			if (health.mode === 'service') {
-				throw new Error(`Context Recall service is unavailable at ${health.url}`);
+				throw new Error(`Layered service is unavailable at ${health.url}`);
 			}
 			return undefined;
 		}
@@ -171,7 +171,7 @@ export class KnowledgeServiceClient {
 	async sync(snapshot: KnowledgeSnapshot): Promise<Record<string, unknown>> {
 		const health = await this.health();
 		if (!health.available) {
-			throw new Error(`Context Recall service is unavailable at ${health.url}`);
+			throw new Error(`Layered service is unavailable at ${health.url}`);
 		}
 		return requestJson<Record<string, unknown>>(new URL(`${health.url}/v1/import/extension`), 'POST', snapshot, 120_000);
 	}
@@ -185,7 +185,7 @@ export class KnowledgeServiceClient {
 	}): Promise<Record<string, unknown>> {
 		const health = await this.health();
 		if (!health.available) {
-			throw new Error(`Context Recall service is unavailable at ${health.url}`);
+			throw new Error(`Layered service is unavailable at ${health.url}`);
 		}
 		return requestJson<Record<string, unknown>>(new URL(`${health.url}/v1/import/continuity`), 'POST', {
 			decisions: input.decisions,
@@ -204,7 +204,7 @@ export class KnowledgeServiceClient {
 	}): Promise<Record<string, unknown>> {
 		const health = await this.health();
 		if (!health.available) {
-			throw new Error(`Context Recall service is unavailable at ${health.url}`);
+			throw new Error(`Layered service is unavailable at ${health.url}`);
 		}
 		return requestJson<Record<string, unknown>>(new URL(`${health.url}/v1/import/documents`), 'POST', {
 			documents: input.documents,

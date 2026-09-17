@@ -4,20 +4,20 @@ Status: proposed; the routing, ranking, and presentation behavior in this docume
 
 ## Goal
 
-Context Recall should help an engineer answer two different questions without treating them as the same source of truth:
+OpenBMC 知识助手 should help an engineer answer two different questions without treating them as the same source of truth:
 
 1. What do technical sources say about this subject?
 2. What did this project previously decide, under which constraints, and is that decision still applicable?
 
-Technical documents and source-linked facts provide evidence. Continuity provides project decisions and constraints. Context Recall retrieves and relates both, but it does not silently promote a historical decision into the current decision.
+Technical documents and source-linked facts provide evidence. Continuity provides project decisions and constraints. OpenBMC 知识助手 retrieves and relates both, but it does not silently promote a historical decision into the current decision.
 
 ## Ownership Boundary
 
 - Continuity remains the system of record for project decisions, status, and supersession.
-- Context Recall stores searchable, additive projections of Continuity records and links them to technical evidence.
+- OpenBMC 知识助手 stores searchable, additive projections of Continuity records and links them to technical evidence.
 - The extension owns intent detection, query construction, result presentation, and explicit user controls.
 - The service owns lifecycle-aware filtering, scoped hybrid retrieval, ranking inputs, and relationship traversal.
-- A new or changed project decision is written through Continuity, not through the read-only Context Recall MCP server.
+- A new or changed project decision is written through Continuity, not through the read-only OpenBMC 知识助手 MCP server.
 
 ## Intent Routing
 
@@ -29,7 +29,7 @@ Trigger technical retrieval when at least one of these conditions is true:
 
 - The current prompt explicitly requests search, a definition, a specification, a page, a register, a protocol, an interface, a threshold, or a command.
 - The current prompt matches an active entity label or alias from the service catalogue.
-- The user invokes an explicit Context Recall search command.
+- The user invokes an explicit OpenBMC 知识助手 search command.
 
 Entity labels and aliases form the primary terminology catalogue. Tags are ranking metadata and are not terminology aliases by default.
 

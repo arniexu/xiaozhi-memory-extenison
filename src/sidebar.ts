@@ -132,11 +132,11 @@ export class SidebarProvider implements vscode.WebviewViewProvider {
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src ${webview.cspSource}; script-src 'nonce-${token}';">
 	<link rel="stylesheet" href="${styleUri}">
-	<title>Context Recall</title>
+	<title>OpenBMC 知识助手</title>
 </head>
 <body>
 	<header>
-		<span>CONTEXT RECALL</span><h1>Layered intelligence</h1><div id="backend" class="backend"></div>
+		<span>OPENBMC 知识助手</span><h1>Layered intelligence</h1><div id="backend" class="backend"></div>
 	</header>
 	<section class="search-section" aria-labelledby="searchTitle">
 		<div class="section-title"><h2 id="searchTitle">Search knowledge</h2><span id="searchSummary">Graph · Semantic · FTS5</span></div>
