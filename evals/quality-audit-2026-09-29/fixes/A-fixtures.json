@@ -1,0 +1,65 @@
+{
+  "capturedAt": "2026-09-29T02:37:29.205Z",
+  "service": "http://10.112.229.254:8765",
+  "goldenCapturedAt": "2026-09-14",
+  "limit": 8,
+  "expected": [
+    {
+      "prefix": "639866_GNR_EDS-A_Rev_2_4 (1).pdf",
+      "canonical": "639866_GNR_EDS-A_Rev_2_4.pdf",
+      "mapped": true,
+      "channel": "lexical",
+      "sample": {
+        "doc": "639866_GNR_EDS-A_Rev_2_4 (1).pdf",
+        "page": 22,
+        "summary": "639866_GNR_EDS-A_Rev_2_4 (1).pdf - page 22"
+      },
+      "error": null,
+      "returned": {
+        "lexical": 8,
+        "semantic": 8,
+        "graph": 8
+      }
+    },
+    {
+      "prefix": "776846_Intel® Server System Integrated OpenBMC_Rev1_0 3.pdf",
+      "canonical": "776846_Intel® Server System Integrated OpenBMC_Rev1_0 3.pdf",
+      "mapped": true,
+      "channel": "lexical",
+      "sample": {
+        "doc": "776846_Intel® Server System Integrated OpenBMC_Rev1_0 3 (1).pdf",
+        "page": 10,
+        "summary": "776846_Intel® Server System Integrated OpenBMC_Rev1_0 3 (1).pdf - page 10"
+      },
+      "error": null,
+      "returned": {
+        "lexical": 8,
+        "semantic": 8,
+        "graph": 8
+      }
+    },
+    {
+      "prefix": "GemMountain PAS V1.0.pdf",
+      "canonical": "GemMountain PAS V1.0.pdf",
+      "mapped": true,
+      "channel": "lexical",
+      "sample": {
+        "doc": "GemMountain PAS V1.0.pdf",
+        "page": 58,
+        "summary": "GemMountain PAS V1.0.pdf - page 58"
+      },
+      "error": null,
+      "returned": {
+        "lexical": 8,
+        "semantic": 8,
+        "graph": 8
+      }
+    }
+  ],
+  "mapped": {
+    "count": 3,
+    "total": 3,
+    "completeRate": 1,
+    "complete": true
+  }
+}

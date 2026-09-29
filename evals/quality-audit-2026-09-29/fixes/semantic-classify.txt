@@ -1,0 +1,3 @@
+{"query":"如何烤面包","semantic_ids":["knowledge:e6ebf34f8a0322ad339c","knowledge:cbc2e2c50b435925abae"],"semantic_suppressed":2,"semantic_memories":[]}
+{"query":"烤面包通用流程","semantic_ids":["knowledge:cb1b93daa0216c0e7566","knowledge:cbc2e2c50b435925abae","knowledge:6601cf70895d4d95d84d"],"semantic_suppressed":3,"semantic_memories":[]}
+{"query":"面包烘焙","semantic_ids":["knowledge:25b0da6f42ec47cf390d","knowledge:cbc2e2c50b435925abae","knowledge:e6ebf34f8a0322ad339c","knowledge:6601cf70895d4d95d84d","knowledge:dd578bb0344f1dac23d8"],"semantic_suppressed":5,"semantic_memories":[]}

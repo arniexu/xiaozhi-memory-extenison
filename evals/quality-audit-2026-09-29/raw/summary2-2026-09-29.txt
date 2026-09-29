@@ -1,0 +1,138 @@
+
+##### pollution-baking | 如何烤面包 (match_mode=cjk scope_match=global scope_suppressed=0)
+ -- lexical 5
+    * 将如何烤面包视为独立检索请求 [status=active score=0.009016]
+    * 跨文档链接与查询无关（固定注入全局 top-N）怎么修的？ [status=active score=0.008871]
+    * P2 缺陷：验收测试残留污染生产记忆，且 63% 的数据只写不读 [status=active score=0.00873]
+    * P1 缺陷：所谓语义通道是 256 维 FNV 哈希词袋，且被赋予最高权重 [status=active score=0.008594]
+ -- semantic 2
+    * {"source_id": "knowledge:e6ebf34f8a0322ad339c", "source_kind": "knowledge", "score": 0.6267831729860629, "meta [status=None score=0.6267831729860629]
+    * {"source_id": "knowledge:cbc2e2c50b435925abae", "source_kind": "knowledge", "score": 0.3986205016599684, "meta [status=None score=0.3986205016599684]
+ -- semantic_memories 2
+    * 将如何烤面包视为独立检索请求 [status=active score=None]
+    * 烤面包 [status=active score=None]
+ -- graph 5
+    * 将如何烤面包视为独立检索请求 [status=active score=2]
+    * 跨文档链接与查询无关（固定注入全局 top-N）怎么修的？ [status=active score=1]
+    * 为什么 document_links 的修复没有解决「问如何烤面包却得到面包做法」？ [status=active score=1]
+    * P1 缺陷：所谓语义通道是 256 维 FNV 哈希词袋，且被赋予最高权重 [status=active score=1]
+
+##### pollution-baking-flow | 烤面包通用流程 (match_mode=cjk scope_match=global scope_suppressed=0)
+ -- lexical 1
+    * 烤面包通用流程 [status=active score=0.009016]
+ -- semantic 3
+    * {"source_id": "knowledge:cb1b93daa0216c0e7566", "source_kind": "knowledge", "score": 0.5548112317561421, "meta [status=None score=0.5548112317561421]
+    * {"source_id": "knowledge:cbc2e2c50b435925abae", "source_kind": "knowledge", "score": 0.44286104594710896, "met [status=None score=0.44286104594710896]
+    * {"source_id": "knowledge:6601cf70895d4d95d84d", "source_kind": "knowledge", "score": 0.39840953246229543, "met [status=None score=0.39840953246229543]
+ -- semantic_memories 3
+    * 烤面包通用流程 [status=active score=None]
+    * 烤面包 [status=active score=None]
+    * 基础面包烘焙流程 [status=active score=None]
+ -- graph 1
+    * 烤面包通用流程 [status=active score=1]
+
+##### unrelated-gibberish | zzz qqq 无意义 (match_mode=all+any+cjk scope_match=global scope_suppressed=0)
+ -- lexical 3
+    * 跨文档链接与查询无关（固定注入全局 top-N）怎么修的？ [status=active score=0.032787]
+    * P1 缺陷：所谓语义通道是 256 维 FNV 哈希词袋，且被赋予最高权重 [status=active score=0.008871]
+    * context-recall 记忆质量审计：18089 条记忆里，VS Code chat/MCP 路径实际只可见 101 条（1.8%），根因是什么？ [status=active score=0.00873]
+ -- semantic 3
+    * {"source_id": "knowledge:2ac78705ebcecf52cdd7", "source_kind": "knowledge", "score": 0.36927447293799825, "met [status=None score=0.36927447293799825]
+    * {"source_id": "knowledge:3c997ddd4c9751d50243", "source_kind": "knowledge", "score": 0.35856858280031806, "met [status=None score=0.35856858280031806]
+    * {"source_id": "knowledge:b684175eb5c613cc6d26", "source_kind": "knowledge", "score": 0.35355338984065154, "met [status=None score=0.35355338984065154]
+ -- semantic_memories 3
+    * obmc-intel-pfr-image-native [status=active score=None]
+    * OpenBMC Software Stack [status=active score=None]
+    * image_types_intel_pfr.bbclass [status=active score=None]
+ -- graph 3
+    * 跨文档链接与查询无关（固定注入全局 top-N）怎么修的？ [status=active score=1]
+    * context-recall 记忆质量审计：18089 条记忆里，VS Code chat/MCP 路径实际只可见 101 条（1.8%），根因是什么？ [status=active score=1]
+    * P1 缺陷：所谓语义通道是 256 维 FNV 哈希词袋，且被赋予最高权重 [status=active score=1]
+
+##### links-gibberish | qqq zzz 无意义 (match_mode=all+any+cjk scope_match=global scope_suppressed=0)
+ -- lexical 3
+    * 跨文档链接与查询无关（固定注入全局 top-N）怎么修的？ [status=active score=0.032787]
+    * P1 缺陷：所谓语义通道是 256 维 FNV 哈希词袋，且被赋予最高权重 [status=active score=0.008871]
+    * context-recall 记忆质量审计：18089 条记忆里，VS Code chat/MCP 路径实际只可见 101 条（1.8%），根因是什么？ [status=active score=0.00873]
+ -- semantic 3
+    * {"source_id": "knowledge:2ac78705ebcecf52cdd7", "source_kind": "knowledge", "score": 0.36927447293799825, "met [status=None score=0.36927447293799825]
+    * {"source_id": "knowledge:3c997ddd4c9751d50243", "source_kind": "knowledge", "score": 0.35856858280031806, "met [status=None score=0.35856858280031806]
+    * {"source_id": "knowledge:b684175eb5c613cc6d26", "source_kind": "knowledge", "score": 0.35355338984065154, "met [status=None score=0.35355338984065154]
+ -- semantic_memories 3
+    * obmc-intel-pfr-image-native [status=active score=None]
+    * OpenBMC Software Stack [status=active score=None]
+    * image_types_intel_pfr.bbclass [status=active score=None]
+ -- graph 3
+    * 跨文档链接与查询无关（固定注入全局 top-N）怎么修的？ [status=active score=1]
+    * context-recall 记忆质量审计：18089 条记忆里，VS Code chat/MCP 路径实际只可见 101 条（1.8%），根因是什么？ [status=active score=1]
+    * P1 缺陷：所谓语义通道是 256 维 FNV 哈希词袋，且被赋予最高权重 [status=active score=1]
+
+ALIAS: abbrev docs=3, full-name docs=4, overlap=2
+ overlap names: ['639866_GNR_EDS-A_Rev_2_4 (1).pdf', 'Whitley BMC Firmware EPS_Rev1_0.pdf']
+
+GRAPH items for gibberish: ['跨文档链接与查询无关（固定注入全局 top-N）怎么修的？ [status=active score=1]', 'context-recall 记忆质量审计：18089 条记忆里，VS Code chat/MCP 路径实际只可见 101 条（1.8%），根因是什么？ [status=active score=1]', 'P1 缺陷：所谓语义通道是 256 维 FNV 哈希词袋，且被赋予最高权重 [status=active score=1]']
+
+REACHABILITY row[0] full: {"caller": "chat-multiroot", "workspaceId": "1486067004dac72425f2", "reachable": 30, "total": 40, "misses": ["document:16f12e61df472e7cb2f23346c9d6050", "document:16f12e61df472e7cb2f23346c9d6050", "document:16f12e61df472e7cb2f23346c9d6050"]}
+samples n= 40 sample[0]= {"id": "document:16f12e61df472e7cb2f23346c9d60503bf8d0630bdf31675ceab851f645d8ff8:page:100:chunk:0", "kind": "document-page", "query": "R | Intel Server System Integrated OpenBMC* (Birch Stream OpenBMC* Fir"}
+Traceback (most recent call last):
+  File "<stdin>", line 41, in <module>
+AttributeError: 'dict' object has no attribute 'search'
+SAMPLES per doc8: {'16f12e61': 8, '5994dbfc': 2, 'ea2a23f8': 10, '?': 20}
+ACTIVE CORPUS DOCS (5):
+   - 639866_GNR_EDS-A_Rev_2_4 (1).pdf
+   - 776846_Intel® Server System Integrated OpenBMC_Rev1_0 3 (1).pdf
+   - EGS_Commercial_OpenBMC_Firmware EPS v1_6 (1).pdf
+   - GemMountain PAS V1.0.pdf
+   - Whitley BMC Firmware EPS_Rev1_0.pdf
+golden corpusAtCapture: {'total': 18184, 'searchable': 5576}
+golden thresholds: {"hitAt1": 0.6, "precisionAtK": 0.6, "noResultAccuracy": 0.9, "smokeRate": 1.0, "supersededLeakageMax": 0, "diversityRate": 0.85, "technicalTop3PageCoverage": 0.8, "pageEvidenceCoverageDiagnosticOnly": 0.8, "documentRecallAtK": 0.7, "recallAtKDiagnosticOnly": 0.7}
+EXPECT DOC REFS total=30 drift=11 missing=0
+HIT@1 base=13/21=0.619 | with (1)-normalization=13/21=0.619
+   RECOVERED: ('tech-tsod-temperature', '776846_Intel® Server System Integrated OpenBMC_Rev1_0 3 (1).pdf - page 107')
+   RECOVERED: ('tech-crashdump-autonomous', '776846_Intel® Server System Integrated OpenBMC_Rev1_0 3 (1).pdf - page 195')
+   RECOVERED: ('tech-redfish-eventservice', '776846_Intel® Server System Integrated OpenBMC_Rev1_0 3 (1).pdf - page 300')
+   RECOVERED: ('tech-spd-bus', '776846_Intel® Server System Integrated OpenBMC_Rev1_0 3 (1).pdf - page 70')
+   RECOVERED: ('global-tsod', '776846_Intel® Server System Integrated OpenBMC_Rev1_0 3 (1).pdf - page 107')
+   RECOVERED: ('legacy-tsod', '776846_Intel® Server System Integrated OpenBMC_Rev1_0 3 (1).pdf - page 107')
+DRIFT-affected cases (11): ['global-tsod', 'legacy-tsod', 'tech-cpld-register', 'tech-crashdump-autonomous', 'tech-mctp', 'tech-memory-mirroring', 'tech-peci-temperature', 'tech-redfish-eventservice', 'tech-smm-status', 'tech-spd-bus', 'tech-tsod-temperature']
+Traceback (most recent call last):
+  File "<stdin>", line 5, in <module>
+  File "/usr/lib/python3.10/collections/__init__.py", line 577, in __init__
+    self.update(iterable, **kwds)
+  File "/usr/lib/python3.10/collections/__init__.py", line 670, in update
+    _count_elements(self, iterable)
+  File "<stdin>", line 5, in <genexpr>
+AttributeError: 'NoneType' object has no attribute 'group'
+all-with-expect          base=13/21=0.619 adj=13/21=0.619
+no-unrelated             base=13/21=0.619 adj=13/21=0.619
+no-unrelated-no-smoke    base=10/18=0.556 adj=12/18=0.667
+recovered: ['tech-tsod-temperature', 'tech-crashdump-autonomous', 'tech-redfish-eventservice', 'tech-spd-bus', 'global-tsod', 'legacy-tsod']
+smoke cases: ['cjk-smoke-threshold', 'cjk-smoke-register', 'cjk-smoke-falsepositive'] | unrelated: ['unrelated-weather', 'unrelated-lottery', 'unrelated-quantum']
+DOC ea2a23f8 -> 639866_GNR_EDS-A_Rev_2_4 (1).pdf - page 1
+DOC 5994dbfc -> GemMountain PAS V1.0.pdf - page 1
+UNIT knowledge:0dca9f7bedffacbca3de -> ('fact', 'active', 'Intel Code of Conduct Hub', '2026-09-05T08:56:55.289Z')
+UNIT knowledge:1ce78f8c390185b9fd3d -> ('concept', 'active', 'Local LAN Discovery', '2026-09-05T08:59:08.753Z')
+UNIT knowledge:9b656b341c4f965b9ea9 -> ('concept', 'active', 'CPLD Register', '2026-09-11T15:28:26.805Z')
+missed-sample channel reachability (10): {('NONE',): 7, ('semantic', 'semantic_memories'): 2, ('semantic', 'semantic_memories', 'graph'): 1}
+  document:16f12e61df472e7cb2f23346c9d60503bf8d0630bdf31675ceab851f645d8ff8:p -> []
+  document:16f12e61df472e7cb2f23346c9d60503bf8d0630bdf31675ceab851f645d8ff8:p -> []
+  document:16f12e61df472e7cb2f23346c9d60503bf8d0630bdf31675ceab851f645d8ff8:p -> []
+  document:ea2a23f828d682e6f5e7ac2fd279403ae8a8f47fac7620cbd6d48f26d9712387:p -> []
+  document:ea2a23f828d682e6f5e7ac2fd279403ae8a8f47fac7620cbd6d48f26d9712387:p -> []
+  document:ea2a23f828d682e6f5e7ac2fd279403ae8a8f47fac7620cbd6d48f26d9712387:p -> []
+  document:ea2a23f828d682e6f5e7ac2fd279403ae8a8f47fac7620cbd6d48f26d9712387:p -> []
+  knowledge:0dca9f7bedffacbca3de -> ['semantic', 'semantic_memories']
+  knowledge:1ce78f8c390185b9fd3d -> ['semantic', 'semantic_memories', 'graph']
+  knowledge:9b656b341c4f965b9ea9 -> ['semantic', 'semantic_memories']
+=== 7 missed document-page samples: existence in DB ===
+EXISTS active | document:16f12e61df472e7cb2f23346c9d60503bf8d0630bdf31675ceab851f645d8ff8:page:100:chunk:0
+EXISTS active | document:16f12e61df472e7cb2f23346c9d60503bf8d0630bdf31675ceab851f645d8ff8:page:135:chunk:0
+EXISTS active | document:16f12e61df472e7cb2f23346c9d60503bf8d0630bdf31675ceab851f645d8ff8:page:262:chunk:0
+EXISTS active | document:ea2a23f828d682e6f5e7ac2fd279403ae8a8f47fac7620cbd6d48f26d9712387:page:127:chunk:0
+EXISTS active | document:ea2a23f828d682e6f5e7ac2fd279403ae8a8f47fac7620cbd6d48f26d9712387:page:157:chunk:0
+EXISTS active | document:ea2a23f828d682e6f5e7ac2fd279403ae8a8f47fac7620cbd6d48f26d9712387:page:231:chunk:0
+EXISTS active | document:ea2a23f828d682e6f5e7ac2fd279403ae8a8f47fac7620cbd6d48f26d9712387:page:331:chunk:0
+=== sample context: same doc, reachable pages (for contrast) ===
+EXISTS active | document:16f12e61df472e7cb2f23346c9d60503bf8d0630bdf31675ceab851f645d8ff8:page:1:chunk:0
+EXISTS active | document:ea2a23f828d682e6f5e7ac2fd279403ae8a8f47fac7620cbd6d48f26d9712387:page:1:chunk:0
+page:100 variants for 16f12e61: 4 | page:127 variants for ea2a23f8: 5

@@ -1,0 +1,4 @@
+
+> memory@0.3.24 compile-tests
+> tsc -p . --outDir out
+

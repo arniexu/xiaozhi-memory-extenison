@@ -1,0 +1,21 @@
+db: /tmp/p0-20260929/memory.copy.sqlite3
+production: no
+rule: status='active' AND id LIKE 'knowledge:%' AND (summary LIKE '%面包%' OR id IN <builtin 16-id list>)
+[1/16] id=knowledge:0bc5bc59e5e52f32f1db type=fact status=active created_at=2026-09-11T13:20:00.946Z match=id-list+keyword summary=面包烘烤温度时间
+[2/16] id=knowledge:25b0da6f42ec47cf390d type=concept status=active created_at=2026-09-11T14:57:46.454Z match=id-list+keyword summary=面包烘焙
+[3/16] id=knowledge:32b9fe36bcf3cc399434 type=fact status=active created_at=2026-09-11T13:20:00.946Z match=id-list+keyword summary=面包内部熟成温度
+[4/16] id=knowledge:451e92becddaa0ee11f3 type=fact status=active created_at=2026-09-11T14:57:46.454Z match=id-list+keyword summary=基础面包配方
+[5/16] id=knowledge:6601cf70895d4d95d84d type=workflow status=active created_at=2026-09-11T13:20:00.946Z match=id-list+keyword summary=基础面包烘焙流程
+[6/16] id=knowledge:84e4d0c0590ca5c82365 type=fact status=active created_at=2026-09-16T07:30:13.864Z match=id-list summary=验收测试污染
+[7/16] id=knowledge:914bd94df49c3089ac0a type=fact status=active created_at=2026-09-16T07:30:13.864Z match=id-list+keyword summary=烤面包知识库缺口
+[8/16] id=knowledge:ae1d4457d6d82bbdd0be type=fact status=active created_at=2026-09-16T07:30:13.864Z match=id-list summary=语义检索误召回
+[9/16] id=knowledge:cb1b93daa0216c0e7566 type=workflow status=active created_at=2026-09-16T07:30:13.864Z match=id-list+keyword summary=烤面包通用流程
+[10/16] id=knowledge:cbc2e2c50b435925abae type=concept status=active created_at=2026-09-11T13:20:00.946Z match=id-list+keyword summary=烤面包
+[11/16] id=knowledge:da7cb9f0b6391ec164a0 type=fact status=active created_at=2026-09-11T14:57:46.454Z match=id-list+keyword summary=面包熟度判断
+[12/16] id=knowledge:dd578bb0344f1dac23d8 type=fact status=active created_at=2026-09-16T07:30:13.864Z match=id-list+keyword summary=面包烘烤温度时间
+[13/16] id=knowledge:ddc7c273a80ddfc689a0 type=fact status=active created_at=2026-09-11T13:20:00.946Z match=id-list+keyword summary=面包发酵条件
+[14/16] id=knowledge:e6ebf34f8a0322ad339c type=decision status=active created_at=2026-09-16T07:30:13.864Z match=id-list+keyword summary=将如何烤面包视为独立检索请求
+[15/16] id=knowledge:f79109a9879e57262102 type=workflow status=active created_at=2026-09-11T13:21:23.460Z match=id-list+keyword summary=烤面包
+[16/16] id=knowledge:f89d0968e6bba06086d9 type=fact status=active created_at=2026-09-11T13:20:00.946Z match=id-list+keyword summary=面包常见失败点
+residues 16
+json: /tmp/p0-20260929/verify/mycopy-before.json

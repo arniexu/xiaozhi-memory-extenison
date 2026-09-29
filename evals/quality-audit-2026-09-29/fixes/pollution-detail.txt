@@ -1,0 +1,27 @@
+=== d36d1b9b detail ===
+('knowledge:d36d1b9bff6138116732', 'concept', 'active', '02f6cdd6f41ab1ab3036', '2026-09-14T08:15:21.050Z', '检索管线缺陷', '已实测：中文查询 TSOD 温度阈值 语义相似度仅 0.322，首条语义召回为“面包内部熟成温度”；无相似度下限；FTS5 unicode61 中文词元失配；/v1/search semantic 路径不过滤 status/kind；VS Code chat/MCP 仅可见 101/18089 条记忆（1.8%）。')
+('knowledge:0bc5bc59e5e52f32f1db', 'fact', 'active', '1486067004dac72425f2')
+('knowledge:25b0da6f42ec47cf390d', 'concept', 'active', '1486067004dac72425f2')
+('knowledge:32b9fe36bcf3cc399434', 'fact', 'active', '1486067004dac72425f2')
+('knowledge:451e92becddaa0ee11f3', 'fact', 'active', '1486067004dac72425f2')
+('knowledge:6601cf70895d4d95d84d', 'workflow', 'active', '1486067004dac72425f2')
+('knowledge:84e4d0c0590ca5c82365', 'fact', 'active', 'f378c72e6fdb2270b506')
+('knowledge:914bd94df49c3089ac0a', 'fact', 'active', 'f378c72e6fdb2270b506')
+('knowledge:ae1d4457d6d82bbdd0be', 'fact', 'active', 'f378c72e6fdb2270b506')
+('knowledge:cb1b93daa0216c0e7566', 'workflow', 'active', 'f378c72e6fdb2270b506')
+('knowledge:cbc2e2c50b435925abae', 'concept', 'active', '')
+('knowledge:da7cb9f0b6391ec164a0', 'fact', 'active', '1486067004dac72425f2')
+('knowledge:dd578bb0344f1dac23d8', 'fact', 'active', 'f378c72e6fdb2270b506')
+('knowledge:ddc7c273a80ddfc689a0', 'fact', 'active', '1486067004dac72425f2')
+('knowledge:e6ebf34f8a0322ad339c', 'decision', 'active', 'f378c72e6fdb2270b506')
+('knowledge:f79109a9879e57262102', 'workflow', 'active', '1486067004dac72425f2')
+('knowledge:f89d0968e6bba06086d9', 'fact', 'active', '1486067004dac72425f2')
+=== resolutions of key units ===
+knowledge:84e4d0c0590ca5c82365 | 验收测试污染 | active 记忆中残留了验收测试写入的「烤面包」（概念/工作流）和「面包烘烤温度时间」等带向量的记录。
+knowledge:ae1d4457d6d82bbdd0be | 语义检索误召回 | 典型误召回包括「TSOD 温度阈值」首条语义记忆为「面包内部熟成温度」，「crashdump 采集」首条为「烤面包」。
+knowledge:e6ebf34f8a0322ad339c | 将如何烤面包视为独立检索请求 | 将用户消息「如何烤面包」作为新的、自包含的面包烘焙检索请求处理。
+knowledge:914bd94df49c3089ac0a | 烤面包知识库缺口 | 检索到的知识库未将烤面包概念连接到经证实的完整配方或步骤，只有概念定义，且相关条目可能为验收测试污染。
+count summary-like: (14,)
+count resolution-like: (12,)
+copied memory 101654528
+copied vectors 12779520

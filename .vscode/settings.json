@@ -1,8 +1,27 @@
 // Place your settings in this file to overwrite default and user settings.
 {
     "files.exclude": {
-        "out": false, // set this to true to hide the "out" folder with the compiled JS files
-        "dist": false // set this to true to hide the "dist" folder with the compiled JS files
+        "**/.git": true,
+        "**/.svn": true,
+        "**/.hg": true,
+        "**/.DS_Store": true,
+        "**/Thumbs.db": true,
+        "out": false,
+        "dist": false,
+        "**/.vexp/daemon.pid": true,
+        "**/.vexp/daemon.sock": true,
+        "**/.vexp/daemon.pipe": true,
+        "**/.vexp/daemon.log": true,
+        "**/.vexp/vexp.log": true,
+        "**/.vexp/healthy": true,
+        "**/.vexp/mcp.port": true,
+        "**/.vexp/mcp.token": true,
+        "**/.vexp/index.db": true,
+        "**/.vexp/index.db-wal": true,
+        "**/.vexp/index.db-shm": true,
+        "**/.vexp/parent_workspace.json": true,
+        "**/.vexp/.gitignore": true,
+        "**/.vexp/.gitattributes": true
     },
     "search.exclude": {
         "out": true, // set this to false to include "out" folder in search results

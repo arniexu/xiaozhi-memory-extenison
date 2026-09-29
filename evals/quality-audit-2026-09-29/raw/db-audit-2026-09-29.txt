@@ -1,0 +1,46 @@
+TABLES: ['memory_events', 'memory_units', 'memory_units_fts', 'memory_units_fts_cjk', 'memory_units_fts_cjk_config', 'memory_units_fts_cjk_content', 'memory_units_fts_cjk_data', 'memory_units_fts_cjk_docsize', 'memory_units_fts_cjk_idx', 'memory_units_fts_config', 'memory_units_fts_content', 'memory_units_fts_data', 'memory_units_fts_docsize', 'memory_units_fts_idx', 'sqlite_sequence']
+-- memory_events n= 72114
+   cols= ['id', 'event_type', 'memory_id', 'detail_json', 'created_at']
+-- memory_units n= 20571
+   cols= ['id', 'fingerprint', 'type', 'summary', 'resolution', 'evidence_json', 'context_json', 'tags_json', 'status', 'memory_kind', 'source_refs_json', 'session_id', 'workspace_id', 'repo_id', 'created_at', 'updated_at']
+-- memory_units_fts n= 20571
+   cols= ['memory_id', 'summary', 'resolution', 'tags', 'source_refs']
+-- memory_units_fts_cjk n= 20571
+   cols= ['memory_id', 'text']
+-- memory_units_fts_cjk_config n= 1
+   cols= ['k', 'v']
+-- memory_units_fts_cjk_content n= 20571
+   cols= ['id', 'c0', 'c1']
+-- memory_units_fts_cjk_data n= 1735
+   cols= ['id', 'block']
+-- memory_units_fts_cjk_docsize n= 20571
+   cols= ['id', 'sz']
+-- memory_units_fts_cjk_idx n= 1067
+   cols= ['segid', 'term', 'pgno']
+-- memory_units_fts_config n= 1
+   cols= ['k', 'v']
+-- memory_units_fts_content n= 20571
+   cols= ['id', 'c0', 'c1', 'c2', 'c3', 'c4']
+-- memory_units_fts_data n= 2956
+   cols= ['id', 'block']
+-- memory_units_fts_docsize n= 20571
+   cols= ['id', 'sz']
+-- memory_units_fts_idx n= 1663
+   cols= ['segid', 'term', 'pgno']
+-- sqlite_sequence n= 1
+   cols= ['name', 'seq']
+MAIN TABLE: None
+== status == [('draft', 12488), ('active', 7963), ('superseded', 100), ('deprecated', 19), ('rejected', 1)]
+== memory_kind == [('raw', 11448), ('memory', 8083), ('candidate', 1040)]
+== type == [('lesson', 11224), ('fact', 5762), ('decision', 1096), ('workflow', 941), ('concept', 641), ('tool', 365), ('project', 252), ('issue', 212), ('session', 62), ('person', 16)]
+== kind x status top == [('raw', 'draft', 11448), ('memory', 'active', 7963), ('candidate', 'draft', 1040), ('memory', 'superseded', 100), ('memory', 'deprecated', 19), ('memory', 'rejected', 1)]
+== created per day >= 09-10 == [('2026-09-10', 2984), ('2026-09-11', 264), ('2026-09-12', 15), ('2026-09-13', 28), ('2026-09-14', 72), ('2026-09-16', 48), ('2026-09-17', 20), ('2026-09-18', 8), ('2026-09-20', 1257), ('2026-09-21', 47), ('2026-09-22', 8), ('2026-09-23', 5), ('2026-09-24', 934)]
+== 776846 variants == [('with(1)', 'active', 1083)]
+== 639866 variants == [('with(1)', 'active', 1553)]
+== whitley eps by day == [('2026-09-20', 'active', 1232), ('2026-09-22', 'active', 1), ('2026-09-23', 'active', 1)]
+== pollution 烤面包 == [('knowledge:cbc2e2c50b435925abae', 'concept', 'active', '2026-09-11T13:20:00.946Z', '烤面包'), ('knowledge:0bc5bc59e5e52f32f1db', 'fact', 'active', '2026-09-11T13:20:00.946Z', '面包烘烤温度时间'), ('knowledge:f79109a9879e57262102', 'workflow', 'active', '2026-09-11T13:21:23.460Z', '烤面包'), ('continuity:c05af351-b379-4bc3-970d-3c59bdadedf9', 'decision', 'active', '2026-09-11T14:52:12.729Z', '跨文档链接与查询无关（固定注入全局 top-N）怎么修的？'), ('continuity:3bbe604a-e55c-4a58-bd2f-6a0c0f9d5f6e', 'decision', 'active', '2026-09-11T15:03:43.737Z', '为什么 document_links 的修复没有解决「问如何烤面包却得到面包做法」？'), ('continuity:a6e9fae3-9f53-469a-bf54-3fc79116dd9c', 'decision', 'active', '2026-09-14T06:27:41.362Z', 'context-recall 记忆质量审计：18089 条记忆里，VS Code chat/MCP 路径实际只可见 101 条（1.8%），'), ('continuity:8bbba2b8-623d-4b29-93c0-fd8adb31ec85', 'decision', 'active', '2026-09-14T06:57:48.685Z', 'P1 缺陷：所谓语义通道是 256 维 FNV 哈希词袋，且被赋予最高权重'), ('continuity:f705999d-23b4-42af-a9d9-ab18122bdff3', 'decision', 'active', '2026-09-14T06:57:52.839Z', 'P2 缺陷：验收测试残留污染生产记忆，且 63% 的数据只写不读'), ('knowledge:cb1b93daa0216c0e7566', 'workflow', 'active', '2026-09-16T07:30:13.864Z', '烤面包通用流程'), ('knowledge:914bd94df49c3089ac0a', 'fact', 'active', '2026-09-16T07:30:13.864Z', '烤面包知识库缺口'), ('knowledge:84e4d0c0590ca5c82365', 'fact', 'active', '2026-09-16T07:30:13.864Z', '验收测试污染'), ('knowledge:ae1d4457d6d82bbdd0be', 'fact', 'active', '2026-09-16T07:30:13.864Z', '语义检索误召回')]
+== fingerprint dup (active) == [(0,)]
+== summary dup (active) == [(1559,)]
+== missed doc 16f12e61 == [('document:16f12e61df472e7cb2f23346c9d60503bf8d0630bdf31675ceab851f645d8ff8:page:1:chunk:0', '776846_Intel® Server System Integrated OpenBMC_Rev1_0 3 (1).pdf - page 1', 'active', 'memory'), ('document:16f12e61df472e7cb2f23346c9d60503bf8d0630bdf31675ceab851f645d8ff8:page:2:chunk:0', '776846_Intel® Server System Integrated OpenBMC_Rev1_0 3 (1).pdf - page 2', 'active', 'memory'), ('document:16f12e61df472e7cb2f23346c9d60503bf8d0630bdf31675ceab851f645d8ff8:page:2:chunk:1', '776846_Intel® Server System Integrated OpenBMC_Rev1_0 3 (1).pdf - page 2', 'active', 'memory'), ('document:16f12e61df472e7cb2f23346c9d60503bf8d0630bdf31675ceab851f645d8ff8:page:2:chunk:2', '776846_Intel® Server System Integrated OpenBMC_Rev1_0 3 (1).pdf - page 2', 'active', 'memory'), ('document:16f12e61df472e7cb2f23346c9d60503bf8d0630bdf31675ceab851f645d8ff8:page:2:chunk:3', '776846_Intel® Server System Integrated OpenBMC_Rev1_0 3 (1).pdf - page 2', 'active', 'memory'), ('document:16f12e61df472e7cb2f23346c9d60503bf8d0630bdf31675ceab851f645d8ff8:page:3:chunk:0', '776846_Intel® Server System Integrated OpenBMC_Rev1_0 3 (1).pdf - page 3', 'active', 'memory')]
+== events type == [('upsert', 72114)]
+== events >= 09-14 == [('2026-09-24', 'upsert', 934), ('2026-09-23', 'upsert', 2463), ('2026-09-21', 'upsert', 2498), ('2026-09-20', 'upsert', 1231), ('2026-09-17', 'upsert', 1083), ('2026-09-14', 'upsert', 226)]

@@ -1,0 +1,27 @@
+=== ACTIVE 面包/烤面包 units ===
+('knowledge:cbc2e2c50b435925abae', 'concept', 'active', '2026-09-11T13:20:00.946Z', '烤面包')
+('knowledge:6601cf70895d4d95d84d', 'workflow', 'active', '2026-09-11T13:20:00.946Z', '基础面包烘焙流程')
+('knowledge:ddc7c273a80ddfc689a0', 'fact', 'active', '2026-09-11T13:20:00.946Z', '面包发酵条件')
+('knowledge:0bc5bc59e5e52f32f1db', 'fact', 'active', '2026-09-11T13:20:00.946Z', '面包烘烤温度时间')
+('knowledge:32b9fe36bcf3cc399434', 'fact', 'active', '2026-09-11T13:20:00.946Z', '面包内部熟成温度')
+('knowledge:f89d0968e6bba06086d9', 'fact', 'active', '2026-09-11T13:20:00.946Z', '面包常见失败点')
+('knowledge:f79109a9879e57262102', 'workflow', 'active', '2026-09-11T13:21:23.460Z', '烤面包')
+('knowledge:25b0da6f42ec47cf390d', 'concept', 'active', '2026-09-11T14:57:46.454Z', '面包烘焙')
+('knowledge:451e92becddaa0ee11f3', 'fact', 'active', '2026-09-11T14:57:46.454Z', '基础面包配方')
+('knowledge:da7cb9f0b6391ec164a0', 'fact', 'active', '2026-09-11T14:57:46.454Z', '面包熟度判断')
+('continuity:c05af351-b379-4bc3-970d-3c59bdadedf9', 'decision', 'active', '2026-09-11T14:52:12.729Z', '跨文档链接与查询无关（固定注入全局 top-N）怎么修的？')
+('continuity:3bbe604a-e55c-4a58-bd2f-6a0c0f9d5f6e', 'decision', 'active', '2026-09-11T15:03:43.737Z', '为什么 document_links 的修复没有解决「问如何烤面包却得到面包做法」？')
+('continuity:a6e9fae3-9f53-469a-bf54-3fc79116dd9c', 'decision', 'active', '2026-09-14T06:27:41.362Z', 'context-recall 记忆质量审计：18089 条记忆里，VS Code chat/MCP 路径实际只可见 101 条（1.8%），')
+('continuity:8bbba2b8-623d-4b29-93c0-fd8adb31ec85', 'decision', 'active', '2026-09-14T06:57:48.685Z', 'P1 缺陷：所谓语义通道是 256 维 FNV 哈希词袋，且被赋予最高权重')
+('continuity:f705999d-23b4-42af-a9d9-ab18122bdff3', 'decision', 'active', '2026-09-14T06:57:52.839Z', 'P2 缺陷：验收测试残留污染生产记忆，且 63% 的数据只写不读')
+('knowledge:d36d1b9bff6138116732', 'concept', 'active', '2026-09-14T08:15:21.050Z', '检索管线缺陷')
+('knowledge:cb1b93daa0216c0e7566', 'workflow', 'active', '2026-09-16T07:30:13.864Z', '烤面包通用流程')
+('knowledge:914bd94df49c3089ac0a', 'fact', 'active', '2026-09-16T07:30:13.864Z', '烤面包知识库缺口')
+('knowledge:84e4d0c0590ca5c82365', 'fact', 'active', '2026-09-16T07:30:13.864Z', '验收测试污染')
+('knowledge:ae1d4457d6d82bbdd0be', 'fact', 'active', '2026-09-16T07:30:13.864Z', '语义检索误召回')
+('knowledge:e6ebf34f8a0322ad339c', 'decision', 'active', '2026-09-16T07:30:13.864Z', '将如何烤面包视为独立检索请求')
+('knowledge:dd578bb0344f1dac23d8', 'fact', 'active', '2026-09-16T07:30:13.864Z', '面包烘烤温度时间')
+=== NON-ACTIVE same filter ===
+=== sample memory_events row ===
+(72099, 'upsert') {"created": true, "memory_kind": "memory", "status": "active"} 2026-09-24T05:08:59Z
+(72100, 'upsert') {"created": true, "memory_kind": "memory", "status": "active"} 2026-09-24T05:08:59Z

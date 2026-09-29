@@ -1,0 +1,5 @@
+db: /home/xuqj/.local/share/knowledge-agent-service/memory.sqlite3
+production: yes
+rule: status='active' AND id LIKE 'knowledge:%' AND (summary LIKE '%面包%' OR id IN <builtin 16-id list>)
+residues 0
+json: /tmp/p0-20260929/verify/prod-after.json

@@ -1,0 +1,139 @@
+{
+  "db": "/home/xuqj/.local/share/knowledge-agent-service/memory.sqlite3",
+  "generated_at": "2026-09-29T04:51:35Z",
+  "rule": "status='active' AND id LIKE 'knowledge:%' AND (summary LIKE '%面包%' OR id IN <builtin 16-id list>)",
+  "summary_keyword_like": "%面包%",
+  "builtin_id_count": 16,
+  "resolution_matched": false,
+  "count": 16,
+  "residues": [
+    {
+      "id": "knowledge:0bc5bc59e5e52f32f1db",
+      "type": "fact",
+      "status": "active",
+      "created_at": "2026-09-11T13:20:00.946Z",
+      "summary": "面包烘烤温度时间",
+      "match": "id-list+keyword"
+    },
+    {
+      "id": "knowledge:25b0da6f42ec47cf390d",
+      "type": "concept",
+      "status": "active",
+      "created_at": "2026-09-11T14:57:46.454Z",
+      "summary": "面包烘焙",
+      "match": "id-list+keyword"
+    },
+    {
+      "id": "knowledge:32b9fe36bcf3cc399434",
+      "type": "fact",
+      "status": "active",
+      "created_at": "2026-09-11T13:20:00.946Z",
+      "summary": "面包内部熟成温度",
+      "match": "id-list+keyword"
+    },
+    {
+      "id": "knowledge:451e92becddaa0ee11f3",
+      "type": "fact",
+      "status": "active",
+      "created_at": "2026-09-11T14:57:46.454Z",
+      "summary": "基础面包配方",
+      "match": "id-list+keyword"
+    },
+    {
+      "id": "knowledge:6601cf70895d4d95d84d",
+      "type": "workflow",
+      "status": "active",
+      "created_at": "2026-09-11T13:20:00.946Z",
+      "summary": "基础面包烘焙流程",
+      "match": "id-list+keyword"
+    },
+    {
+      "id": "knowledge:84e4d0c0590ca5c82365",
+      "type": "fact",
+      "status": "active",
+      "created_at": "2026-09-16T07:30:13.864Z",
+      "summary": "验收测试污染",
+      "match": "id-list"
+    },
+    {
+      "id": "knowledge:914bd94df49c3089ac0a",
+      "type": "fact",
+      "status": "active",
+      "created_at": "2026-09-16T07:30:13.864Z",
+      "summary": "烤面包知识库缺口",
+      "match": "id-list+keyword"
+    },
+    {
+      "id": "knowledge:ae1d4457d6d82bbdd0be",
+      "type": "fact",
+      "status": "active",
+      "created_at": "2026-09-16T07:30:13.864Z",
+      "summary": "语义检索误召回",
+      "match": "id-list"
+    },
+    {
+      "id": "knowledge:cb1b93daa0216c0e7566",
+      "type": "workflow",
+      "status": "active",
+      "created_at": "2026-09-16T07:30:13.864Z",
+      "summary": "烤面包通用流程",
+      "match": "id-list+keyword"
+    },
+    {
+      "id": "knowledge:cbc2e2c50b435925abae",
+      "type": "concept",
+      "status": "active",
+      "created_at": "2026-09-11T13:20:00.946Z",
+      "summary": "烤面包",
+      "match": "id-list+keyword"
+    },
+    {
+      "id": "knowledge:da7cb9f0b6391ec164a0",
+      "type": "fact",
+      "status": "active",
+      "created_at": "2026-09-11T14:57:46.454Z",
+      "summary": "面包熟度判断",
+      "match": "id-list+keyword"
+    },
+    {
+      "id": "knowledge:dd578bb0344f1dac23d8",
+      "type": "fact",
+      "status": "active",
+      "created_at": "2026-09-16T07:30:13.864Z",
+      "summary": "面包烘烤温度时间",
+      "match": "id-list+keyword"
+    },
+    {
+      "id": "knowledge:ddc7c273a80ddfc689a0",
+      "type": "fact",
+      "status": "active",
+      "created_at": "2026-09-11T13:20:00.946Z",
+      "summary": "面包发酵条件",
+      "match": "id-list+keyword"
+    },
+    {
+      "id": "knowledge:e6ebf34f8a0322ad339c",
+      "type": "decision",
+      "status": "active",
+      "created_at": "2026-09-16T07:30:13.864Z",
+      "summary": "将如何烤面包视为独立检索请求",
+      "match": "id-list+keyword"
+    },
+    {
+      "id": "knowledge:f79109a9879e57262102",
+      "type": "workflow",
+      "status": "active",
+      "created_at": "2026-09-11T13:21:23.460Z",
+      "summary": "烤面包",
+      "match": "id-list+keyword"
+    },
+    {
+      "id": "knowledge:f89d0968e6bba06086d9",
+      "type": "fact",
+      "status": "active",
+      "created_at": "2026-09-11T13:20:00.946Z",
+      "summary": "面包常见失败点",
+      "match": "id-list+keyword"
+    }
+  ]
+}

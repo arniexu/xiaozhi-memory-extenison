@@ -1,0 +1,106 @@
+{
+  "capturedAt": "2026-09-29T01:46:54.189Z",
+  "caller": "chat-multiroot",
+  "checked": [
+    {
+      "id": "document:16f12e61df472e7cb2f23346c9d60503bf8d0630bdf31675ceab851f645d8ff8:page:100:chunk:0",
+      "query": "R | Intel Server System Integrated OpenBMC* (Birch Stream OpenBMC* Fir",
+      "found": {
+        "lexical": false,
+        "semantic": false,
+        "semantic_memories": false,
+        "graph": false
+      }
+    },
+    {
+      "id": "document:16f12e61df472e7cb2f23346c9d60503bf8d0630bdf31675ceab851f645d8ff8:page:135:chunk:0",
+      "query": "Sensor Monitoring—Intel Server System Integrated OpenBMC* (Birch Strea",
+      "found": {
+        "lexical": false,
+        "semantic": false,
+        "semantic_memories": false,
+        "graph": false
+      }
+    },
+    {
+      "id": "document:16f12e61df472e7cb2f23346c9d60503bf8d0630bdf31675ceab851f645d8ff8:page:262:chunk:0",
+      "query": "R Intel Server System Integrated OpenBMC* (Birch Stream OpenBMC* Firmw",
+      "found": {
+        "lexical": false,
+        "semantic": false,
+        "semantic_memories": false,
+        "graph": false
+      }
+    },
+    {
+      "id": "document:ea2a23f828d682e6f5e7ac2fd279403ae8a8f47fac7620cbd6d48f26d9712387:page:127:chunk:0",
+      "query": "Coherency and Home Agent (CHA) Functional Description—Intel ® Xeon ® 6",
+      "found": {
+        "lexical": false,
+        "semantic": false,
+        "semantic_memories": false,
+        "graph": false
+      }
+    },
+    {
+      "id": "document:ea2a23f828d682e6f5e7ac2fd279403ae8a8f47fac7620cbd6d48f26d9712387:page:157:chunk:0",
+      "query": "Power Management Functional Description—Intel ® Xeon ® 6900/6700/6500-",
+      "found": {
+        "lexical": false,
+        "semantic": false,
+        "semantic_memories": false,
+        "graph": false
+      }
+    },
+    {
+      "id": "document:ea2a23f828d682e6f5e7ac2fd279403ae8a8f47fac7620cbd6d48f26d9712387:page:231:chunk:0",
+      "query": "Reliability, Availability, and Serviceability (RAS) Functional Descrip",
+      "found": {
+        "lexical": false,
+        "semantic": false,
+        "semantic_memories": false,
+        "graph": false
+      }
+    },
+    {
+      "id": "document:ea2a23f828d682e6f5e7ac2fd279403ae8a8f47fac7620cbd6d48f26d9712387:page:331:chunk:0",
+      "query": "Secured Startup Services Module (S3M)—Intel ® Xeon ® 6900/6700/6500-Se",
+      "found": {
+        "lexical": false,
+        "semantic": false,
+        "semantic_memories": false,
+        "graph": false
+      }
+    },
+    {
+      "id": "knowledge:0dca9f7bedffacbca3de",
+      "query": "Intel Code of Conduct Hub",
+      "found": {
+        "lexical": false,
+        "semantic": true,
+        "semantic_memories": true,
+        "graph": false
+      }
+    },
+    {
+      "id": "knowledge:1ce78f8c390185b9fd3d",
+      "query": "Local LAN Discovery",
+      "found": {
+        "lexical": false,
+        "semantic": true,
+        "semantic_memories": true,
+        "graph": true
+      }
+    },
+    {
+      "id": "knowledge:9b656b341c4f965b9ea9",
+      "query": "CPLD Register",
+      "found": {
+        "lexical": false,
+        "semantic": true,
+        "semantic_memories": true,
+        "graph": false
+      }
+    }
+  ]
+}

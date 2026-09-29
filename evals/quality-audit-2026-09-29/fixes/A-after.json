@@ -1,0 +1,594 @@
+{
+  "capturedAt": "2026-09-29T02:39:27.705Z",
+  "service": "http://10.112.229.254:8765",
+  "corpusAtRun": {
+    "total": 20571,
+    "active": 7963,
+    "searchable": 7963,
+    "candidate": 1040,
+    "raw": 11448,
+    "continuity": 568
+  },
+  "goldenCapturedAt": "2026-09-14",
+  "metrics": {
+    "hitAt1": 0.8888888888888888,
+    "precisionAtK": 0.4861111111111111,
+    "recallAtK": 0.4103835978835979,
+    "smokeRate": 1,
+    "noResultAccuracy": 1,
+    "supersededLeakage": 0,
+    "diversityRate": 1,
+    "pageEvidenceCoverage": 0.5205479452054794,
+    "documentRecallAtK": 0.7333333333333333,
+    "technicalTop3PageCoverage": 0.875,
+    "casesScored": 24,
+    "casesTotal": 24
+  },
+  "targets": {
+    "hitAt1": 0.6,
+    "precisionAtK": 0.6,
+    "noResultAccuracy": 0.9,
+    "smokeRate": 1,
+    "supersededLeakageMax": 0,
+    "diversityRate": 0.85,
+    "technicalTop3PageCoverage": 0.8,
+    "pageEvidenceCoverageDiagnosticOnly": 0.8,
+    "documentRecallAtK": 0.7,
+    "recallAtKDiagnosticOnly": 0.7
+  },
+  "checks": [
+    {
+      "name": "hitAt1",
+      "passed": true,
+      "detail": "0.889 / >= 0.6"
+    },
+    {
+      "name": "precisionAtK",
+      "passed": false,
+      "detail": "0.486 / >= 0.6"
+    },
+    {
+      "name": "documentRecallAtK",
+      "passed": true,
+      "detail": "0.733 / >= 0.7"
+    },
+    {
+      "name": "smokeRate",
+      "passed": true,
+      "detail": "1.000 / >= 1"
+    },
+    {
+      "name": "noResultAccuracy",
+      "passed": true,
+      "detail": "1.000 / >= 0.9"
+    },
+    {
+      "name": "supersededLeakage",
+      "passed": true,
+      "detail": "0 / <= 0"
+    },
+    {
+      "name": "diversityRate",
+      "passed": true,
+      "detail": "1.000 / >= 0.85"
+    },
+    {
+      "name": "technicalTop3PageCoverage",
+      "passed": true,
+      "detail": "0.875 / >= 0.8"
+    }
+  ],
+  "regressions": [],
+  "cases": [
+    {
+      "id": "tech-tsod-temperature",
+      "intent": "technical",
+      "caller": "chat-multiroot",
+      "query": "TSOD 温度阈值",
+      "returned": 8,
+      "smoke": false,
+      "unrelated": false,
+      "hitAt1": true,
+      "precision": 0.5,
+      "recall": 0.25,
+      "smokePass": null,
+      "unrelatedPass": null,
+      "diversity": true,
+      "documentRecall": {
+        "covered": 2,
+        "total": 3
+      },
+      "pageTop3": {
+        "withPage": 3,
+        "total": 3
+      },
+      "top1": "776846_Intel® Server System Integrated OpenBMC_Rev1_0 3 (1).pdf - page 107"
+    },
+    {
+      "id": "tech-crashdump-autonomous",
+      "intent": "technical",
+      "caller": "chat-multiroot",
+      "query": "Autonomous Crash Dump",
+      "returned": 8,
+      "smoke": false,
+      "unrelated": false,
+      "hitAt1": true,
+      "precision": 0.375,
+      "recall": 0.42857142857142855,
+      "smokePass": null,
+      "unrelatedPass": null,
+      "diversity": true,
+      "documentRecall": {
+        "covered": 2,
+        "total": 2
+      },
+      "pageTop3": {
+        "withPage": 3,
+        "total": 3
+      },
+      "top1": "776846_Intel® Server System Integrated OpenBMC_Rev1_0 3 (1).pdf - page 195"
+    },
+    {
+      "id": "tech-redfish-eventservice",
+      "intent": "technical",
+      "caller": "chat-multiroot",
+      "query": "Redfish EventService 订阅",
+      "returned": 8,
+      "smoke": false,
+      "unrelated": false,
+      "hitAt1": true,
+      "precision": 0.25,
+      "recall": 0.5,
+      "smokePass": null,
+      "unrelatedPass": null,
+      "diversity": true,
+      "documentRecall": {
+        "covered": 1,
+        "total": 1
+      },
+      "pageTop3": {
+        "withPage": 3,
+        "total": 3
+      },
+      "top1": "776846_Intel® Server System Integrated OpenBMC_Rev1_0 3 (1).pdf - page 300"
+    },
+    {
+      "id": "tech-memory-mirroring",
+      "intent": "technical",
+      "caller": "chat-multiroot",
+      "query": "memory mirroring",
+      "returned": 8,
+      "smoke": false,
+      "unrelated": false,
+      "hitAt1": true,
+      "precision": 0.5,
+      "recall": 0.3333333333333333,
+      "smokePass": null,
+      "unrelatedPass": null,
+      "diversity": true,
+      "documentRecall": {
+        "covered": 2,
+        "total": 2
+      },
+      "pageTop3": {
+        "withPage": 3,
+        "total": 3
+      },
+      "top1": "639866_GNR_EDS-A_Rev_2_4 (1).pdf - page 278"
+    },
+    {
+      "id": "tech-pirom-offset",
+      "intent": "technical",
+      "caller": "chat-multiroot",
+      "query": "PIROM offset",
+      "returned": 8,
+      "smoke": false,
+      "unrelated": false,
+      "hitAt1": true,
+      "precision": 0.25,
+      "recall": 0,
+      "smokePass": null,
+      "unrelatedPass": null,
+      "diversity": true,
+      "documentRecall": {
+        "covered": 1,
+        "total": 2
+      },
+      "pageTop3": {
+        "withPage": 2,
+        "total": 3
+      },
+      "top1": "639866_GNR_EDS-A_Rev_2_4 (1).pdf - page 388"
+    },
+    {
+      "id": "tech-peci-temperature",
+      "intent": "technical",
+      "caller": "chat-multiroot",
+      "query": "PECI 温度读取",
+      "returned": 8,
+      "smoke": false,
+      "unrelated": false,
+      "hitAt1": true,
+      "precision": 0.125,
+      "recall": 0,
+      "smokePass": null,
+      "unrelatedPass": null,
+      "diversity": true,
+      "documentRecall": {
+        "covered": 1,
+        "total": 3
+      },
+      "pageTop3": {
+        "withPage": 3,
+        "total": 3
+      },
+      "top1": "GemMountain PAS V1.0.pdf - page 43"
+    },
+    {
+      "id": "tech-cpld-register",
+      "intent": "technical",
+      "caller": "chat-multiroot",
+      "query": "CPLD register",
+      "returned": 8,
+      "smoke": false,
+      "unrelated": false,
+      "hitAt1": false,
+      "precision": 0.25,
+      "recall": 0.125,
+      "smokePass": null,
+      "unrelatedPass": null,
+      "diversity": true,
+      "documentRecall": {
+        "covered": 1,
+        "total": 3
+      },
+      "pageTop3": {
+        "withPage": 3,
+        "total": 3
+      },
+      "top1": "Whitley BMC Firmware EPS_Rev1_0.pdf - page 104"
+    },
+    {
+      "id": "tech-mctp",
+      "intent": "technical",
+      "caller": "chat-multiroot",
+      "query": "MCTP",
+      "returned": 8,
+      "smoke": false,
+      "unrelated": false,
+      "hitAt1": true,
+      "precision": 0.5,
+      "recall": 0.375,
+      "smokePass": null,
+      "unrelatedPass": null,
+      "diversity": true,
+      "documentRecall": {
+        "covered": 2,
+        "total": 3
+      },
+      "pageTop3": {
+        "withPage": 3,
+        "total": 3
+      },
+      "top1": "639866_GNR_EDS-A_Rev_2_4 (1).pdf - page 212"
+    },
+    {
+      "id": "tech-spd-bus",
+      "intent": "technical",
+      "caller": "chat-multiroot",
+      "query": "SPD bus",
+      "returned": 8,
+      "smoke": false,
+      "unrelated": false,
+      "hitAt1": true,
+      "precision": 0.75,
+      "recall": 0.125,
+      "smokePass": null,
+      "unrelatedPass": null,
+      "diversity": true,
+      "documentRecall": {
+        "covered": 3,
+        "total": 3
+      },
+      "pageTop3": {
+        "withPage": 3,
+        "total": 3
+      },
+      "top1": "776846_Intel® Server System Integrated OpenBMC_Rev1_0 3 (1).pdf - page 70"
+    },
+    {
+      "id": "tech-smm-status",
+      "intent": "technical",
+      "caller": "chat-multiroot",
+      "query": "SMM status register",
+      "returned": 8,
+      "smoke": false,
+      "unrelated": false,
+      "hitAt1": true,
+      "precision": 0.5,
+      "recall": 0.25,
+      "smokePass": null,
+      "unrelatedPass": null,
+      "diversity": true,
+      "documentRecall": {
+        "covered": 2,
+        "total": 2
+      },
+      "pageTop3": {
+        "withPage": 3,
+        "total": 3
+      },
+      "top1": "639866_GNR_EDS-A_Rev_2_4 (1).pdf - page 254"
+    },
+    {
+      "id": "dec-coverity-triage",
+      "intent": "decision",
+      "caller": "chat-multiroot",
+      "query": "coverity 误报 triage",
+      "returned": 8,
+      "smoke": false,
+      "unrelated": false,
+      "hitAt1": true,
+      "precision": 0.375,
+      "recall": 1,
+      "smokePass": null,
+      "unrelatedPass": null,
+      "diversity": true,
+      "documentRecall": null,
+      "pageTop3": null,
+      "top1": "Coverity Triage Agent"
+    },
+    {
+      "id": "dec-coverity-workflow",
+      "intent": "decision",
+      "caller": "chat-multiroot",
+      "query": "Coverity Triage Agent Workflow",
+      "returned": 8,
+      "smoke": false,
+      "unrelated": false,
+      "hitAt1": true,
+      "precision": 0.125,
+      "recall": 0.5,
+      "smokePass": null,
+      "unrelatedPass": null,
+      "diversity": true,
+      "documentRecall": null,
+      "pageTop3": null,
+      "top1": "Coverity Triage Agent Workflow"
+    },
+    {
+      "id": "dec-loop1-orchestrator",
+      "intent": "decision",
+      "caller": "chat-multiroot",
+      "query": "loop1_orchestrator",
+      "returned": 3,
+      "smoke": false,
+      "unrelated": false,
+      "hitAt1": true,
+      "precision": 1,
+      "recall": 1,
+      "smokePass": null,
+      "unrelatedPass": null,
+      "diversity": null,
+      "documentRecall": null,
+      "pageTop3": null,
+      "top1": "loop1_orchestrator"
+    },
+    {
+      "id": "dec-crossdoc-fix",
+      "intent": "decision",
+      "caller": "chat-multiroot",
+      "query": "跨文档链接与查询无关 怎么修的",
+      "returned": 1,
+      "smoke": false,
+      "unrelated": false,
+      "hitAt1": true,
+      "precision": 1,
+      "recall": 1,
+      "smokePass": null,
+      "unrelatedPass": null,
+      "diversity": null,
+      "documentRecall": null,
+      "pageTop3": null,
+      "top1": "跨文档链接与查询无关（固定注入全局 top-N）怎么修的？"
+    },
+    {
+      "id": "cjk-smoke-threshold",
+      "intent": "cjk",
+      "caller": "chat-multiroot",
+      "query": "阈值",
+      "returned": 8,
+      "smoke": true,
+      "unrelated": false,
+      "hitAt1": true,
+      "precision": 0.25,
+      "recall": 1,
+      "smokePass": true,
+      "unrelatedPass": null,
+      "diversity": null,
+      "documentRecall": null,
+      "pageTop3": null,
+      "top1": "TSOD 温度阈值"
+    },
+    {
+      "id": "cjk-smoke-register",
+      "intent": "cjk",
+      "caller": "chat-multiroot",
+      "query": "寄存器",
+      "returned": 7,
+      "smoke": true,
+      "unrelated": false,
+      "hitAt1": true,
+      "precision": 1,
+      "recall": 1,
+      "smokePass": true,
+      "unrelatedPass": null,
+      "diversity": null,
+      "documentRecall": null,
+      "pageTop3": null,
+      "top1": "CPLD功能确认"
+    },
+    {
+      "id": "cjk-smoke-falsepositive",
+      "intent": "cjk",
+      "caller": "chat-multiroot",
+      "query": "误报",
+      "returned": 6,
+      "smoke": true,
+      "unrelated": false,
+      "hitAt1": true,
+      "precision": 0.8333333333333334,
+      "recall": 1,
+      "smokePass": true,
+      "unrelatedPass": null,
+      "diversity": null,
+      "documentRecall": null,
+      "pageTop3": null,
+      "top1": "不将无关条目关联到 Whitley"
+    },
+    {
+      "id": "cjk-precise-threshold",
+      "intent": "cjk",
+      "caller": "chat-multiroot",
+      "query": "阈值 时间窗口 掉电不丢失",
+      "returned": 1,
+      "smoke": false,
+      "unrelated": false,
+      "hitAt1": true,
+      "precision": 1,
+      "recall": 1,
+      "smokePass": null,
+      "unrelatedPass": null,
+      "diversity": null,
+      "documentRecall": null,
+      "pageTop3": {
+        "withPage": 0,
+        "total": 1
+      },
+      "top1": "用户要求阈值与时间窗口必须可配置且掉电不丢失，并要求立即将这些约束加入实现。"
+    },
+    {
+      "id": "cjk-precise-cpld",
+      "intent": "cjk",
+      "caller": "chat-multiroot",
+      "query": "寄存器 读写 CPLD",
+      "returned": 8,
+      "smoke": false,
+      "unrelated": false,
+      "hitAt1": false,
+      "precision": 0,
+      "recall": 0,
+      "smokePass": null,
+      "unrelatedPass": null,
+      "diversity": true,
+      "documentRecall": null,
+      "pageTop3": {
+        "withPage": 0,
+        "total": 3
+      },
+      "top1": "GMM CPLD D-Bus mapping"
+    },
+    {
+      "id": "unrelated-weather",
+      "intent": "unrelated",
+      "caller": "chat-multiroot",
+      "query": "今天天气怎么样",
+      "returned": 0,
+      "smoke": false,
+      "unrelated": true,
+      "hitAt1": false,
+      "precision": 0,
+      "recall": 0,
+      "smokePass": null,
+      "unrelatedPass": true,
+      "diversity": null,
+      "documentRecall": null,
+      "pageTop3": null,
+      "top1": ""
+    },
+    {
+      "id": "unrelated-lottery",
+      "intent": "unrelated",
+      "caller": "chat-multiroot",
+      "query": "彩票中奖号码预测",
+      "returned": 0,
+      "smoke": false,
+      "unrelated": true,
+      "hitAt1": false,
+      "precision": 0,
+      "recall": 0,
+      "smokePass": null,
+      "unrelatedPass": true,
+      "diversity": null,
+      "documentRecall": null,
+      "pageTop3": null,
+      "top1": ""
+    },
+    {
+      "id": "unrelated-quantum",
+      "intent": "unrelated",
+      "caller": "chat-multiroot",
+      "query": "量子纠缠退相干",
+      "returned": 0,
+      "smoke": false,
+      "unrelated": true,
+      "hitAt1": false,
+      "precision": 0,
+      "recall": 0,
+      "smokePass": null,
+      "unrelatedPass": true,
+      "diversity": null,
+      "documentRecall": null,
+      "pageTop3": null,
+      "top1": ""
+    },
+    {
+      "id": "global-tsod",
+      "intent": "technical",
+      "caller": "dashboard",
+      "query": "TSOD 温度阈值",
+      "returned": 8,
+      "smoke": false,
+      "unrelated": false,
+      "hitAt1": true,
+      "precision": 0.5,
+      "recall": 0.25,
+      "smokePass": null,
+      "unrelatedPass": null,
+      "diversity": true,
+      "documentRecall": {
+        "covered": 2,
+        "total": 3
+      },
+      "pageTop3": {
+        "withPage": 3,
+        "total": 3
+      },
+      "top1": "776846_Intel® Server System Integrated OpenBMC_Rev1_0 3 (1).pdf - page 107"
+    },
+    {
+      "id": "legacy-tsod",
+      "intent": "technical",
+      "caller": "legacy-uri",
+      "query": "TSOD 温度阈值",
+      "returned": 8,
+      "smoke": false,
+      "unrelated": false,
+      "hitAt1": true,
+      "precision": 0.75,
+      "recall": 0.25,
+      "smokePass": null,
+      "unrelatedPass": null,
+      "diversity": true,
+      "documentRecall": {
+        "covered": 3,
+        "total": 3
+      },
+      "pageTop3": {
+        "withPage": 3,
+        "total": 3
+      },
+      "top1": "776846_Intel® Server System Integrated OpenBMC_Rev1_0 3 (1).pdf - page 107"
+    }
+  ]
+}

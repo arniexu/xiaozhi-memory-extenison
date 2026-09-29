@@ -1,0 +1,57 @@
+# service/repo state snapshot 2026-09-29 (intermediate evidence)
+Tue Sep 29 01:49:32 AM UTC 2026
+
+## host
+10.112.229.254 10.112.230.11 172.18.0.1 172.19.0.1 172.20.0.1 
+
+## service process
+853079 /usr/bin/python3 -m knowledge_agent_service.cli serve
+3712443 /usr/bin/python3 -m knowledge_agent_service.cli serve
+    PID                  STARTED COMMAND
+ 853079 Wed Sep 23 05:47:11 2026 /usr/bin/python3 -m knowledge_agent_service.cli serve
+/home/xuqj/knowledge-agent-service
+
+## listening
+LISTEN 0      4096              0.0.0.0:7687       0.0.0.0:*                                                                      
+LISTEN 0      2048       10.112.229.254:8765       0.0.0.0:*    users:(("python3",pid=853079,fd=6))                               
+LISTEN 0      4096                 [::]:7687          [::]:*                                                                      
+
+## health
+{"status":"ok","version":"0.1.7","commit":"e83a387","started_at":"2026-09-23T05:47:16Z","memory":{"total":20571,"active":7963,"searchable":7963,"candidate":1040,"raw":11448,"continuity":568},"vectors":{"total":8674,"dimensions":256},"databases":{"memory":{"engine":"SQLite","path":"/home/xuqj/.local/share/knowledge-agent-service/memory.sqlite3","size_bytes":101654528,"features":["FTS5","WAL","CJK-char-index"]},"vectors":{"engine":"SQLite","path":"/home/xuqj/.local/share/knowledge-agent-service/vectors.sqlite3","size_bytes":12779520,"features":["Exact cosine","WAL"]}},"neo4j":{"configured":true,"ready":true,"endpoint":"bolt://10.112.229.254:7687","database":"neo4j","nodes":8309,"relationships":16383}}
+## capabilities
+{"version":"0.1.7","commit":"e83a387","started_at":"2026-09-23T05:47:16Z","endpoints":["/v1/capabilities","/v1/capabilities/skills","/v1/capabilities/skills/{skill_id}","/v1/graph/document-links","/v1/graph/relink","/v1/import/continuity","/v1/import/documents","/v1/import/extension","/v1/search","/v1/stats"],"search_fields":["embedding","include_retired","limit","min_similarity","page_boost","per_document_limit","query","repo_id","scope_fallback","session_id","session_scope","workspace_id","workspace_ids"]}
+## extension repo
+db04463cd20a708f1bf8b491eaf9b5793ac6f3a1
+ M .gitignore
+ M .vscode/settings.json
+ M CLAUDE.md
+ M Context-Recall-Studio.code-workspace
+ M GEMINI.md
+ M src/dashboard.ts
+?? .codex/
+?? .continuity/
+?? .cursorrules
+?? .github/skills/
+?? .mcp.json
+?? .vscode/mcp.json
+?? evals/quality-audit-2026-09-29/
+?? knowledge_agent.code-workspace
+2026-09-17 08:18:43 +0000 db04463 refactor(naming): 品牌更名 Context Recall → OpenBMC 知识助手（@recall → @openbmc）+ v0.3.24
+2026-09-15 02:16:02 +0000 d1e6d9a docs(readme): 补「实测能力与指标」，修正陈旧设置名
+2026-09-15 00:23:59 +0000 7fb5848 feat(scope): 统一工作区身份 + 检索 payload 对齐（chat/MCP 可达率 0%→80%）
+
+## service repo
+e83a38782c6ddeb383d2fedce1e018eb5cd4372d
+2026-09-21 20:27:44 +0000 e83a387 chore: 入库 AI 协作配置（.github/ instructions+agent+skills）与 xiaozhi 测试实体清理脚本
+2026-09-21 03:20:52 +0000 ad094a5 docs: 标准语义化提案（scope 归一/CJK 通道对齐/graph 开关，兼容演进）
+2026-09-21 03:04:47 +0000 f46bc15 docs: hard v3 加测证据（更新旧值残留→supersede 优先级上升）
+2026-09-21 02:26:51 +0000 13edc33 docs: CJK 检索召回待办（来自 xiaozhi 真机联调发现）
+2026-09-15 00:23:59 +0000 61ef96f fix(retrieval): 作用域加权合并 + CJK 逐字索引 + 三通道并联（可达率 0%→80%）
+
+## ci workflows
+extension: none
+service: none
+
+## fixture history
+2026-09-15 00:23:59 +0000 7fb5848 feat(scope): 统一工作区身份 + 检索 payload 对齐（chat/MCP 可达率 0%→80%）
+2026-09-14 08:00:01 +0000 bc04d3d 固化基线测试脚本和修复前基线测试数据“

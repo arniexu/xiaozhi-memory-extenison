@@ -1,0 +1,1 @@
+5b0648e7a9c35cfe3b70723f5a4d870ce0089be8a1e0f0a9a03fbeb0d486e202  /home/xuqj/.local/share/knowledge-agent-service/memory.sqlite3

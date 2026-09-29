@@ -1,0 +1,34 @@
+# derived readable table from retrieval-2026-09-29.json (script stdout equivalent)
+METRICS: {"hitAt1": 0.5555555555555556, "precisionAtK": 0.3472222222222222, "recallAtK": 0.30886243386243384, "smokeRate": 1, "noResultAccuracy": 1, "supersededLeakage": 0, "diversityRate": 1, "pageEvidenceCoverage": 0.5205479452054794, "documentRecallAtK": 0.4, "technicalTop3PageCoverage": 0.875, "casesScored": 24, "casesTotal": 24}
+CHECKS: [{"name": "hitAt1", "passed": false, "detail": "0.556 / >= 0.6"}, {"name": "precisionAtK", "passed": false, "detail": "0.347 / >= 0.6"}, {"name": "documentRecallAtK", "passed": false, "detail": "0.400 / >= 0.7"}, {"name": "smokeRate", "passed": true, "detail": "1.000 / >= 1"}, {"name": "noResultAccuracy", "passed": true, "detail": "1.000 / >= 0.9"}, {"name": "supersededLeakage", "passed": true, "detail": "0 / <= 0"}, {"name": "diversityRate", "passed": true, "detail": "1.000 / >= 0.85"}, {"name": "technicalTop3PageCoverage", "passed": true, "detail": "0.875 / >= 0.8"}]
+tech-tsod-temperature        chat-multiroot  hit1=False P@K=0.250 R@K=0.125 docRecall={'covered': 1, 'total': 3} top1=776846_Intel® Server System Integrated OpenBMC_Rev1_0 3 (1).
+tech-crashdump-autonomous    chat-multiroot  hit1=False P@K=0.125 R@K=0.143 docRecall={'covered': 1, 'total': 2} top1=776846_Intel® Server System Integrated OpenBMC_Rev1_0 3 (1).
+tech-redfish-eventservice    chat-multiroot  hit1=False P@K=0.000 R@K=0.000 docRecall={'covered': 0, 'total': 1} top1=776846_Intel® Server System Integrated OpenBMC_Rev1_0 3 (1).
+tech-memory-mirroring        chat-multiroot  hit1=True  P@K=0.250 R@K=0.167 docRecall={'covered': 1, 'total': 2} top1=639866_GNR_EDS-A_Rev_2_4 (1).pdf - page 278
+tech-pirom-offset            chat-multiroot  hit1=True  P@K=0.250 R@K=0.000 docRecall={'covered': 1, 'total': 2} top1=639866_GNR_EDS-A_Rev_2_4 (1).pdf - page 388
+tech-peci-temperature        chat-multiroot  hit1=True  P@K=0.125 R@K=0.000 docRecall={'covered': 1, 'total': 3} top1=GemMountain PAS V1.0.pdf - page 43
+tech-cpld-register           chat-multiroot  hit1=False P@K=0.000 R@K=0.000 docRecall={'covered': 0, 'total': 3} top1=Whitley BMC Firmware EPS_Rev1_0.pdf - page 104
+tech-mctp                    chat-multiroot  hit1=True  P@K=0.250 R@K=0.125 docRecall={'covered': 1, 'total': 3} top1=639866_GNR_EDS-A_Rev_2_4 (1).pdf - page 212
+tech-spd-bus                 chat-multiroot  hit1=False P@K=0.500 R@K=0.125 docRecall={'covered': 2, 'total': 3} top1=776846_Intel® Server System Integrated OpenBMC_Rev1_0 3 (1).
+tech-smm-status              chat-multiroot  hit1=True  P@K=0.250 R@K=0.125 docRecall={'covered': 1, 'total': 2} top1=639866_GNR_EDS-A_Rev_2_4 (1).pdf - page 254
+dec-coverity-triage          chat-multiroot  hit1=True  P@K=0.375 R@K=1.000 docRecall=None top1=Coverity Triage Agent
+dec-coverity-workflow        chat-multiroot  hit1=True  P@K=0.125 R@K=0.500 docRecall=None top1=Coverity Triage Agent Workflow
+dec-loop1-orchestrator       chat-multiroot  hit1=True  P@K=1.000 R@K=1.000 docRecall=None top1=loop1_orchestrator
+dec-crossdoc-fix             chat-multiroot  hit1=True  P@K=1.000 R@K=1.000 docRecall=None top1=跨文档链接与查询无关（固定注入全局 top-N）怎么修的？
+cjk-smoke-threshold          chat-multiroot  hit1=True  P@K=0.250 R@K=1.000 docRecall=None top1=TSOD 温度阈值
+cjk-smoke-register           chat-multiroot  hit1=True  P@K=1.000 R@K=1.000 docRecall=None top1=CPLD功能确认
+cjk-smoke-falsepositive      chat-multiroot  hit1=True  P@K=0.833 R@K=1.000 docRecall=None top1=不将无关条目关联到 Whitley
+cjk-precise-threshold        chat-multiroot  hit1=True  P@K=1.000 R@K=1.000 docRecall=None top1=用户要求阈值与时间窗口必须可配置且掉电不丢失，并要求立即将这些约束加入实现。
+cjk-precise-cpld             chat-multiroot  hit1=False P@K=0.000 R@K=0.000 docRecall=None top1=GMM CPLD D-Bus mapping
+unrelated-weather            chat-multiroot  hit1=False P@K=0.000 R@K=0.000 docRecall=None top1=
+unrelated-lottery            chat-multiroot  hit1=False P@K=0.000 R@K=0.000 docRecall=None top1=
+unrelated-quantum            chat-multiroot  hit1=False P@K=0.000 R@K=0.000 docRecall=None top1=
+global-tsod                  dashboard       hit1=False P@K=0.250 R@K=0.125 docRecall={'covered': 1, 'total': 3} top1=776846_Intel® Server System Integrated OpenBMC_Rev1_0 3 (1).
+legacy-tsod                  legacy-uri      hit1=False P@K=0.500 R@K=0.125 docRecall={'covered': 2, 'total': 3} top1=776846_Intel® Server System Integrated OpenBMC_Rev1_0 3 (1).
+
+# reachability rows
+chat-multiroot 30 / 40
+chat-single 29 / 40
+mcp 30 / 40
+dashboard 31 / 40
+legacy-uri 29 / 40

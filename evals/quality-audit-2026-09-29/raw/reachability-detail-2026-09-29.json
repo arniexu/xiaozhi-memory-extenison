@@ -1,0 +1,38 @@
+{
+  "capturedAt": "2026-09-29T01:44:15.013Z",
+  "note": "full miss list variant of evaluate-retrieval.mjs --reachability (diagnostic only)",
+  "callers": {
+    "chat-multiroot": {
+      "reachable": 30,
+      "total": 40,
+      "misses": [
+        "document:16f12e61df472e7cb2f23346c9d60503bf8d0630bdf31675ceab851f645d8ff8:page:100:chunk:0",
+        "document:16f12e61df472e7cb2f23346c9d60503bf8d0630bdf31675ceab851f645d8ff8:page:135:chunk:0",
+        "document:16f12e61df472e7cb2f23346c9d60503bf8d0630bdf31675ceab851f645d8ff8:page:262:chunk:0",
+        "document:ea2a23f828d682e6f5e7ac2fd279403ae8a8f47fac7620cbd6d48f26d9712387:page:127:chunk:0",
+        "document:ea2a23f828d682e6f5e7ac2fd279403ae8a8f47fac7620cbd6d48f26d9712387:page:157:chunk:0",
+        "document:ea2a23f828d682e6f5e7ac2fd279403ae8a8f47fac7620cbd6d48f26d9712387:page:231:chunk:0",
+        "document:ea2a23f828d682e6f5e7ac2fd279403ae8a8f47fac7620cbd6d48f26d9712387:page:331:chunk:0",
+        "knowledge:0dca9f7bedffacbca3de",
+        "knowledge:1ce78f8c390185b9fd3d",
+        "knowledge:9b656b341c4f965b9ea9"
+      ]
+    },
+    "mcp": {
+      "reachable": 30,
+      "total": 40,
+      "misses": [
+        "document:16f12e61df472e7cb2f23346c9d60503bf8d0630bdf31675ceab851f645d8ff8:page:100:chunk:0",
+        "document:16f12e61df472e7cb2f23346c9d60503bf8d0630bdf31675ceab851f645d8ff8:page:135:chunk:0",
+        "document:16f12e61df472e7cb2f23346c9d60503bf8d0630bdf31675ceab851f645d8ff8:page:262:chunk:0",
+        "document:ea2a23f828d682e6f5e7ac2fd279403ae8a8f47fac7620cbd6d48f26d9712387:page:127:chunk:0",
+        "document:ea2a23f828d682e6f5e7ac2fd279403ae8a8f47fac7620cbd6d48f26d9712387:page:157:chunk:0",
+        "document:ea2a23f828d682e6f5e7ac2fd279403ae8a8f47fac7620cbd6d48f26d9712387:page:231:chunk:0",
+        "document:ea2a23f828d682e6f5e7ac2fd279403ae8a8f47fac7620cbd6d48f26d9712387:page:331:chunk:0",
+        "knowledge:0dca9f7bedffacbca3de",
+        "knowledge:1ce78f8c390185b9fd3d",
+        "knowledge:9b656b341c4f965b9ea9"
+      ]
+    }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "db": "/home/xuqj/.local/share/knowledge-agent-service/memory.sqlite3",
+  "generated_at": "2026-09-29T04:51:57Z",
+  "rule": "status='active' AND id LIKE 'knowledge:%' AND (summary LIKE '%面包%' OR id IN <builtin 16-id list>)",
+  "summary_keyword_like": "%面包%",
+  "builtin_id_count": 16,
+  "resolution_matched": false,
+  "count": 0,
+  "residues": []
+}
