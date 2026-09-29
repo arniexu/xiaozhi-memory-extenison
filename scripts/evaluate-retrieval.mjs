@@ -1,10 +1,13 @@
 #!/usr/bin/env node
 // Phase 0 评测台：检索质量（golden set）与可达率（probe）。
 //
-//   npm run test:retrieval                     # 跑 golden set
+//   npm run test:retrieval                     # 前置 fixture 自检 + 跑 golden set
 //   node scripts/evaluate-retrieval.mjs --reachability
+//   node scripts/evaluate-retrieval.mjs --compare evals/accepted.json           # 与「最近验收基线」对比（推荐）
+//   node scripts/evaluate-retrieval.mjs --baseline-update evals/accepted.json   # 验收通过后刷新基线（由验收人执行）
 //   node scripts/evaluate-retrieval.mjs --json evals/reports/xxx.json
 //
+// 文档名匹配统一归一化：两侧都做 canonicalDoc（去掉语料改名产生的 " (N)" 后缀）。
 // 依赖 out/vector.js（先 npm run compile-tests），与既有 evaluate-session-continuity.mjs 同款 shim。
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import Module from 'node:module';
@@ -74,9 +77,19 @@ function parseDoc(summary = '') {
 	return { doc: match.groups.doc, page: match.groups.page ? Number(match.groups.page) : null };
 }
 
+// 语料文档可能以 " (1).pdf" 之类的副本名重新入库（改名漂移）；金标 docPrefix 与
+// 返回文档名两侧都归一化后再比较，避免把同一篇文档判成失配。只影响名称匹配，
+// 不改金标真值，也不影响页码/summaryContains/resolutionContains 判定。
+function canonicalDoc(name) {
+	if (name === undefined || name === null) {
+		return '';
+	}
+	return String(name).replace(/ \(\d+\)\.pdf$/, '.pdf');
+}
+
 function matches(item, expectation) {
 	const { doc, page } = parseDoc(item.summary || '');
-	if (expectation.docPrefix && doc.startsWith(expectation.docPrefix)) {
+	if (expectation.docPrefix && canonicalDoc(doc).startsWith(canonicalDoc(expectation.docPrefix))) {
 		if (Array.isArray(expectation.pages)) {
 			if (page !== null && expectation.pages.includes(page)) {
 				return true;
@@ -211,9 +224,10 @@ for (const testCase of golden.cases) {
 	// R@K 对 848 页真值的词无意义（top-8 最多只能覆盖 8/848），故把它降为诊断项。
 	let documentRecall = null;
 	{
-		const expectedDocs = [...new Set(testCase.expect.filter((item) => item.docPrefix).map((item) => item.docPrefix))];
+		// 两侧都归一化，并在去重前归一：同一篇文档的 " (1)" 副本不应算作两个期望文档。
+		const expectedDocs = [...new Set(testCase.expect.filter((item) => item.docPrefix).map((item) => canonicalDoc(item.docPrefix)))];
 		if (expectedDocs.length && !testCase.unrelated && !testCase.smoke) {
-			const returnedDocs = returned.map((item) => parseDoc(item.summary).doc).filter(Boolean);
+			const returnedDocs = returned.map((item) => canonicalDoc(parseDoc(item.summary).doc)).filter(Boolean);
 			documentRecall = {
 				covered: expectedDocs.filter((doc) => returnedDocs.some((candidate) => candidate.startsWith(doc))).length,
 				total: expectedDocs.length,
@@ -307,7 +321,9 @@ if (compareIndex >= 0) {
 	const comparable = Array.isArray(baseline.comparable)
 		? baseline.comparable
 		: ['hitAt1', 'precisionAtK', 'recallAtK', 'smokeRate', 'noResultAccuracy'];
-	const lowerIsBetter = new Set(['supersededLeakage', 'documentRecallAtK']);
+	// 只有 supersededLeakage 是「越低越好」；documentRecallAtK 等比率指标越高越好，
+	// 之前误入此集合会导致其回退被静默跳过（见 2026-09-29 审计 §4.5）。
+	const lowerIsBetter = new Set(['supersededLeakage']);
 	for (const name of comparable) {
 		if (lowerIsBetter.has(name)) continue;
 		if (typeof baseMetrics[name] !== 'number' || typeof metrics[name] !== 'number') continue;

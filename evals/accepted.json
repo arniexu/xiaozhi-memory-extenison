@@ -1,0 +1,39 @@
+{
+  "capturedAt": "2026-09-29T04:52:47.188Z",
+  "metrics": {
+    "hitAt1": 0.8888888888888888,
+    "precisionAtK": 0.4861111111111111,
+    "recallAtK": 0.4103835978835979,
+    "smokeRate": 1,
+    "noResultAccuracy": 1,
+    "supersededLeakage": 0,
+    "diversityRate": 1,
+    "pageEvidenceCoverage": 0.5205479452054794,
+    "documentRecallAtK": 0.7333333333333333,
+    "technicalTop3PageCoverage": 0.875,
+    "casesScored": 24,
+    "casesTotal": 24
+  },
+  "targets": {
+    "hitAt1": 0.6,
+    "precisionAtK": 0.6,
+    "noResultAccuracy": 0.9,
+    "smokeRate": 1,
+    "supersededLeakageMax": 0,
+    "diversityRate": 0.85,
+    "technicalTop3PageCoverage": 0.8,
+    "pageEvidenceCoverageDiagnosticOnly": 0.8,
+    "documentRecallAtK": 0.7,
+    "recallAtKDiagnosticOnly": 0.7
+  },
+  "comparable": [
+    "hitAt1",
+    "precisionAtK",
+    "documentRecallAtK",
+    "smokeRate",
+    "noResultAccuracy",
+    "technicalTop3PageCoverage",
+    "diversityRate"
+  ],
+  "note": "2026-09-29 P0 验收基线：文档名归一化匹配 + fixture 前置自检（check-fixtures 3/3）后的首次验收运行；生成自 verification run（wave p0-20260929）。supersededLeakage 由 --compare 单独判定（=0）。"
+}

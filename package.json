@@ -154,7 +154,8 @@
     "test:mcp": "npm run package && node scripts/test-mcp.mjs",
     "test:continuity": "npm run compile-tests && node scripts/evaluate-session-continuity.mjs",
 
-    "test:retrieval": "npm run compile-tests && node scripts/evaluate-retrieval.mjs",
+    "test:retrieval": "npm run compile-tests && node scripts/check-fixtures.mjs && node scripts/evaluate-retrieval.mjs",
+    "test:fixtures": "npm run compile-tests && node scripts/check-fixtures.mjs",
     "compile-tests": "tsc -p . --outDir out",
     "watch-tests": "tsc -p . -w --outDir out",
     "pretest": "npm run compile-tests && npm run compile && npm run lint",
